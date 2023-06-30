@@ -1,14 +1,31 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "nodemon index.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "nodemon": "^2.0.22"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "nodemon index.js",
+		"test": "jest",
+		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"collectCoverageFrom": [
+			"api/**/*.js",
+			"!**/node_modules/**",
+			"!**/vendor/**",
+			"!**/__tests__/**",
+			"!**/coverage/**",
+			"!**/apidoc/**"
+		]
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"nodemon": "^2.0.22"
+	},
+	"devDependencies": {
+		"jest": "^29.5.0",
+		"supertest": "^6.3.3"
+	}
 }
