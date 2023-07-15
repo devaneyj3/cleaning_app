@@ -3,19 +3,21 @@ const router = express.Router();
 
 // Define routes
 router.get("/", (req, res) => {
-	res.status(200).json({ message: "Getting Employees" });
+	res.status(200).json({ employee: req.body, message: "Getting Employees" });
 });
 
-router.post("/add", (req, res) => {
-	res.status(201).json({ message: "Adding Employees" });
+router.post("/", (req, res) => {
+	res.status(201).json({ employee: req.body, message: "Adding Employee" });
 });
 
 router.put("/:id/edit", (req, res) => {
-	res.status(200).json({ message: "Editing Employees" });
+	const { id } = req.params;
+	res.status(200).json({ employee: req.body, message: "Editing Employees" });
 });
 
 router.delete("/:id/delete", (req, res) => {
-	res.status(200).json({ message: "Deleting Employees" });
+	const { id } = req.params;
+	res.status(200).json({ employee: req.body, message: "Deleting Employees" });
 });
 
 // Export the router

@@ -8,6 +8,7 @@ exports.up = function (knex) {
 			tbl.text("username").notNullable();
 			tbl.text("password").notNullable();
 			tbl.float("hourly_pay").notNullable();
+			tbl.text("position").notNullable();
 		})
 		.createTable("location", (tbl) => {
 			tbl.increments();
@@ -67,9 +68,9 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
 	return knex.schema
-		.dropTableIfExist("product_locations")
-		.dropTableIfExist("employee_locations")
-		.dropTableIfExist("product")
-		.dropTableIfExist("location")
-		.dropTableIfExist("employee");
+		.dropTableIfExists("product_locations")
+		.dropTableIfExists("employee_locations")
+		.dropTableIfExists("product")
+		.dropTableIfExists("location")
+		.dropTableIfExists("employee");
 };
