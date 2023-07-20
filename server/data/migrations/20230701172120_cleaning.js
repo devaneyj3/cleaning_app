@@ -15,16 +15,17 @@ exports.up = function (knex) {
 			tbl.text("name").notNullable();
 			tbl.text("address").notNullable();
 			tbl.text("phone").notNullable();
-			tbl.text("username").notNullable();
-			tbl.text("password").notNullable();
+			tbl.text("city").notNullable();
+			tbl.text("state").notNullable();
+			tbl.integer("zip").notNullable();
 		})
 		.createTable("product", (tbl) => {
 			tbl.increments();
 			tbl.text("name").notNullable();
-			tbl.integer("quantity");
+			tbl.text("quantity").notNullable();
 			tbl.text("use").notNullable();
-			tbl.text("status");
-			tbl.text("type");
+			tbl.text("status").notNullable();
+			tbl.text("type").notNullable();
 		})
 		.createTable("employee_locations", (tbl) => {
 			tbl

@@ -13,7 +13,7 @@ const productRoutes = require("./Routes/Products");
 
 // Use the routes
 app.use("/api/employees", employeesRoutes);
-app.use("/api/location", locationRoutes);
+app.use("/api/locations", locationRoutes);
 app.use("/api/products", productRoutes);
 
 // Define a route

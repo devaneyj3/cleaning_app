@@ -3,19 +3,19 @@ const router = express.Router();
 
 // Define routes
 router.get("/", (req, res) => {
-	res.status(200).json({ message: "Getting Locations" });
+	res.status(200).json({ location: req.body, message: "Getting Locations" });
 });
 
-router.post("/add", (req, res) => {
-	res.status(201).json({ message: "Adding Location" });
+router.post("/", (req, res) => {
+	res.status(201).json({ location: req.body, message: "Adding Location" });
 });
 
 router.put("/:id/edit", (req, res) => {
-	res.status(200).json({ message: "Editing Location" });
+	res.status(200).json({ location: req.body, message: "Editing Location" });
 });
 
 router.delete("/:id/delete", (req, res) => {
-	res.status(200).json({ message: "Deleting Location" });
+	res.status(200).json({ location: req.body, message: "Deleting Location" });
 });
 
 // Export the router
