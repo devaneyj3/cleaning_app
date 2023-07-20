@@ -1,0 +1,16 @@
+/* DataTable.css */
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th,
+.table td {
+	padding: 10px;
+	border: 1px solid white;
+}
+
+.table thead tr {
+	background-color: blueviolet;
+}
