@@ -1,24 +1,60 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	Form,
+	FormGroup,
+	FormText,
+	Input,
+	Label,
+	Alert,
+} from "reactstrap";
 
-function CustomModal({ isOpen, toggle }) {
+function CustomModal({ isOpen, toggle, title, msg }) {
+	const [alert, setAlert] = useState("");
+	const save = () => {
+		setAlert(msg);
+		setTimeout(() => {
+			setAlert("");
+			toggle();
+		}, 1000);
+	};
 	return (
 		<div>
 			<Modal isOpen={isOpen} toggle={toggle}>
-				<ModalHeader toggle={toggle}>Modal title</ModalHeader>
+				{alert && <Alert color="success">{alert}</Alert>}
+				<ModalHeader toggle={toggle}>{title}</ModalHeader>
 				<ModalBody>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-					eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-					minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.
+					<Form>
+						<FormGroup>
+							<Label for="name">Name</Label>
+							<Input id="name" name="name" type="text" />
+						</FormGroup>
+						<FormGroup>
+							<Label for="email">Email</Label>
+							<Input id="email" name="email" type="email" />
+						</FormGroup>
+						<FormGroup>
+							<Label for="phone">Phone</Label>
+							<Input id="phone" name="phone" type="tel" />
+						</FormGroup>
+						<FormGroup>
+							<Label for="pay">Pay</Label>
+							<Input id="pay" name="pay" type="number" />
+						</FormGroup>
+						<FormGroup>
+							<Label for="position">Position</Label>
+							<Input id="position" name="position" type="text" />
+						</FormGroup>
+					</Form>
 				</ModalBody>
 				<ModalFooter>
-					<Button color="primary" onClick={toggle}>
-						Do Something
-					</Button>{" "}
+					<Button color="primary" onClick={save}>
+						Save
+					</Button>
 					<Button color="secondary" onClick={toggle}>
 						Cancel
 					</Button>

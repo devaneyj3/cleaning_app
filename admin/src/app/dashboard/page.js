@@ -21,7 +21,12 @@ export default function Dashboard() {
 			<p>You can create your employees, locations, and products</p>
 			<DataTable />
 			<CustomButton text="Create Employee" onClick={toggle} />
-			<CustomModal isOpen={modal} toggle={toggle} />
+			<CustomModal
+				isOpen={modal}
+				toggle={toggle}
+				title="Create Employee"
+				msg="Successfully created employee"
+			/>
 		</main>
 	);
 }
