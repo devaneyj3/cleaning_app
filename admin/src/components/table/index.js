@@ -1,31 +1,7 @@
 import React from "react";
 import styles from "./table.module.css";
 
-const DataTable = () => {
-	const data = [
-		{
-			name: "John Smith",
-			email: "john.smith@gmail.com",
-			phone: "810-220-8888",
-			houly_pay: 17.5,
-			position: "Janitor",
-		},
-		{
-			name: "John Doe",
-			email: "john.doe@gmail.com",
-			phone: "810-220-8878",
-			houly_pay: 17.5,
-			position: "Janitor",
-		},
-		{
-			name: "John Love",
-			email: "john.love@gmail.com",
-			phone: "810-220-8898",
-			houly_pay: 17.5,
-			position: "Janitor Supervisor",
-		},
-	];
-
+const DataTable = ({ data }) => {
 	return (
 		<table className={styles.table}>
 			<thead>

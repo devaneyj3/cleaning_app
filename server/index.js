@@ -1,10 +1,13 @@
 // Import required modules
 const express = require("express");
+const cors = require("cors");
 
 // Create an instance of the Express application
 const app = express();
 
 app.use(express.json());
+// Allow all requests from http://localhost:3000
+app.use(cors({ origin: "http://localhost:3000" }));
 
 // Require route files
 const employeesRoutes = require("./Routes/Employees");
@@ -23,8 +26,8 @@ app.get("/", (req, res) => {
 
 if (!module.parent) {
 	// Start the server
-	app.listen(3000, () => {
-		console.log("Server is running on port 3000");
+	app.listen(3001, () => {
+		console.log("Server is running on port 3001");
 	});
 }
 
