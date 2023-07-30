@@ -15,10 +15,10 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
 	try {
 		const data = await db.addData("employee", req.body);
-		console.log(data.employee);
-		res
-			.status(201)
-			.json({ employee: data, message: `Creating employee ${req.body.name}` });
+		res.status(201).json({
+			employee: req.body,
+			message: `Creating employee ${req.body.name}`,
+		});
 	} catch (error) {
 		console.log(error);
 	}

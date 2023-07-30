@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
-import customAxios from "@/utils/CustomAxios";
+import React, { useEffect, useContext, useState } from "react";
 
 import DataTable from "@/components/table";
 
@@ -10,36 +8,29 @@ import "./dashboard.css";
 import CustomButton from "@/components/CustomButton/CustomButton";
 
 import CustomModal from "@/components/Modal/Modal";
+import { MyContext } from "../context";
 
 export default function Dashboard() {
 	const [modal, setModal] = useState(false);
 
-	const toggle = () => setModal(!modal);
-
-	const [data, setData] = useState([]);
+	const { employees, getEmployees, loading } = useContext(MyContext);
 
 	useEffect(() => {
-		const getEmployees = async () => {
-			try {
-				const response = await customAxios().get("/employees");
-				const employees = response.data;
-				// Do something with the employees' data here.
-				setData(employees.employee);
-				console.log(employees.employee);
-			} catch (error) {
-				// Handle any errors that might occur during the API request.
-				console.error("Error fetching employees:", error.message);
-			}
-		};
 		getEmployees();
 	}, []);
+
+	const toggle = () => setModal(!modal);
+
+	if (loading) {
+		return <div>Loading...</div>; // Display a loading message while waiting for data
+	}
 
 	return (
 		<main>
 			<h1>Welcome to your dashboard</h1>
 			<p>You can create your employees, locations, and products</p>
-			{data.length > 0 ? (
-				<DataTable data={data} />
+			{employees.length > 0 ? (
+				<DataTable data={employees} />
 			) : (
 				<p>Create your first employee to get started</p>
 			)}

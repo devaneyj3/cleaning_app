@@ -1,5 +1,6 @@
 import customAxios from "@/utils/CustomAxios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { MyContext } from "@/app/context";
 import {
 	Button,
 	Modal,
@@ -14,7 +15,7 @@ import {
 	Alert,
 } from "reactstrap";
 
-function CustomModal({ isOpen, toggle, title, msg }) {
+function CustomModal({ isOpen, toggle, title }) {
 	const [alert, setAlert] = useState("");
 	const [formData, setFormData] = useState({
 		name: "",
@@ -26,6 +27,8 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 		position: "",
 	});
 	const [invalidFields, setInvalidFields] = useState([]);
+
+	const { employees, setEmployees } = useContext(MyContext);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -54,6 +57,7 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 				const response = await customAxios().post("/employees", formData);
 				// Assuming the response contains the success message from the server.
 				setAlert(`${response.data.message}`);
+				setEmployees([...employees, response.data.employee]);
 				setTimeout(() => {
 					setAlert("");
 					toggle();

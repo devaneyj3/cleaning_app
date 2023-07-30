@@ -19,7 +19,7 @@ const DataTable = ({ data }) => {
 						<td>{row.name}</td>
 						<td>{row.email}</td>
 						<td>{row.phone}</td>
-						<td>{row.houly_pay}</td>
+						<td>${row.hourly_pay}/hr</td>
 						<td>{row.position}</td>
 					</tr>
 				))}

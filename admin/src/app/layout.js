@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 
+import { MyContextProvider } from "./context";
 export const metadata = {
 	title: "CleanSweeps",
 	description:
@@ -10,7 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body>
+				<MyContextProvider>{children}</MyContextProvider>
+			</body>
 		</html>
 	);
 }
