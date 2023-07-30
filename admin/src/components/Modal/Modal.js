@@ -20,7 +20,9 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 		name: "",
 		email: "",
 		phone: "",
-		pay: "",
+		username: "",
+		password: "",
+		hourly_pay: "",
 		position: "",
 	});
 	const [invalidFields, setInvalidFields] = useState([]);
@@ -34,7 +36,15 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 	};
 
 	const save = async () => {
-		const requiredFields = ["name", "email", "phone", "pay", "position"];
+		const requiredFields = [
+			"name",
+			"username",
+			"password",
+			"email",
+			"phone",
+			"hourly_pay",
+			"position",
+		];
 		const emptyFields = requiredFields.filter((field) => !formData[field]);
 		if (emptyFields.length > 0) {
 			setInvalidFields(emptyFields);
@@ -43,11 +53,21 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 			try {
 				const response = await customAxios().post("/employees", formData);
 				// Assuming the response contains the success message from the server.
-				setAlert(`${response.data.message}: ${response.data.employee.name}`);
+				setAlert(`${response.data.message}`);
 				setTimeout(() => {
 					setAlert("");
 					toggle();
 				}, 1000);
+				// Reset the form fields to their initial empty state.
+				setFormData({
+					name: "",
+					email: "",
+					phone: "",
+					username: "",
+					password: "",
+					hourly_pay: "",
+					position: "",
+				});
 			} catch (error) {
 				console.error("Error posting data:", error);
 				// Handle any errors that may occur during the API request.
@@ -99,6 +119,38 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 							)}
 						</FormGroup>
 						<FormGroup>
+							<Label for="username">Username</Label>
+							<Input
+								id="username"
+								name="username"
+								type="username"
+								value={formData.username}
+								onChange={handleChange}
+								className={isInvalidField("username") ? "invalid" : ""}
+							/>
+							{isInvalidField("username") && (
+								<FormText className="invalid-text">
+									Please fill out this field.
+								</FormText>
+							)}
+						</FormGroup>
+						<FormGroup>
+							<Label for="password">Password</Label>
+							<Input
+								id="password"
+								name="password"
+								type="password"
+								value={formData.password}
+								onChange={handleChange}
+								className={isInvalidField("password") ? "invalid" : ""}
+							/>
+							{isInvalidField("password") && (
+								<FormText className="invalid-text">
+									Please fill out this field.
+								</FormText>
+							)}
+						</FormGroup>
+						<FormGroup>
 							<Label for="phone">Phone</Label>
 							<Input
 								id="phone"
@@ -115,16 +167,16 @@ function CustomModal({ isOpen, toggle, title, msg }) {
 							)}
 						</FormGroup>
 						<FormGroup>
-							<Label for="pay">Pay</Label>
+							<Label for="hourly_pay">Pay</Label>
 							<Input
-								id="pay"
-								name="pay"
+								id="hourly_pay"
+								name="hourly_pay"
 								type="number"
-								value={formData.pay}
+								value={formData.hourly_pay}
 								onChange={handleChange}
-								className={isInvalidField("pay") ? "invalid" : ""}
+								className={isInvalidField("hourly_pay") ? "invalid" : ""}
 							/>
-							{isInvalidField("pay") && (
+							{isInvalidField("hourly_pay") && (
 								<FormText className="invalid-text">
 									Please fill out this field.
 								</FormText>

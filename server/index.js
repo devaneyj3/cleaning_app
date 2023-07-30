@@ -10,9 +10,9 @@ app.use(express.json());
 app.use(cors({ origin: "http://localhost:3000" }));
 
 // Require route files
-const employeesRoutes = require("./Routes/Employees");
-const locationRoutes = require("./Routes/Location");
-const productRoutes = require("./Routes/Products");
+const employeesRoutes = require("./api/Routes/Employees");
+const locationRoutes = require("./api/Routes/Location");
+const productRoutes = require("./api/Routes/Products");
 
 // Use the routes
 app.use("/api/employees", employeesRoutes);
