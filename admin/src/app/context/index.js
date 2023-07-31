@@ -17,7 +17,6 @@ const MyContextProvider = ({ children }) => {
 			// Do something with the employees' data here.
 			setEmployees(employees.employee);
 			setLoading(false);
-			console.log(employees.employee);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
 			console.error("Error fetching employees:", error.message);

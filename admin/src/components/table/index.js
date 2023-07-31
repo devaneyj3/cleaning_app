@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import { MyContext } from "@/app/context";
 import styles from "./table.module.css";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const DataTable = ({ data }) => {
 	const { deleteEmployee, edit } = useContext(MyContext);
+	const router = useRouter();
 	const deleteRow = (id) => {
 		deleteEmployee(id);
 	};
@@ -13,7 +15,7 @@ const DataTable = ({ data }) => {
 	const [editedData, setEditedData] = useState({}); // Add state to store the edited data
 
 	const handleRowClick = (id) => {
-		console.log("Clicking employee with id ", id);
+		router.push(`/employee/${id}`);
 	};
 	const handleEditClick = (index) => {
 		setEditRowIndex(index); // Set the index of the row being edited
