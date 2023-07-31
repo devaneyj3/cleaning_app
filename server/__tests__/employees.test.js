@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../index");
+const { v4: uuidv4 } = require("uuid"); // import uuid
 
 let server;
 
@@ -16,7 +17,7 @@ describe("Employees API", () => {
 
 	beforeEach(async () => {
 		const response = await request(app).post("/api/employees").send({
-			id: 1,
+			id: uuidv4(),
 			name: "John Doe1",
 			email: "john@gmail.com",
 			phone: "777-777-7777",

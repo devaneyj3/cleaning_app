@@ -32,7 +32,6 @@ function findByID(name, id) {
 	return db(name).where({ id: id }).first();
 }
 function deleteByID(name, id) {
-	console.log(id);
 	return db(name).where({ id: id }).del();
 }
 function edit(name, id, username, password) {

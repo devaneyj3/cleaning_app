@@ -14,9 +14,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const data = await db.addData("employee", req.body);
+		await db.addData("employee", req.body);
+		const data = await db.getFromDB("employee");
 		res.status(201).json({
-			employee: req.body,
+			newEmployee: req.body,
+			employees: data,
 			message: `Creating employee ${req.body.name}`,
 		});
 	} catch (error) {
@@ -29,9 +31,14 @@ router.put("/:id/edit", (req, res) => {
 	res.status(200).json({ employee: req.body, message: "Editing Employees" });
 });
 
-router.delete("/:id/delete", (req, res) => {
+router.delete("/:id/delete", async (req, res) => {
 	const { id } = req.params;
-	res.status(200).json({ employee: req.body, message: "Deleting Employees" });
+	try {
+		await db.deleteByID("employee", id);
+		res.status(200).json({ id: id, message: "Deleting Employee" });
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 // Export the router

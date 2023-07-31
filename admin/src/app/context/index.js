@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 import customAxios from "@/utils/CustomAxios";
 
@@ -23,9 +23,27 @@ const MyContextProvider = ({ children }) => {
 			console.error("Error fetching employees:", error.message);
 		}
 	};
+	const deleteEmployee = async (id) => {
+		try {
+			const response = await customAxios().delete(`/employees/${id}/delete`);
+			const deletedID = response.data.id;
+			setEmployees(employees.filter((emp) => emp.id != deletedID));
+		} catch (error) {
+			// Do something with the employees' data here.
+			// Handle any errors that might occur during the API request.
+			console.error("Error deleting employee:", error.message);
+		}
+	};
+
 	return (
 		<MyContext.Provider
-			value={{ employees, getEmployees, setEmployees, loading }}>
+			value={{
+				employees,
+				getEmployees,
+				setEmployees,
+				loading,
+				deleteEmployee,
+			}}>
 			{children}
 		</MyContext.Provider>
 	);

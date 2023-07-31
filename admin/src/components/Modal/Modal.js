@@ -57,7 +57,7 @@ function CustomModal({ isOpen, toggle, title }) {
 				const response = await customAxios().post("/employees", formData);
 				// Assuming the response contains the success message from the server.
 				setAlert(`${response.data.message}`);
-				setEmployees([...employees, response.data.employee]);
+				setEmployees(response.data.employees);
 				setTimeout(() => {
 					setAlert("");
 					toggle();
