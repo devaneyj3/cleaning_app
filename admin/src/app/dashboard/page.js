@@ -29,6 +29,8 @@ export default function Dashboard() {
 		<main>
 			<h1>Welcome to your dashboard</h1>
 			<p>You can create your employees, locations, and products</p>
+			<p>Click on an employee, location, and products for more information</p>
+			<p>You have {employees.length} employees</p>
 			{employees.length > 0 ? (
 				<DataTable data={employees} />
 			) : (

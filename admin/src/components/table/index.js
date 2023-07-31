@@ -12,6 +12,9 @@ const DataTable = ({ data }) => {
 	const [editRowIndex, setEditRowIndex] = useState(-1); // Add state to track the row being edited
 	const [editedData, setEditedData] = useState({}); // Add state to store the edited data
 
+	const handleRowClick = (id) => {
+		console.log("Clicking employee with id ", id);
+	};
 	const handleEditClick = (index) => {
 		setEditRowIndex(index); // Set the index of the row being edited
 	};
@@ -49,7 +52,7 @@ const DataTable = ({ data }) => {
 			</thead>
 			<tbody>
 				{data.map((row, index) => (
-					<tr key={index}>
+					<tr key={index} onClick={() => handleRowClick(row.id)}>
 						<td>{row.id}</td>
 						<td>
 							{editRowIndex === index ? (
@@ -92,7 +95,7 @@ const DataTable = ({ data }) => {
 									onChange={(e) => handleInputChange(e, "hourly_pay")}
 								/>
 							) : (
-								row.hourly_pay
+								`$${row.hourly_pay}/hr`
 							)}
 						</td>
 						<td>
