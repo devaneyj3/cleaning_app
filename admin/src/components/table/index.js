@@ -5,7 +5,7 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation"; // Import useRouter
 
 const DataTable = ({ data }) => {
-	const { deleteEmployee, edit } = useContext(MyContext);
+	const { deleteEmployee, edit, setSelectedEmployee } = useContext(MyContext);
 	const router = useRouter();
 	const deleteRow = (id) => {
 		deleteEmployee(id);
@@ -14,7 +14,8 @@ const DataTable = ({ data }) => {
 	const [editRowIndex, setEditRowIndex] = useState(-1); // Add state to track the row being edited
 	const [editedData, setEditedData] = useState({}); // Add state to store the edited data
 
-	const handleRowClick = (id) => {
+	const handleRowClick = (id, row) => {
+		setSelectedEmployee({ ...row });
 		router.push(`/employee/${id}`);
 	};
 	const handleEditClick = (index) => {
@@ -54,7 +55,7 @@ const DataTable = ({ data }) => {
 			</thead>
 			<tbody>
 				{data.map((row, index) => (
-					<tr key={index} onClick={() => handleRowClick(row.id)}>
+					<tr key={index} onClick={() => handleRowClick(row.id, row)}>
 						<td>{row.id}</td>
 						<td>
 							{editRowIndex === index ? (

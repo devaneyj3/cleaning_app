@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React, { createContext, use, useState } from "react";
 
 import customAxios from "@/utils/CustomAxios";
 
@@ -9,6 +9,7 @@ const MyContext = createContext();
 const MyContextProvider = ({ children }) => {
 	const [employees, setEmployees] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [selectedEmployee, setSelectedEmployee] = useState(null);
 
 	const getEmployees = async () => {
 		try {
@@ -55,6 +56,8 @@ const MyContextProvider = ({ children }) => {
 				loading,
 				deleteEmployee,
 				edit,
+				selectedEmployee,
+				setSelectedEmployee,
 			}}>
 			{children}
 		</MyContext.Provider>
