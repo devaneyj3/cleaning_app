@@ -34,11 +34,32 @@ function findByID(name, id) {
 function deleteByID(name, id) {
 	return db(name).where({ id: id }).del();
 }
-function edit(name, id, username, password) {
-	const data = db(name)
-		.where({ id: id })
-		.update({ username: username, password: password });
-	return data;
+
+async function edit(name, id, data) {
+	try {
+		const updatedData = { ...data };
+		console.log(updatedData);
+		// Validate if req.body is not empty and contains at least one field to update
+		if (Object.keys(updatedData).length === 0) {
+			throw new Error("No data provided for the update.");
+		}
+
+		// Use the Knex instance to update the data
+		const numRowsUpdated = await db(name).where({ id: id }).update(updatedData);
+
+		// Check if any rows were updated
+		if (numRowsUpdated === 0) {
+			throw new Error("No matching record found for the provided id.");
+		}
+
+		// Fetch and return the updated data
+		const updatedRecord = await findByID("employee", id);
+		return updatedRecord;
+	} catch (error) {
+		// Handle any errors that might occur during the update
+		console.error("Error updating data:", error);
+		throw error;
+	}
 }
 
 function getIdClasses(text, id) {

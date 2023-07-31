@@ -35,6 +35,18 @@ const MyContextProvider = ({ children }) => {
 		}
 	};
 
+	const edit = async (id, data) => {
+		try {
+			const response = await customAxios().put(`/employees/${id}/edit`, data);
+			const employees = response.data.employees;
+			setEmployees(employees);
+		} catch (error) {
+			// Do something with the employees' data here.
+			// Handle any errors that might occur during the API request.
+			console.error("Error editing employee:", error.message);
+		}
+	};
+
 	return (
 		<MyContext.Provider
 			value={{
@@ -43,6 +55,7 @@ const MyContextProvider = ({ children }) => {
 				setEmployees,
 				loading,
 				deleteEmployee,
+				edit,
 			}}>
 			{children}
 		</MyContext.Provider>

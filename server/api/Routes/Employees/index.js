@@ -26,9 +26,15 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.put("/:id/edit", (req, res) => {
+router.put("/:id/edit", async (req, res) => {
 	const { id } = req.params;
-	res.status(200).json({ employee: req.body, message: "Editing Employees" });
+	try {
+		await db.edit("employee", id, req.body);
+		const data = await db.getFromDB("employee");
+		res.status(200).json({ employees: data, message: "Editing Employees" });
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 router.delete("/:id/delete", async (req, res) => {
