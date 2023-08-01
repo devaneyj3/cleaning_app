@@ -5,7 +5,7 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation"; // Import useRouter
 
 const DataTable = ({ data }) => {
-	const { deleteEmployee, edit, setSelectedEmployee } = useContext(MyContext);
+	const { deleteEmployee, edit } = useContext(MyContext);
 	const router = useRouter();
 	const deleteRow = (id) => {
 		deleteEmployee(id);
@@ -15,7 +15,6 @@ const DataTable = ({ data }) => {
 	const [editedData, setEditedData] = useState({}); // Add state to store the edited data
 
 	const handleRowClick = (id, row) => {
-		setSelectedEmployee({ ...row });
 		router.push(`/employee/${id}`);
 	};
 	const handleEditClick = (index) => {

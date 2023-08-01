@@ -23,6 +23,17 @@ const MyContextProvider = ({ children }) => {
 			console.error("Error fetching employees:", error.message);
 		}
 	};
+	const getEmployeeById = async (id) => {
+		try {
+			const response = await customAxios().get(`/employees/${id}`);
+			const { data } = response;
+			// Do something with the employees' data here.
+			setSelectedEmployee(data.employee);
+		} catch (error) {
+			// Handle any errors that might occur during the API request.
+			console.error("Error fetching employee:", error.message);
+		}
+	};
 	const deleteEmployee = async (id) => {
 		try {
 			const response = await customAxios().delete(`/employees/${id}/delete`);
@@ -57,7 +68,7 @@ const MyContextProvider = ({ children }) => {
 				deleteEmployee,
 				edit,
 				selectedEmployee,
-				setSelectedEmployee,
+				getEmployeeById,
 			}}>
 			{children}
 		</MyContext.Provider>

@@ -1,0 +1,35 @@
+.card {
+	background-color: #ffffff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	margin: 20px;
+	padding: 20px;
+	transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+	transform: translateY(-10px);
+}
+
+.cardHeader {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.cardContent {
+	display: flex;
+	flex-direction: column;
+}
+
+.cardContent h2 {
+	margin-bottom: 10px;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+	.card {
+		margin: 10px;
+	}
+}

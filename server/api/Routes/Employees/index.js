@@ -11,6 +11,15 @@ router.get("/", async (req, res) => {
 		console.log(error);
 	}
 });
+router.get("/:id", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const data = await db.findByID("employee", id);
+		res.status(200).json({ employee: data });
+	} catch (error) {
+		console.log(error);
+	}
+});
 
 router.post("/", async (req, res) => {
 	try {
