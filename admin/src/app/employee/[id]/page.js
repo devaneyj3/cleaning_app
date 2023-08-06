@@ -2,10 +2,12 @@
 
 import React, { useContext, useEffect } from "react";
 import { MyContext } from "@/app/context";
+import Link from "next/link";
 import styles from "./employee.module.css";
 
 export default function employee({ params: { id } }) {
 	const { selectedEmployee, getEmployeeById } = useContext(MyContext);
+
 	useEffect(() => {
 		getEmployeeById(id);
 	}, [id]);
@@ -22,9 +24,18 @@ export default function employee({ params: { id } }) {
 						<p> {selectedEmployee.email}</p>
 						<p>{selectedEmployee.hourly_pay}</p>
 						<p>{selectedEmployee.position}</p>
+						{selectedEmployee.dateHired && (
+							<p>
+								{new Date(selectedEmployee.dateHired).toLocaleDateString(
+									undefined,
+									{ year: "numeric", month: "long", day: "numeric" }
+								)}
+							</p>
+						)}
 					</div>
 				</div>
 			)}
+			<Link href="/dashboard">Dashboard</Link>
 		</>
 	);
 }

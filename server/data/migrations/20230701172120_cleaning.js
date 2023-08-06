@@ -9,6 +9,7 @@ exports.up = function (knex) {
 			tbl.text("password").notNullable();
 			tbl.float("hourly_pay").notNullable();
 			tbl.text("position").notNullable();
+			tbl.timestamp("dateHired").notNullable();
 		})
 		.createTable("location", (tbl) => {
 			tbl.increments();

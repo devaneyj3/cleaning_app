@@ -25,6 +25,7 @@ function CustomModal({ isOpen, toggle, title }) {
 		password: "",
 		hourly_pay: "",
 		position: "",
+		dateHired: "",
 	});
 	const [invalidFields, setInvalidFields] = useState([]);
 
@@ -47,6 +48,7 @@ function CustomModal({ isOpen, toggle, title }) {
 			"phone",
 			"hourly_pay",
 			"position",
+			"dateHired",
 		];
 		const emptyFields = requiredFields.filter((field) => !formData[field]);
 		if (emptyFields.length > 0) {
@@ -71,6 +73,7 @@ function CustomModal({ isOpen, toggle, title }) {
 					password: "",
 					hourly_pay: "",
 					position: "",
+					dateHired: "",
 				});
 			} catch (error) {
 				console.error("Error posting data:", error);
@@ -195,6 +198,22 @@ function CustomModal({ isOpen, toggle, title }) {
 								value={formData.position}
 								onChange={handleChange}
 								className={isInvalidField("position") ? "invalid" : ""}
+							/>
+							{isInvalidField("position") && (
+								<FormText className="invalid-text">
+									Please fill out this field.
+								</FormText>
+							)}
+						</FormGroup>
+						<FormGroup>
+							<Label for="dateHired">Date Hired</Label>
+							<Input
+								id="dateHired"
+								name="dateHired"
+								type="date"
+								value={formData.dateHired}
+								onChange={handleChange}
+								className={isInvalidField("dateHired") ? "invalid" : ""}
 							/>
 							{isInvalidField("position") && (
 								<FormText className="invalid-text">

@@ -6,7 +6,11 @@
 	"scripts": {
 		"start": "nodemon index.js",
 		"test": "jest",
-		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit"
+		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit",
+		"migrate:make": "npx knex migrate:make",
+		"migrate_latest": "npx knex migrate:rollback & npx knex migrate:latest",
+		"migrate_rollback": "npx knex migrate:rollback",
+		"seed_make": "knex seed:make"
 	},
 	"jest": {
 		"testEnvironment": "node",
