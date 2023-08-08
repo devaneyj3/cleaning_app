@@ -22,7 +22,7 @@ export default function LocationTable() {
 	const toggle = () => setModal(!modal);
 
 	if (loading) {
-		return <div>Loading...</div>; // Display a loading message while waiting for data
+		return <div>Loading Locations...</div>; // Display a loading message while waiting for data
 	}
 
 	const locationFields = [
@@ -32,7 +32,7 @@ export default function LocationTable() {
 		{ name: "city", label: "City", type: "text", required: true },
 		{ name: "state", label: "State", type: "text", required: true },
 		{
-			name: "Zip",
+			name: "zip",
 			label: "Zip",
 			title: "Please enter a Zip Code",
 			pattern: "^s*?d{5}(?:[-s]d{4})?s*?$",
@@ -45,7 +45,8 @@ export default function LocationTable() {
 		try {
 			const response = await customAxios().post("/locations", formData);
 			// Assuming the response contains the success message from the server.
-			setLocations(response.data.location);
+			setLocations(response.data.locations);
+			console.log(response.data.locations);
 			setMsg("Successfully added location");
 			setTimeout(() => {
 				toggle();
@@ -58,9 +59,11 @@ export default function LocationTable() {
 
 	return (
 		<main>
-			<p>You have {locations.length} employees</p>
-			{locations.length > 0 ? (
-				<DataTable data={locations} />
+			{locations && locations.length > 0 ? (
+				<>
+					<p>You have {locations.length} accounts</p>
+					<DataTable data={locations} />
+				</>
 			) : (
 				<p>Create your first location to get started</p>
 			)}
