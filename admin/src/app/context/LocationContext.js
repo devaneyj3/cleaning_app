@@ -7,16 +7,16 @@ import customAxios from "@/utils/CustomAxios";
 const LocationContext = createContext();
 
 const LocationContextProvider = ({ children }) => {
-	const [location, setLocations] = useState([]);
+	const [locations, setLocations] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 
 	const getLocations = async () => {
 		try {
 			const response = await customAxios().get("/locations");
-			const location = response.data;
+			const locations = response.data;
 			// Do something with the employees' data here.
-			setLocations(location.location);
+			setLocations(locations.location);
 			setLoading(false);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
@@ -61,7 +61,7 @@ const LocationContextProvider = ({ children }) => {
 	return (
 		<LocationContext.Provider
 			value={{
-				location,
+				locations,
 				getLocations,
 				setLocations,
 				loading,
