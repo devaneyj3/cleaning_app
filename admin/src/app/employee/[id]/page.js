@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { MyContext } from "@/app/context";
+import { EmployeeContext } from "@/app/context/EmployeeContext";
 import Link from "next/link";
 import styles from "./employee.module.css";
 
 export default function employee({ params: { id } }) {
-	const { selectedEmployee, getEmployeeById } = useContext(MyContext);
+	const { selectedEmployee, getEmployeeById } = useContext(EmployeeContext);
 
 	useEffect(() => {
 		getEmployeeById(id);

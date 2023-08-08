@@ -1,6 +1,6 @@
 import customAxios from "@/utils/CustomAxios";
 import React, { useState, useContext } from "react";
-import { MyContext } from "@/app/context";
+import { EmployeeContext } from "@/app/context/EmployeeContext";
 import {
 	Button,
 	Modal,
@@ -29,7 +29,7 @@ function CustomModal({ isOpen, toggle, title }) {
 	});
 	const [invalidFields, setInvalidFields] = useState([]);
 
-	const { employees, setEmployees } = useContext(MyContext);
+	const { employees, setEmployees } = useContext(EmployeeContext);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;

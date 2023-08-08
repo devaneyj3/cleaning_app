@@ -4,11 +4,11 @@ import React, { createContext, use, useState } from "react";
 
 import customAxios from "@/utils/CustomAxios";
 
-const MyContext = createContext();
+const EmployeeContext = createContext();
 
-const MyContextProvider = ({ children }) => {
+const EmployeeContextProvider = ({ children }) => {
 	const [employees, setEmployees] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [employeeLoading, setLoading] = useState(true);
 	const [selectedEmployee, setSelectedEmployee] = useState(null);
 
 	const getEmployees = async () => {
@@ -59,20 +59,20 @@ const MyContextProvider = ({ children }) => {
 	};
 
 	return (
-		<MyContext.Provider
+		<EmployeeContext.Provider
 			value={{
 				employees,
 				getEmployees,
 				setEmployees,
-				loading,
+				employeeLoading,
 				deleteEmployee,
 				edit,
 				selectedEmployee,
 				getEmployeeById,
 			}}>
 			{children}
-		</MyContext.Provider>
+		</EmployeeContext.Provider>
 	);
 };
 
-export { MyContext, MyContextProvider };
+export { EmployeeContext, EmployeeContextProvider };

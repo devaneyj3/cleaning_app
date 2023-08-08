@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import DataTable from "../index";
-import { MyContext } from "../../../app/context";
+import { MyContext } from "../../../app/context/EmployeeContext";
 
 describe("DataTable", () => {
 	it("renders correctly", () => {

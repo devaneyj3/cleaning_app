@@ -1,5 +1,5 @@
-import React, { use, useContext, useState } from "react";
-import { MyContext } from "@/app/context";
+import React, { useContext, useState } from "react";
+import { EmployeeContext } from "@/app/context/EmployeeContext";
 import styles from "./table.module.css";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation"; // Import useRouter
@@ -9,7 +9,7 @@ const DataTable = ({ data }) => {
 	const [editedData, setEditedData] = useState({}); // Add state to store the edited data
 
 	const [editMode, setEditMode] = useState(false);
-	const { deleteEmployee, edit } = useContext(MyContext);
+	const { deleteEmployee, edit } = useContext(EmployeeContext);
 
 	const router = useRouter();
 	const deleteRow = (e, id) => {
