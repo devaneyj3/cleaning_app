@@ -31,6 +31,7 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 		setInvalidFields(emptyFields);
 		if (emptyFields.length === 0 && onSave) {
 			onSave(formData);
+			console.log("Saving");
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {

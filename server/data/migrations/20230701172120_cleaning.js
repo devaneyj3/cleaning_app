@@ -2,23 +2,23 @@ exports.up = function (knex) {
 	return knex.schema
 		.createTable("employee", (tbl) => {
 			tbl.increments();
-			tbl.text("name").notNullable();
-			tbl.text("email").notNullable();
-			tbl.text("phone").notNullable();
-			tbl.text("username").notNullable();
-			tbl.text("password").notNullable();
-			tbl.float("hourly_pay").notNullable();
-			tbl.text("position").notNullable();
-			tbl.timestamp("dateHired").notNullable();
+			tbl.text("Name").notNullable();
+			tbl.text("Email").notNullable();
+			tbl.text("Phone").notNullable();
+			tbl.text("Username").notNullable();
+			tbl.text("Password").notNullable();
+			tbl.float("Pay").notNullable();
+			tbl.text("Position").notNullable();
+			tbl.timestamp("Hired").notNullable();
 		})
 		.createTable("location", (tbl) => {
 			tbl.increments();
-			tbl.text("name").notNullable();
-			tbl.text("address").notNullable();
-			tbl.text("phone").notNullable();
-			tbl.text("city").notNullable();
-			tbl.text("state").notNullable();
-			tbl.integer("zip").notNullable();
+			tbl.text("Name").notNullable();
+			tbl.text("Address").notNullable();
+			tbl.text("Phone").notNullable();
+			tbl.text("City").notNullable();
+			tbl.text("State").notNullable();
+			tbl.integer("Zip").notNullable();
 		})
 		.createTable("product", (tbl) => {
 			tbl.increments();

@@ -13,8 +13,14 @@ import customAxios from "@/utils/CustomAxios";
 export default function EmployeeTable() {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
-	const { employees, getEmployees, setEmployees, employeeLoading } =
-		useContext(EmployeeContext);
+	const {
+		employees,
+		getEmployees,
+		setEmployees,
+		employeeLoading,
+		editEmployee,
+		deleteEmployee,
+	} = useContext(EmployeeContext);
 
 	useEffect(() => {
 		getEmployees();
@@ -26,20 +32,24 @@ export default function EmployeeTable() {
 	}
 
 	const employeeFields = [
-		{ name: "name", label: "Name", type: "text", required: true },
-		{ name: "email", label: "Email", type: "text", required: true },
-		{ name: "phone", label: "Phone", type: "text", required: true },
-		{ name: "username", label: "Username", type: "text", required: true },
-		{ name: "password", label: "Password", type: "text", required: true },
-		{ name: "hourly_pay", label: "Hourly Pay", type: "number", required: true },
-		{ name: "position", label: "Position", type: "text", required: true },
+		{ name: "Name", label: "Name", type: "text", required: true },
+		{ name: "Email", label: "Email", type: "text", required: true },
+		{ name: "Phone", label: "Phone", type: "text", required: true },
+		{ name: "Username", label: "Username", type: "text", required: true },
+		{ name: "Password", label: "Password", type: "text", required: true },
+		{ name: "Pay", label: "Pay", type: "number", required: true },
+		{ name: "Position", label: "Position", type: "text", required: true },
 		{
-			name: "dateHired",
-			label: "Date Hired",
+			name: "Hired",
+			label: "Hired",
 			type: "date",
 			required: true,
 		},
 	];
+
+	const employeeLabelArr = employeeFields.map((field) => field.label);
+
+	employeeLabelArr[0] = "ID";
 
 	const SaveEmployee = async (formData) => {
 		try {
@@ -47,6 +57,7 @@ export default function EmployeeTable() {
 			// Assuming the response contains the success message from the server.
 			setEmployees(response.data.employees);
 			setMsg("Successfully added employee");
+			console.log("Saving Employee", response.data.employees);
 			setTimeout(() => {
 				toggle();
 				setMsg("");
@@ -60,7 +71,12 @@ export default function EmployeeTable() {
 		<main>
 			<p>You have {employees.length} employees</p>
 			{employees.length > 0 ? (
-				<DataTable data={employees} />
+				<DataTable
+					data={employees}
+					labels={employeeLabelArr}
+					onEdit={editEmployee}
+					onDelete={deleteEmployee}
+				/>
 			) : (
 				<p>Create your first employee to get started</p>
 			)}

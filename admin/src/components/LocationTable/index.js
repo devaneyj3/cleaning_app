@@ -26,13 +26,13 @@ export default function LocationTable() {
 	}
 
 	const locationFields = [
-		{ name: "name", label: "Name", type: "text", required: true },
-		{ name: "address", label: "Address", type: "text", required: true },
-		{ name: "phone", label: "Phone", type: "text", required: true },
-		{ name: "city", label: "City", type: "text", required: true },
-		{ name: "state", label: "State", type: "text", required: true },
+		{ name: "Name", label: "Name", type: "text", required: true },
+		{ name: "Address", label: "Address", type: "text", required: true },
+		{ name: "Phone", label: "Phone", type: "text", required: true },
+		{ name: "City", label: "City", type: "text", required: true },
+		{ name: "State", label: "State", type: "text", required: true },
 		{
-			name: "zip",
+			name: "Zip",
 			label: "Zip",
 			title: "Please enter a Zip Code",
 			pattern: "^s*?d{5}(?:[-s]d{4})?s*?$",
@@ -41,6 +41,9 @@ export default function LocationTable() {
 		},
 	];
 
+	const locationLabelsArray = locationFields.map((field) => field.label);
+
+	locationLabelsArray[0] = "ID";
 	const SaveLocation = async (formData) => {
 		try {
 			const response = await customAxios().post("/locations", formData);
@@ -62,7 +65,7 @@ export default function LocationTable() {
 			{locations && locations.length > 0 ? (
 				<>
 					<p>You have {locations.length} accounts</p>
-					<DataTable data={locations} />
+					<DataTable data={locations} labels={locationLabelsArray} />
 				</>
 			) : (
 				<p>Create your first location to get started</p>

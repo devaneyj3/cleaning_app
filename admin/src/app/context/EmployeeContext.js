@@ -46,7 +46,7 @@ const EmployeeContextProvider = ({ children }) => {
 		}
 	};
 
-	const edit = async (id, data) => {
+	const editEmployee = async (id, data) => {
 		try {
 			const response = await customAxios().put(`/employees/${id}/edit`, data);
 			const employees = response.data.employees;
@@ -66,7 +66,7 @@ const EmployeeContextProvider = ({ children }) => {
 				setEmployees,
 				employeeLoading,
 				deleteEmployee,
-				edit,
+				editEmployee,
 				selectedEmployee,
 				getEmployeeById,
 			}}>
