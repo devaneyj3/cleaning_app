@@ -42,7 +42,7 @@ const DataTable = ({ data, labels, onEdit, onDelete }) => {
 		setEditedData({});
 	};
 
-	const renderInputField = (field, index, value, onChange) => {
+	const renderInputField = (field, value, onChange, index) => {
 		if (editRowIndex === index) {
 			return (
 				<input
@@ -69,17 +69,21 @@ const DataTable = ({ data, labels, onEdit, onDelete }) => {
 			<tbody>
 				{data.map((row, index) => (
 					<tr key={index} onClick={() => handleRowClick(row.id, row)}>
-						{labels.map((field) => (
-							<td key={field.name}>
-								{renderInputField(
-									field,
-									editRowIndex === index
-										? editedData[field.name] || row[field.name]
-										: row[field.name],
-									handleInputChange
-								)}
-							</td>
-						))}
+						{labels.map((field) => {
+							console.log(row[field]);
+							return (
+								<td key={field.name}>
+									{renderInputField(
+										field,
+										editRowIndex === index
+											? editedData[field] || row[field]
+											: row[field],
+										handleInputChange,
+										index
+									)}
+								</td>
+							);
+						})}
 						<td>
 							{editRowIndex === index ? (
 								<button onClick={() => handleSaveClick(row.id)}>Save</button>
