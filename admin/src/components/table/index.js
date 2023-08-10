@@ -70,7 +70,21 @@ const DataTable = ({ data, labels, onEdit, onDelete }) => {
 				{data.map((row, index) => (
 					<tr key={index} onClick={() => handleRowClick(row.id, row)}>
 						{labels.map((field) => {
-							console.log(row[field]);
+							if (field === "Hired") {
+								const originalDate = new Date(row[field]); // Assuming row[field] contains the original date string
+
+								const options = {
+									year: "numeric",
+									month: "long",
+									day: "numeric",
+								};
+								let formatedDate = originalDate.toLocaleDateString(
+									undefined,
+									options
+								);
+								row[field] = formatedDate;
+							}
+
 							return (
 								<td key={field.name}>
 									{renderInputField(
