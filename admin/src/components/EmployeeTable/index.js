@@ -28,7 +28,7 @@ export default function EmployeeTable() {
 	const toggle = () => setModal(!modal);
 
 	if (employeeLoading) {
-		return <div>Loading...</div>; // Display a loading message while waiting for data
+		return <div>Loading Employees...</div>; // Display a loading message while waiting for data
 	}
 
 	const employeeFields = [
@@ -49,7 +49,7 @@ export default function EmployeeTable() {
 
 	const employeeLabelArr = employeeFields.map((field) => field.label);
 
-	employeeLabelArr[0] = "ID";
+	employeeLabelArr[0] = "id";
 
 	const SaveEmployee = async (formData) => {
 		try {
@@ -57,7 +57,6 @@ export default function EmployeeTable() {
 			// Assuming the response contains the success message from the server.
 			setEmployees(response.data.employees);
 			setMsg("Successfully added employee");
-			console.log("Saving Employee", response.data.employees);
 			setTimeout(() => {
 				toggle();
 				setMsg("");

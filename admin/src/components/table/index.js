@@ -48,7 +48,7 @@ const DataTable = ({ data, labels, onEdit, onDelete }) => {
 				<input
 					type={field.type}
 					value={value}
-					onChange={(e) => onChange(e, field.name)}
+					onChange={(e) => onChange(e, field)}
 				/>
 			);
 		} else {

@@ -13,8 +13,14 @@ import { LocationContext } from "@/app/context/LocationContext";
 export default function LocationTable() {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
-	const { locations, getLocations, setLocations, loading } =
-		useContext(LocationContext);
+	const {
+		locations,
+		getLocations,
+		setLocations,
+		loading,
+		deleteLocation,
+		editLocation,
+	} = useContext(LocationContext);
 
 	useEffect(() => {
 		getLocations();
@@ -22,7 +28,7 @@ export default function LocationTable() {
 	const toggle = () => setModal(!modal);
 
 	if (loading) {
-		return <div>Loading Locations...</div>; // Display a loading message while waiting for data
+		return <p>Loading Locations...</p>; // Display a loading message while waiting for data
 	}
 
 	const locationFields = [
@@ -43,13 +49,13 @@ export default function LocationTable() {
 
 	const locationLabelsArray = locationFields.map((field) => field.label);
 
-	locationLabelsArray[0] = "ID";
+	locationLabelsArray[0] = "id";
 	const SaveLocation = async (formData) => {
 		try {
 			const response = await customAxios().post("/locations", formData);
 			// Assuming the response contains the success message from the server.
 			setLocations(response.data.locations);
-			console.log(response.data.locations);
+
 			setMsg("Successfully added location");
 			setTimeout(() => {
 				toggle();
@@ -59,13 +65,17 @@ export default function LocationTable() {
 			console.error("Error posting data:", error);
 		}
 	};
-
 	return (
 		<main>
-			{locations && locations.length > 0 ? (
+			<p>You have {locations.length} accounts</p>
+			{locations.length > 0 ? (
 				<>
-					<p>You have {locations.length} accounts</p>
-					<DataTable data={locations} labels={locationLabelsArray} />
+					<DataTable
+						data={locations}
+						labels={locationLabelsArray}
+						onEdit={editLocation}
+						onDelete={deleteLocation}
+					/>
 				</>
 			) : (
 				<p>Create your first location to get started</p>
