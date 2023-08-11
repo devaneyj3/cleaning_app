@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
+import styles from "./table.module.css";
 
 import { useRouter } from "next/navigation";
 
@@ -18,7 +19,7 @@ const DataTable = ({ data, labels, onEdit, onDelete, api }) => {
 	const handleRowClick = (id, row) => {
 		if (!editMode) {
 			if (api == "employees") router.push(`/employee/${id}`);
-			if (api == "locations") router.push(`/locations/${id}`);
+			if (api == "locations") router.push(`/location/${id}`);
 		}
 	};
 
@@ -58,7 +59,7 @@ const DataTable = ({ data, labels, onEdit, onDelete, api }) => {
 	};
 
 	return (
-		<table>
+		<table className={styles.table}>
 			<thead>
 				<tr>
 					{labels.map((label) => (

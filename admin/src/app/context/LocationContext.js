@@ -27,7 +27,6 @@ const LocationContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().get(`/locations/${id}`);
 			const { data } = response;
-			// Do something with the employees' data here.
 			setSelectedLocation(data.location);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
@@ -40,8 +39,6 @@ const LocationContextProvider = ({ children }) => {
 			const deletedID = response.data.id;
 			setLocations(locations.filter((loc) => loc.id != deletedID));
 		} catch (error) {
-			// Do something with the employees' data here.
-			// Handle any errors that might occur during the API request.
 			console.error("Error deleting location:", error.message);
 		}
 	};
@@ -52,8 +49,6 @@ const LocationContextProvider = ({ children }) => {
 			const locations = response.data.locations;
 			setLocations(locations);
 		} catch (error) {
-			// Do something with the employees' data here.
-			// Handle any errors that might occur during the API request.
 			console.error("Error editing location:", error.message);
 		}
 	};
