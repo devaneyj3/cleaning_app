@@ -13,8 +13,10 @@ export default function Dashboard() {
 			<h1>Welcome to your dashboard</h1>
 			<p>You can create your employees, locations, and products</p>
 			<p>Click on an employee, location, and products for more information</p>
-			<EmployeeTable />
-			<LocationTable />
+			<section className="tables">
+				<EmployeeTable />
+				<LocationTable />
+			</section>
 		</main>
 	);
 }

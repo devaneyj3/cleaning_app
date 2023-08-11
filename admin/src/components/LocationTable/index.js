@@ -75,6 +75,7 @@ export default function LocationTable() {
 						labels={locationLabelsArray}
 						onEdit={editLocation}
 						onDelete={deleteLocation}
+						api="locations"
 					/>
 				</>
 			) : (
