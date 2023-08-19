@@ -7,6 +7,7 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 
 import CustomModal from "@/components/Modal/Modal";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
+import { LocationContext } from "../../app/context/LocationContext";
 
 import customAxios from "@/utils/CustomAxios";
 
@@ -22,6 +23,7 @@ export default function EmployeeTable() {
 		deleteEmployee,
 	} = useContext(EmployeeContext);
 
+	const { locations } = useContext(LocationContext);
 	useEffect(() => {
 		getEmployees();
 	}, []);
@@ -45,9 +47,17 @@ export default function EmployeeTable() {
 			type: "date",
 			required: true,
 		},
+		// Add checkboxes for locations dynamically
+		...Object.values(locations).map((locationName) => ({
+			...locationName,
+			name: locationName.Name,
+			label: `${locationName.Name} - ${locationName.City}`,
+			type: "checkbox",
+			required: false,
+		})),
 	];
 
-	const employeeLabelArr = employeeFields.map((field) => field.label);
+	const employeeLabelArr = Object.keys(employees[0]);
 
 	employeeLabelArr[0] = "id";
 

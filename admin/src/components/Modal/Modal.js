@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import React, { useState } from "react";
 
+import styles from "./modal.module.css";
+
 function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 	const [formData, setFormData] = useState({});
 	const [invalidFields, setInvalidFields] = useState([]);
@@ -50,25 +52,55 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 				<ModalBody>
 					{msg && <Alert color="success">{msg}</Alert>}
 					<Form>
-						{fields.map((field, index) => (
-							<FormGroup key={index}>
-								<Label for={field.name}>{field.label}</Label>
-								<Input
-									id={field.name}
-									name={field.name}
-									type={field.type}
-									value={formData[field.name] || ""}
-									pattern={field.pattern}
-									onChange={handleChange}
-									className={isInvalidField(field.name) ? "invalid" : ""}
-								/>
-								{isInvalidField(field.name) && (
-									<FormText className="invalid-text">
-										Please fill out this field.
-									</FormText>
-								)}
-							</FormGroup>
-						))}
+						{fields.map((field, index) => {
+							return (
+								<FormGroup
+									key={index}
+									className={
+										field.type === "checkbox" ? `${styles.checkbox_group}` : ""
+									}>
+									<Label
+										for={field.name}
+										className={
+											field.type === "checkbox"
+												? `${styles.checkbox_label}`
+												: ""
+										}>
+										{field.label}
+									</Label>
+									{field.type !== "checkbox" && (
+										<>
+											<Input
+												id={field.name}
+												name={field.name}
+												type={field.type}
+												value={formData[field.name] || ""}
+												pattern={field.pattern}
+												onChange={handleChange}
+												className={isInvalidField(field.name) ? "invalid" : ""}
+											/>
+										</>
+									)}
+									{field.type === "checkbox" && (
+										<div className={styles.list}>
+											<Input
+												id={field.name}
+												name={field.name}
+												type={field.type}
+												checked={formData[field.name] || false}
+												onChange={handleChange}
+												className={isInvalidField(field.name) ? "invalid" : ""}
+											/>
+										</div>
+									)}
+									{isInvalidField(field.name) && (
+										<FormText className="invalid-text">
+											Please fill out this field.
+										</FormText>
+									)}
+								</FormGroup>
+							);
+						})}
 					</Form>
 				</ModalBody>
 				<ModalFooter>

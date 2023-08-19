@@ -2,11 +2,14 @@
 
 import React, { useContext, useEffect } from "react";
 import { EmployeeContext } from "@/app/context/EmployeeContext";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./employee.module.css";
+import CustomButton from "@/components/CustomButton/CustomButton";
 
 export default function employee({ params: { id } }) {
 	const { selectedEmployee, getEmployeeById } = useContext(EmployeeContext);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		getEmployeeById(id);
@@ -17,25 +20,43 @@ export default function employee({ params: { id } }) {
 			{selectedEmployee && (
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
-						<h1>{selectedEmployee.name}</h1>
+						<h1>{selectedEmployee.Name}</h1>
 					</div>
 					<div className={styles.cardContent}>
-						<p> {selectedEmployee.phone}</p>
-						<p> {selectedEmployee.email}</p>
-						<p>{selectedEmployee.hourly_pay}</p>
-						<p>{selectedEmployee.position}</p>
-						{selectedEmployee.dateHired && (
+						<p>
+							Phone: <span>{selectedEmployee.Phone}</span>
+						</p>
+
+						<p>
+							Email: <span>{selectedEmployee.Email}</span>
+						</p>
+						<p>
+							Phone: <span>{selectedEmployee.Pay}</span>
+						</p>
+						<p>
+							Position: <span>{selectedEmployee.Position}</span>
+						</p>
+						{selectedEmployee.Hired && (
 							<p>
-								{new Date(selectedEmployee.dateHired).toLocaleDateString(
-									undefined,
-									{ year: "numeric", month: "long", day: "numeric" }
-								)}
+								Hired:{" "}
+								<span>
+									{new Date(selectedEmployee.Hired).toLocaleDateString(
+										undefined,
+										{ year: "numeric", month: "long", day: "numeric" }
+									)}
+								</span>
 							</p>
 						)}
+						<p>
+							Assigned Locations: <span></span>
+						</p>
 					</div>
+					<CustomButton
+						text="Dashboard"
+						onClick={() => router.push("/dashboard")}
+					/>
 				</div>
 			)}
-			<Link href="/dashboard">Dashboard</Link>
 		</>
 	);
 }

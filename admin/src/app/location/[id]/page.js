@@ -2,11 +2,14 @@
 
 import React, { useContext, useEffect } from "react";
 import { LocationContext } from "@/app/context/LocationContext";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import CustomButton from "@/components/CustomButton/CustomButton";
 import styles from "./location.module.css";
 
 export default function location({ params: { id } }) {
 	const { selectedLocation, getLocationById } = useContext(LocationContext);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		getLocationById(id);
@@ -20,15 +23,18 @@ export default function location({ params: { id } }) {
 						<h1>{selectedLocation.Name}</h1>
 					</div>
 					<div className={styles.cardContent}>
-						<p> {selectedLocation.Address}</p>
-						<p> {selectedLocation.Phone}</p>
-						<p>{selectedLocation.City}</p>
-						<p>{selectedLocation.State}</p>
-						<p>{selectedLocation.Zip}</p>
+						<p>{selectedLocation.Phone}</p>
+						<p>
+							{selectedLocation.Address} {selectedLocation.City},{" "}
+							{selectedLocation.State} {selectedLocation.Zip}
+						</p>
 					</div>
+					<CustomButton
+						text="Dashboard"
+						onClick={() => router.push("/dashboard")}
+					/>
 				</div>
 			)}
-			<Link href="/dashboard">Dashboard</Link>
 		</>
 	);
 }
