@@ -11,8 +11,7 @@ module.exports = {
 	getIdClasses,
 	instructorPostClasses,
 	editClasses,
-	addClassToClient,
-	incrementClassAttendees,
+	addLocationToEmployee,
 };
 
 //reusable get function to retreive data from all databases
@@ -128,12 +127,11 @@ function editClasses(
 	return data;
 }
 
-function addClassToClient(id, clasID) {
-	return db("clients_classes").insert({ client_id: id, class_id: clasID });
-}
-
-function incrementClassAttendees(id) {
-	return db("classes").where({ id: id }).increment("attendees", 1);
+function addLocationToEmployee(id, locationID) {
+	return db("employee_locations").insert({
+		employee_id: id,
+		location_id: locationID,
+	});
 }
 
 function clearDatabase(text) {
