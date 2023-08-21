@@ -69,5 +69,17 @@ router.post("/:id/locations/:locationID", async (req, res) => {
 		console.log(error);
 	}
 });
+
+//get individual employees locations
+router.get("/:id/locations", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const result = await db.getEmployeeLocations(id);
+		console.log(result);
+		res.status(200).send(result);
+	} catch (error) {
+		console.log(error);
+	}
+});
 // Export the router
 module.exports = router;

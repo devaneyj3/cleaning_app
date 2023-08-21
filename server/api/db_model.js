@@ -8,9 +8,7 @@ module.exports = {
 	findByID,
 	deleteByID,
 	edit,
-	getIdClasses,
-	instructorPostClasses,
-	editClasses,
+	getEmployeeLocations,
 	addLocationToEmployee,
 };
 
@@ -61,70 +59,12 @@ async function edit(name, id, data) {
 	}
 }
 
-function getIdClasses(text, id) {
-	if (text === "instructors") {
-		return db("instructors as i")
-			.join("classes as c", "i.id", `c.instructor_id`)
-			.select(
-				"c.id",
-				"c.name",
-				"c.type",
-				"c.startTime",
-				"c.duration",
-				"c.intensityLevel",
-				"c.location",
-				"c.attendees",
-				"c.maxClassSize"
-			)
-			.where("c.instructor_id", id);
-	} else {
-		return db("clients as c")
-			.join("clients_classes as cc", "cc.client_id", "c.id")
-			.join("classes as cl", "cc.class_id", "cl.id")
-			.select(
-				"cl.id",
-				"cl.name",
-				"cl.type",
-				"cl.instructor_name",
-				"cl.startTime",
-				"cl.duration",
-				"cl.intensityLevel",
-				"cl.location",
-				"cl.attendees",
-				"cl.maxClassSize"
-			)
-			.where("cc.client_id", id);
-	}
-}
-
-//instructor can post classes that they teach
-function instructorPostClasses(object, id) {
-	console.log("instructorPostClasses, ", object);
-	return db("classes").insert(object).where({ id: id });
-}
-
-function editClasses(
-	id,
-	name,
-	type,
-	startTime,
-	duration,
-	intensityLevel,
-	location,
-	attendees,
-	maxClassSize
-) {
-	const data = db("classes").where({ id: id }).update({
-		name,
-		type,
-		startTime,
-		duration,
-		intensityLevel,
-		location,
-		attendees,
-		maxClassSize,
-	});
-	return data;
+function getEmployeeLocations(id) {
+	return db("employee as e")
+		.join("employee_locations as el", "el.employee_id", "e.id")
+		.join("location as l", "el.location_id", "l.id")
+		.select("l.*")
+		.where("el.employee_id", id);
 }
 
 function addLocationToEmployee(id, locationID) {
