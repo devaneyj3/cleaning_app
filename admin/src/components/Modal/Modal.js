@@ -20,10 +20,13 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 	const [invalidFields, setInvalidFields] = useState([]);
 
 	const handleChange = (e) => {
-		const { name, value } = e.target;
+		const { name, value, type, checked } = e.target;
+		const newValue = type === "checkbox" ? checked : value;
+		console.log(newValue);
+
 		setFormData((prevFormData) => ({
 			...prevFormData,
-			[name]: value,
+			[name]: newValue,
 		}));
 	};
 
@@ -33,7 +36,6 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 		setInvalidFields(emptyFields);
 		if (emptyFields.length === 0 && onSave) {
 			onSave(formData);
-			console.log("Saving");
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {
@@ -53,6 +55,7 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 					{msg && <Alert color="success">{msg}</Alert>}
 					<Form>
 						{fields.map((field, index) => {
+							console.log(field.id);
 							return (
 								<FormGroup
 									key={index}
@@ -84,7 +87,7 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 									{field.type === "checkbox" && (
 										<div className={styles.list}>
 											<Input
-												id={field.name}
+												id={field.id}
 												name={field.name}
 												type={field.type}
 												checked={formData[field.name] || false}

@@ -50,7 +50,7 @@ export default function EmployeeTable() {
 		// Add checkboxes for locations dynamically
 		...Object.values(locations).map((locationName) => ({
 			...locationName,
-			name: locationName.Name,
+			name: `${locationName.id} - ${locationName.Name}`,
 			label: `${locationName.Name} - ${locationName.City}`,
 			type: "checkbox",
 			required: false,
