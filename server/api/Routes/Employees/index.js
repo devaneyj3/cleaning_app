@@ -23,12 +23,12 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		await db.addData("employee", req.body);
-		const data = await db.getFromDB("employee");
+		const newEmployee = await db.addData("employee", req.body);
+		const employees = await db.getFromDB("employee");
 		res.status(201).json({
-			newEmployee: req.body,
-			employees: data,
-			message: `Creating employee ${req.body.name}`,
+			newEmployee: newEmployee,
+			employees: employees,
+			message: `Creating employee ${req.body.Name}`,
 		});
 	} catch (error) {
 		console.log(error);

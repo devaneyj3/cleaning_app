@@ -4,7 +4,7 @@ const app = require("../index");
 let server;
 
 beforeAll((done) => {
-	server = app.listen(4000, done); // Start the server and save the server object
+	server = app.listen(3002, done); // Start the server and save the server object
 });
 
 afterAll((done) => {

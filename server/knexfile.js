@@ -21,7 +21,7 @@ module.exports = {
 		connection: {
 			host: process.env.HOST,
 			port: process.env.DB_PORT,
-			database: "cleaning",
+			database: "cleaning_testing",
 			user: process.env.USER,
 			password: process.env.PASSWORD,
 		},

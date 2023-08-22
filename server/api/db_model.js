@@ -18,8 +18,11 @@ function getFromDB(dbName) {
 }
 
 //POST data to the database
-function addData(text, object) {
-	return db(text).insert(object);
+async function addData(text, object) {
+	const [newId] = await db(text).insert(object).returning("id");
+	object.id = newId.id;
+	const newObject = { ...object };
+	return newObject;
 }
 
 function find(name, object) {

@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "nodemon index.js",
-		"test": "jest",
+		"testAll": "DB_ENV=testing jest",
+		"test-employees": "DB_ENV=testing jest employees.test.js",
+		"setup-test-db": "knex migrate:latest --env testing",
 		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit",
 		"migrate:make": "npx knex migrate:make",
 		"migrate_latest": "npx knex migrate:rollback & npx knex migrate:latest",
