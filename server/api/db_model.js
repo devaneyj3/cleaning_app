@@ -38,7 +38,6 @@ function deleteByID(name, id) {
 async function edit(name, id, data) {
 	try {
 		const updatedData = { ...data };
-		console.log(updatedData);
 		// Validate if req.body is not empty and contains at least one field to update
 		if (Object.keys(updatedData).length === 0) {
 			throw new Error("No data provided for the update.");

@@ -10,8 +10,9 @@ beforeAll((done) => {
 	server = app.listen(3002, done);
 });
 
-afterAll((done) => {
-	server.close(done);
+afterAll(async () => {
+	await request(app).delete(`/api/employees/${createdEmployeeId}/delete`);
+	server.close();
 });
 
 describe("Employees API", () => {
@@ -46,44 +47,46 @@ describe("Employees API", () => {
 		expect(res.body.employee).toEqual(createdEmployee.newEmployee);
 	});
 
-	// it("should create a new employee", async () => {
-	// 	const newEmployee = {
-	// 		Name: "John Doe",
-	// 		Email: "john@gmail.com",
-	// 		Phone: "777-777-7777",
-	// 		Username: "john3",
-	// 		Password: "hello",
-	// 		Pay: 15.0,
-	// 		Position: "cleaner",
-	// 		Hired: "04-03-2021",
-	// 	};
-	// 	const res = await request(app).post("/api/employees/").send(newEmployee);
-	// 	expect(res.statusCode).toEqual(201);
-	// 	expect(res.body.newEmployee).toEqual(newEmployee);
-	// });
+	it("should create a new employee", async () => {
+		const newEmployee = {
+			Name: "John Doe",
+			Email: "john@gmail.com",
+			Phone: "777-777-7777",
+			Username: "john3",
+			Password: "hello",
+			Pay: 15.0,
+			Position: "cleaner",
+			Hired: date,
+		};
+		const res = await request(app).post("/api/employees/").send(newEmployee);
+		newEmployee.id = res.body.newEmployee.id;
+		expect(res.statusCode).toEqual(201);
+		expect(res.body.newEmployee).toEqual(newEmployee);
+	});
 
-	// it("should update an existing employee", async () => {
-	// 	const updatedEmployee = {
-	// 		Name: "John Smoe",
-	// 		Email: "john@gmail.com",
-	// 		Phone: "777-777-7777",
-	// 		Username: "john4",
-	// 		Password: "hello",
-	// 		Pay: 19.0,
-	// 		Position: "cleaner",
-	// 		Hired: "04-03-2021",
-	// 	};
-	// 	const res = await request(app)
-	// 		.put(`/api/employees/${createdEmployeeId}/edit`)
-	// 		.send(updatedEmployee);
-	// 	expect(res.statusCode).toEqual(200);
-	// 	expect(res.body.employees).toContainEqual(updatedEmployee);
-	// });
+	it("should update an existing employee", async () => {
+		const updatedEmployee = {
+			Name: "John Smoe",
+			Email: "john@gmail.com",
+			Phone: "777-777-7777",
+			Username: "john4",
+			Password: "hello",
+			Pay: 19.0,
+			Position: "cleaner",
+			Hired: date,
+		};
+		const res = await request(app)
+			.put(`/api/employees/${createdEmployeeId}/edit`)
+			.send(updatedEmployee);
 
-	// it("should delete an employee", async () => {
-	// 	const res = await request(app).delete(
-	// 		`/api/employees/${createdEmployeeId}/delete`
-	// 	);
-	// 	expect(res.statusCode).toEqual(200);
-	// });
+		expect(res.statusCode).toEqual(200);
+		expect(res.body.employees).toContainEqual(res.body.updatedEmployee);
+	});
+
+	it("should delete an employee", async () => {
+		const res = await request(app).delete(
+			`/api/employees/${createdEmployeeId}/delete`
+		);
+		expect(res.statusCode).toEqual(200);
+	});
 });

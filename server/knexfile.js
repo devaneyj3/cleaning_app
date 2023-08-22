@@ -25,6 +25,20 @@ module.exports = {
 			user: process.env.USER,
 			password: process.env.PASSWORD,
 		},
+		log: {
+			warn(message) {
+				// Suppress warning logs
+			},
+			error(message) {
+				// Suppress error logs
+			},
+			debug(message) {
+				// Suppress debug logs
+			},
+			deprecate(message) {
+				// Suppress deprecation logs
+			},
+		},
 		migrations: {
 			directory: "./data/migrations",
 		},
