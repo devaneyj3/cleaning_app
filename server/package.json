@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "nodemon index.js",
 		"testAll": "DB_ENV=testing jest",
-		"test-employees": "DB_ENV=testing jest employees.test.js --detectOpenHandles",
+		"test-employees": "DB_ENV=testing jest 01_employees.test.js --detectOpenHandles",
+		"test-locations": "DB_ENV=testing jest 02_locations.test.js --detectOpenHandles",
 		"setup-test-db": "knex migrate:latest --env testing",
 		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit",
 		"migrate:make": "npx knex migrate:make",
