@@ -52,7 +52,7 @@ async function edit(name, id, data) {
 		}
 
 		// Fetch and return the updated data
-		const updatedRecord = await findByID("employee", id);
+		const updatedRecord = await findByID(name, id);
 		return updatedRecord;
 	} catch (error) {
 		// Handle any errors that might occur during the update
