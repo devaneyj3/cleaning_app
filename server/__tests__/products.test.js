@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../index");
+const db = require("../api/db_model");
 
 let server;
 let createdProductId;
@@ -76,4 +77,80 @@ describe("Products API", () => {
 		);
 		expect(res.statusCode).toEqual(200);
 	});
+});
+
+//DATABASE TESTS
+describe("Database Operations", () => {
+	let createdProductId;
+
+	beforeEach(async () => {
+		const response = await request(app).post("/api/products").send({
+			Name: "503",
+			Quantity: "1 LT",
+			Use: "Floors",
+			Status: "Out",
+			Type: "Floor Cleaner",
+		});
+
+		createdProductId = response.body.newProduct.id;
+	});
+
+	afterEach(async () => {
+		const products = await db.getFromDB("product");
+		for (const product of products) {
+			await db.deleteByID("product", product.id);
+		}
+	});
+
+	it("should get all products from the database", async () => {
+		const product = await db.getFromDB("product");
+		expect(product).toBeDefined();
+		// Add more assertions as needed
+	});
+
+	it("should create a new product in the database", async () => {
+		const newProductData = {
+			Name: "New Product",
+			Quantity: "2 LT",
+			Use: "Test Use",
+			Status: "In",
+			Type: "Test Type",
+		};
+
+		const createdProduct = await db.addData("product", newProductData);
+		expect(createdProduct).toBeDefined();
+		expect(createdProduct.Name).toEqual(newProductData.Name);
+		expect(createdProduct.Quantity).toEqual(newProductData.Quantity);
+		expect(createdProduct.Use).toEqual(newProductData.Use);
+		expect(createdProduct.Status).toEqual(newProductData.Status);
+		expect(createdProduct.Type).toEqual(newProductData.Type);
+
+		const productFromDB = await db.findByID("product", createdProduct.id);
+		expect(productFromDB).toEqual(createdProduct);
+	});
+
+	it("should retrieve an product from the database", async () => {
+		const product = await db.findByID("product", createdProductId);
+		expect(product).toBeDefined();
+		// Add more assertions as needed
+	});
+
+	it("should update a product in the database", async () => {
+		const updatedProductData = {
+			Name: "Updated John Doe",
+			// ... other updated fields ...
+		};
+		await db.edit("product", createdProductId, updatedProductData);
+		const updatedProduct = await db.findByID("product", createdProductId);
+		expect(updatedProduct.Name).toEqual("Updated John Doe");
+		// Add more assertions as needed
+	});
+
+	it("should delete a product from the database", async () => {
+		await db.deleteByID("product", createdProductId);
+		const deletedProduct = await db.findByID("product", createdProductId);
+		expect(deletedProduct).toBeUndefined();
+	});
+
+	// Add more tests for other database operations
 });
