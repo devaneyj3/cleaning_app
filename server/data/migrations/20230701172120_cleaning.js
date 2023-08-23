@@ -22,11 +22,11 @@ exports.up = function (knex) {
 		})
 		.createTable("product", (tbl) => {
 			tbl.increments();
-			tbl.text("name").notNullable();
-			tbl.text("quantity").notNullable();
-			tbl.text("use").notNullable();
-			tbl.text("status").notNullable();
-			tbl.text("type").notNullable();
+			tbl.text("Name").notNullable();
+			tbl.text("Quantity").notNullable();
+			tbl.text("Use").notNullable();
+			tbl.text("Status").notNullable();
+			tbl.text("Type").notNullable();
 		})
 		.createTable("employee_locations", (tbl) => {
 			tbl

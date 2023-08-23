@@ -7,6 +7,8 @@
 		"start": "nodemon index.js",
 		"testAll": "DB_ENV=testing jest",
 		"test-employees": "DB_ENV=testing jest employees.test.js --detectOpenHandles",
+		"test-products": "DB_ENV=testing jest products.test.js --detectOpenHandles",
+		"rollback-test-db": "knex migrate:rollback --env testing",
 		"setup-test-db": "knex migrate:latest --env testing",
 		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit",
 		"migrate:make": "npx knex migrate:make",
