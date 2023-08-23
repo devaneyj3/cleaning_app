@@ -5,8 +5,9 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "nodemon index.js",
-		"testAll": "DB_ENV=testing jest",
-		"test-employees": "DB_ENV=testing jest employees.test.js --detectOpenHandles",
+		"testAll": "DB_ENV=testing jest --detectOpenHandles",
+		"test-employees": "DB_ENV=testing jest 01_employees.test.js --detectOpenHandles",
+		"test-locations": "DB_ENV=testing jest 02_locations.test.js --detectOpenHandles",
 		"test-products": "DB_ENV=testing jest products.test.js --detectOpenHandles",
 		"rollback-test-db": "knex migrate:rollback --env testing",
 		"setup-test-db": "knex migrate:latest --env testing",

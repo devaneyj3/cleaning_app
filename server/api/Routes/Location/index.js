@@ -24,12 +24,12 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		await db.addData("location", req.body);
-		const data = await db.getFromDB("location");
+		const newLocation = await db.addData("location", req.body);
+		const locations = await db.getFromDB("location");
 		res.status(201).json({
-			newlocation: req.body,
-			locations: data,
-			message: `Creating location ${req.body.name}`,
+			newLocation: newLocation,
+			locations: locations,
+			message: `Creating location ${req.body.Name}`,
 		});
 	} catch (error) {
 		console.log(error);
@@ -39,9 +39,13 @@ router.post("/", async (req, res) => {
 router.put("/:id/edit", async (req, res) => {
 	const { id } = req.params;
 	try {
-		await db.edit("location", id, req.body);
+		const updatedLocation = await db.edit("location", id, req.body);
 		const data = await db.getFromDB("location");
-		res.status(200).json({ locations: data, message: "Editing locations" });
+		res.status(200).json({
+			updatedLocation: updatedLocation,
+			locations: data,
+			message: "Editing locations",
+		});
 	} catch (error) {
 		console.log(error);
 	}
