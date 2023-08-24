@@ -14,12 +14,14 @@ const employeesRoutes = require("./api/Routes/Employees");
 const locationRoutes = require("./api/Routes/Location");
 const productRoutes = require("./api/Routes/Products");
 const productLocationRoute = require("./api/Routes/Product_Locations");
+const employeeLocationRoute = require("./api/Routes/Employee_Locations");
 
 // Use the routes
 app.use("/api/employees", employeesRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/product-locations", productLocationRoute);
+app.use("/api/employee-locations", employeeLocationRoute);
 
 // Define a route
 app.get("/", (req, res) => {

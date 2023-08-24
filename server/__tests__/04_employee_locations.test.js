@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../index");
-const db = require("../api/db_model");
+const db = require("../api/Routes/Employee_Locations/employee_locations_model");
 
 let server;
 
@@ -25,19 +25,21 @@ describe("Employee_Locations API", () => {
 		);
 
 		const res = await request(app)
-			.post(`/api/employees/3/locations/1`)
+			.post(`/api/employee-locations/3/locations/1`)
 			.send(newEmployeeLocation);
 
 		expect(res.statusCode).toEqual(201);
 	});
 
 	it("should retrive a specific employee location", async () => {
-		const res = await request(app).get(`/api/employees/3/locations`);
+		const res = await request(app).get(`/api/employee-locations/3/locations`);
 		expect(res.statusCode).toEqual(200);
 	});
 
 	it("should delete an employee's location", async () => {
-		const res = await request(app).delete("/api/employees/3/locations/1");
+		const res = await request(app).delete(
+			"/api/employee-locations/3/locations/1"
+		);
 		expect(res.statusCode).toEqual(200);
 	});
 });
