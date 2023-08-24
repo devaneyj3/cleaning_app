@@ -13,11 +13,13 @@ app.use(cors({ origin: "http://localhost:3000" }));
 const employeesRoutes = require("./api/Routes/Employees");
 const locationRoutes = require("./api/Routes/Location");
 const productRoutes = require("./api/Routes/Products");
+const productLocationRoute = require("./api/Routes/Product_Locations");
 
 // Use the routes
 app.use("/api/employees", employeesRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/product-locations", productLocationRoute);
 
 // Define a route
 app.get("/", (req, res) => {

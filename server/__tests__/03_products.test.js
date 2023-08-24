@@ -95,13 +95,6 @@ describe("Database Operations", () => {
 		createdProductId = response.body.newProduct.id;
 	});
 
-	afterEach(async () => {
-		const products = await db.getFromDB("product");
-		for (const product of products) {
-			await db.deleteByID("product", product.id);
-		}
-	});
-
 	it("should get all products from the database", async () => {
 		const product = await db.getFromDB("product");
 		expect(product).toBeDefined();

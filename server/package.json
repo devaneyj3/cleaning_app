@@ -10,6 +10,7 @@
 		"test-locations": "DB_ENV=testing jest 02_locations.test.js --detectOpenHandles --forceExit",
 		"test-products": "DB_ENV=testing jest 03_products.test.js --detectOpenHandles --forceExit",
 		"test-employee_locations": "DB_ENV=testing jest 04_employee_locations.test.js --detectOpenHandles --forceExit",
+		"test-product_locations": "DB_ENV=testing jest 05_product_locations.test.js --detectOpenHandles --forceExit",
 		"rollback-test-db": "knex migrate:rollback --env testing",
 		"setup-test-db": "knex migrate:latest --env testing",
 		"coverage": "CI=true npx jest --coverage --detectOpenHandles --forceExit",
