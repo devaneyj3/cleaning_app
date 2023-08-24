@@ -34,24 +34,7 @@ describe("Employee_Locations API", () => {
 	it("should retrive a specific employee location", async () => {
 		const res = await request(app).get(`/api/employees/3/locations`);
 		expect(res.statusCode).toEqual(200);
-
-		// expect(res.body.product).toEqual(createdProduct.newProduct);
 	});
-
-	// it("should update an existing employee location", async () => {
-	// 	const updatedProduct = {
-	// 		Name: "503",
-	// 		Quantity: "1 LT",
-	// 		Use: "Floors",
-	// 		Status: "IN",
-	// 		Type: "Floor Cleaner",
-	// 	};
-	// 	const res = await request(app)
-	// 		.put(`/api/products/${createdProductId}/edit`)
-	// 		.send(updatedProduct);
-	// 	expect(res.statusCode).toEqual(200),
-	// 		expect(res.body.products).toContainEqual(res.body.updatedProduct);
-	// });
 
 	it("should delete an employee's location", async () => {
 		const res = await request(app).delete("/api/employees/3/locations/1");
