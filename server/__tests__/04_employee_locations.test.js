@@ -53,8 +53,8 @@ describe("Employee_Locations API", () => {
 	// 		expect(res.body.products).toContainEqual(res.body.updatedProduct);
 	// });
 
-	// it("should delete an employee's location", async () => {
-	// 	const res = await request(app).delete("/api/employees/3/locations/1");
-	// 	expect(res.statusCode).toEqual(200);
-	// });
+	it("should delete an employee's location", async () => {
+		const res = await request(app).delete("/api/employees/3/locations/1");
+		expect(res.statusCode).toEqual(200);
+	});
 });
