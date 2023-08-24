@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
 	try {
 		const data = await db.getFromDB("employee");
-		res.status(200).json({ employee: data, message: "Getting Employees" });
+		res.sendStatus(200).json({ employee: data, message: "Getting Employees" });
 	} catch (error) {
 		console.log(error);
 	}
@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
 	const { id } = req.params;
 	try {
 		const data = await db.findByID("employee", id);
-		res.status(200).json({ employee: data });
+		res.sendStatus(200).json({ employee: data });
 	} catch (error) {
 		console.log(error);
 	}
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
 	try {
 		const newEmployee = await db.addData("employee", req.body);
 		const employees = await db.getFromDB("employee");
-		res.status(201).json({
+		res.sendStatus(201).json({
 			newEmployee: newEmployee,
 			employees: employees,
 			message: `Creating employee ${req.body.Name}`,
@@ -40,7 +40,7 @@ router.put("/:id/edit", async (req, res) => {
 	try {
 		const updatedEmployee = await db.edit("employee", id, req.body);
 		const data = await db.getFromDB("employee");
-		res.status(200).json({
+		res.sendStatus(200).json({
 			updatedEmployee: updatedEmployee,
 			employees: data,
 			message: "Editing Employees",
@@ -54,7 +54,7 @@ router.delete("/:id/delete", async (req, res) => {
 	const { id } = req.params;
 	try {
 		await db.deleteByID("employee", id);
-		res.status(200).json({ id: id, message: "Deleting Employee" });
+		res.sendStatus(200).json({ id: id, message: "Deleting Employee" });
 	} catch (error) {
 		console.log(error);
 	}
@@ -64,10 +64,9 @@ router.post("/:id/locations/:locationID", async (req, res) => {
 	const { id } = req.params;
 	const { locationID } = req.params;
 	try {
-		const result = await db.addLocationToEmployee(id, locationID);
-		console.log(result);
+		await db.addLocationToEmployee(id, locationID);
 		res
-			.status(200)
+			.sendStatus(201)
 			.send({ message: `Location ID: ${locationID} successfully added` });
 	} catch (error) {
 		console.log(error);
@@ -79,8 +78,19 @@ router.get("/:id/locations", async (req, res) => {
 	const { id } = req.params;
 	try {
 		const result = await db.getEmployeeLocations(id);
-		console.log(result);
-		res.status(200).send(result);
+		res.sendStatus(200).send(result);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+//delete individual employees location
+router.delete("/:id/locations/:locationID", async (req, res) => {
+	const { id } = req.params;
+	const { locationID } = req.params;
+	try {
+		const result = await db.deleteEmployeeLocation(id, locationID);
+		res.sendStatus(200).send(result);
 	} catch (error) {
 		console.log(error);
 	}

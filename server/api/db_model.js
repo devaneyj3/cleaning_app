@@ -10,6 +10,7 @@ module.exports = {
 	edit,
 	getEmployeeLocations,
 	addLocationToEmployee,
+	deleteEmployeeLocation,
 };
 
 //reusable get function to retreive data from all databases
@@ -74,6 +75,14 @@ function addLocationToEmployee(id, locationID) {
 		employee_id: id,
 		location_id: locationID,
 	});
+}
+function deleteEmployeeLocation(id, locationID) {
+	return db("employee_locations")
+		.where({
+			employee_id: id,
+			location_id: locationID,
+		})
+		.del();
 }
 
 function clearDatabase(text) {
