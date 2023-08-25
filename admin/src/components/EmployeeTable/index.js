@@ -63,18 +63,29 @@ export default function EmployeeTable() {
 	}
 
 	const SaveEmployee = async (formData, checkedLocations) => {
-		console.log("form data is, ", formData);
-		console.log("checked locations are, ", checkedLocations);
 		try {
 			const response = await customAxios().post("/employees", formData);
 			// Assuming the response contains the success message from the server.
-			console.log("saving and the response is,", response);
+			const employeeId = response.data.newEmployee.id;
+			for (const locationId of checkedLocations) {
+				await SaveLocationToEmployee(employeeId, locationId);
+			}
+
 			setEmployees(response.data.employees);
 			setMsg("Successfully added employee");
 			setTimeout(() => {
 				toggle();
 				setMsg("");
 			}, 1000);
+		} catch (error) {
+			console.error("Error posting data:", error);
+		}
+	};
+	const SaveLocationToEmployee = async (employeeId, location_id) => {
+		try {
+			const response = await customAxios().post(
+				`/employee-locations/${employeeId}/locations/${location_id}`
+			);
 		} catch (error) {
 			console.error("Error posting data:", error);
 		}
