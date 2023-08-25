@@ -83,7 +83,7 @@ export default function EmployeeTable() {
 	};
 	const SaveLocationToEmployee = async (employeeId, location_id) => {
 		try {
-			const response = await customAxios().post(
+			await customAxios().post(
 				`/employee-locations/${employeeId}/locations/${location_id}`
 			);
 		} catch (error) {

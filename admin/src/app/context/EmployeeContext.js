@@ -10,6 +10,7 @@ const EmployeeContextProvider = ({ children }) => {
 	const [employees, setEmployees] = useState([]);
 	const [employeeLoading, setLoading] = useState(true);
 	const [selectedEmployee, setSelectedEmployee] = useState(null);
+	const [employeeLocation, setEmployeeLocation] = useState(null);
 
 	const getEmployees = async () => {
 		try {
@@ -29,11 +30,26 @@ const EmployeeContextProvider = ({ children }) => {
 			const { data } = response;
 			// Do something with the employees' data here.
 			setSelectedEmployee(data.employee);
+			getEmployeesLocations(id);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
 			console.error("Error fetching employee:", error.message);
 		}
 	};
+
+	const getEmployeesLocations = async (id) => {
+		try {
+			const response = await customAxios().get(
+				`/employee-locations/${id}/locations`
+			);
+			const { data } = response;
+			setEmployeeLocation(data);
+		} catch (error) {
+			// Handle any errors that might occur during the API request.
+			console.error("Error fetching employee:", error.message);
+		}
+	};
+
 	const deleteEmployee = async (id) => {
 		try {
 			const response = await customAxios().delete(`/employees/${id}/delete`);
@@ -80,6 +96,7 @@ const EmployeeContextProvider = ({ children }) => {
 				editEmployee,
 				selectedEmployee,
 				getEmployeeById,
+				employeeLocation,
 			}}>
 			{children}
 		</EmployeeContext.Provider>
