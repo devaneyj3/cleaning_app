@@ -1,3 +1,5 @@
+// TODO: THIS IS CRAPPY CODE, REDO THIS LATER
+
 import {
 	Button,
 	Modal,
@@ -15,33 +17,54 @@ import React, { useState } from "react";
 
 import styles from "./modal.module.css";
 
-function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
+function CustomModal({
+	isOpen,
+	toggle,
+	title,
+	msg,
+	fields,
+	checkboxArr,
+	onSave,
+}) {
 	const [formData, setFormData] = useState({});
 	const [invalidFields, setInvalidFields] = useState([]);
+	const [checkedLocations, setCheckedLocations] = useState([]);
 
 	const handleChange = (e) => {
 		const { name, value, type, checked } = e.target;
-		const newValue = type === "checkbox" ? checked : value;
-		console.log(newValue);
+		if (type !== "checkbox") {
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				[name]: value,
+			}));
+		}
 
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: newValue,
-		}));
+		if (type === "checkbox") {
+			if (checked) {
+				setCheckedLocations((prevChecked) => [...prevChecked, name]);
+			} else {
+				setCheckedLocations((prevChecked) =>
+					prevChecked.filter((locationId) => locationId !== name)
+				);
+			}
+		}
 	};
 
 	const save = () => {
 		const requiredFields = fields.filter((f) => f.required).map((f) => f.name);
 		const emptyFields = requiredFields.filter((field) => !formData[field]);
 		setInvalidFields(emptyFields);
-		if (emptyFields.length === 0 && onSave) {
-			onSave(formData);
+
+		// At least one checkbox is checked
+		if (emptyFields.length === 0 && onSave && checkedLocations.length > 0) {
+			onSave(formData, checkedLocations);
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {
 				resetData[fieldName] = null;
 			}
 			setFormData(resetData);
+			setCheckedLocations([]);
 		}
 	};
 
@@ -55,47 +78,18 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 					{msg && <Alert color="success">{msg}</Alert>}
 					<Form>
 						{fields.map((field, index) => {
-							console.log(field.id);
 							return (
-								<FormGroup
-									key={index}
-									className={
-										field.type === "checkbox" ? `${styles.checkbox_group}` : ""
-									}>
-									<Label
-										for={field.name}
-										className={
-											field.type === "checkbox"
-												? `${styles.checkbox_label}`
-												: ""
-										}>
-										{field.label}
-									</Label>
-									{field.type !== "checkbox" && (
-										<>
-											<Input
-												id={field.name}
-												name={field.name}
-												type={field.type}
-												value={formData[field.name] || ""}
-												pattern={field.pattern}
-												onChange={handleChange}
-												className={isInvalidField(field.name) ? "invalid" : ""}
-											/>
-										</>
-									)}
-									{field.type === "checkbox" && (
-										<div className={styles.list}>
-											<Input
-												id={field.id}
-												name={field.name}
-												type={field.type}
-												checked={formData[field.name] || false}
-												onChange={handleChange}
-												className={isInvalidField(field.name) ? "invalid" : ""}
-											/>
-										</div>
-									)}
+								<FormGroup key={index}>
+									<Label for={field.name}>{field.label}</Label>
+									<Input
+										id={field.name}
+										name={field.name}
+										type={field.type}
+										value={formData[field.name] || ""}
+										pattern={field.pattern}
+										onChange={handleChange}
+										className={isInvalidField(field.name) ? "invalid" : ""}
+									/>
 									{isInvalidField(field.name) && (
 										<FormText className="invalid-text">
 											Please fill out this field.
@@ -104,6 +98,38 @@ function CustomModal({ isOpen, toggle, title, msg, fields, onSave }) {
 								</FormGroup>
 							);
 						})}
+						{checkboxArr &&
+							checkboxArr.map((location) => {
+								return (
+									<>
+										<FormGroup
+											key={location.id}
+											className={styles.checkbox_group}>
+											<div className={styles.list}>
+												<Label
+													className={styles.checkbox_label}
+													for={location.id}>
+													{location.label}
+												</Label>
+												<Input
+													id={location.id}
+													name={location.id}
+													type="checkbox"
+													onChange={handleChange}
+													className={
+														isInvalidField(location.id) ? "invalid" : ""
+													}
+												/>
+											</div>
+											{invalidFields.includes("checkboxes") && (
+												<FormText className="invalid-text">
+													Please select at least one checkbox.
+												</FormText>
+											)}
+										</FormGroup>
+									</>
+								);
+							})}
 					</Form>
 				</ModalBody>
 				<ModalFooter>

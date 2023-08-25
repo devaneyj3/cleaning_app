@@ -47,24 +47,28 @@ export default function EmployeeTable() {
 			type: "date",
 			required: true,
 		},
-		// Add checkboxes for locations dynamically
-		...Object.values(locations).map((locationName) => ({
-			...locationName,
-			name: `${locationName.id} - ${locationName.Name}`,
-			label: `${locationName.Name} - ${locationName.City}`,
-			type: "checkbox",
-			required: false,
-		})),
 	];
+	// Add checkboxes for locations dynamically
+	const checkboxArr = Object.values(locations).map((locationName) => ({
+		...locationName,
+		name: `${locationName.Name}`,
+		label: `${locationName.Name} - ${locationName.City}`,
+		type: "checkbox",
+		required: false,
+	}));
+	let employeeLabelArr;
+	if (employees.length > 0) {
+		employeeLabelArr = Object.keys(employees[0]);
+		employeeLabelArr[0] = "id";
+	}
 
-	const employeeLabelArr = Object.keys(employees[0]);
-
-	employeeLabelArr[0] = "id";
-
-	const SaveEmployee = async (formData) => {
+	const SaveEmployee = async (formData, checkedLocations) => {
+		console.log("form data is, ", formData);
+		console.log("checked locations are, ", checkedLocations);
 		try {
 			const response = await customAxios().post("/employees", formData);
 			// Assuming the response contains the success message from the server.
+			console.log("saving and the response is,", response);
 			setEmployees(response.data.employees);
 			setMsg("Successfully added employee");
 			setTimeout(() => {
@@ -96,6 +100,7 @@ export default function EmployeeTable() {
 				toggle={toggle}
 				title="Create Employee"
 				msg={msg}
+				checkboxArr={checkboxArr}
 				fields={employeeFields}
 				onSave={SaveEmployee}
 			/>
