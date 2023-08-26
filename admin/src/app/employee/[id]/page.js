@@ -5,7 +5,6 @@ import { EmployeeContext } from "@/app/context/EmployeeContext";
 import { useRouter } from "next/navigation";
 import styles from "./employee.module.css";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { MdAddModerator } from "react-icons/md";
 
 export default function employee({ params: { id } }) {
 	const { selectedEmployee, getEmployeeById, employeeLocation } =

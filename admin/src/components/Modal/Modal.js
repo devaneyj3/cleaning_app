@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import React, { useState } from "react";
 
-import styles from "./modal.module.css";
+import CustomCheckbox from "../CustomCheckbox";
 
 function CustomModal({
 	isOpen,
@@ -31,23 +31,11 @@ function CustomModal({
 	const [checkedLocations, setCheckedLocations] = useState([]);
 
 	const handleChange = (e) => {
-		const { name, value, type, checked } = e.target;
-		if (type !== "checkbox") {
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				[name]: value,
-			}));
-		}
-
-		if (type === "checkbox") {
-			if (checked) {
-				setCheckedLocations((prevChecked) => [...prevChecked, name]);
-			} else {
-				setCheckedLocations((prevChecked) =>
-					prevChecked.filter((locationId) => locationId !== name)
-				);
-			}
-		}
+		const { name, value } = e.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value,
+		}));
 	};
 
 	const save = () => {
@@ -57,6 +45,7 @@ function CustomModal({
 
 		// At least one checkbox is checked
 		if (emptyFields.length === 0 && onSave && checkedLocations.length > 0) {
+			console.log("checked locations are, ", checkedLocations);
 			onSave(formData, checkedLocations);
 			// Reset individual fields of formData
 			const resetData = {};
@@ -64,7 +53,6 @@ function CustomModal({
 				resetData[fieldName] = null;
 			}
 			setFormData(resetData);
-			setCheckedLocations([]);
 		}
 	};
 
@@ -98,38 +86,10 @@ function CustomModal({
 								</FormGroup>
 							);
 						})}
-						{checkboxArr &&
-							checkboxArr.map((location) => {
-								return (
-									<>
-										<FormGroup
-											key={location.id}
-											className={styles.checkbox_group}>
-											<div className={styles.list}>
-												<Label
-													className={styles.checkbox_label}
-													for={location.id}>
-													{location.label}
-												</Label>
-												<Input
-													id={location.id}
-													name={location.id}
-													type="checkbox"
-													onChange={handleChange}
-													className={
-														isInvalidField(location.id) ? "invalid" : ""
-													}
-												/>
-											</div>
-											{invalidFields.includes("checkboxes") && (
-												<FormText className="invalid-text">
-													Please select at least one checkbox.
-												</FormText>
-											)}
-										</FormGroup>
-									</>
-								);
-							})}
+						<CustomCheckbox
+							checkboxArr={checkboxArr}
+							setCheckedLocations={setCheckedLocations}
+						/>
 					</Form>
 				</ModalBody>
 				<ModalFooter>
