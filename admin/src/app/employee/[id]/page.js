@@ -52,51 +52,56 @@ export default function Employee({ params: { id } }) {
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
 						<h1>{selectedEmployee.Name}</h1>
+						<section className={styles.hired_stats}>
+							{selectedEmployee.Hired && (
+								<p>
+									Hired:{" "}
+									<p>
+										{new Date(selectedEmployee.Hired).toLocaleDateString(
+											undefined,
+											{ year: "numeric", month: "long", day: "numeric" }
+										)}
+									</p>
+								</p>
+							)}
+							{timeSinceHired && (
+								<p>
+									Employed for: <span>{timeSinceHired}</span>
+								</p>
+							)}
+						</section>
 					</div>
 					<div className={styles.cardContent}>
-						<p>
-							Phone: <span>{selectedEmployee.Phone}</span>
-						</p>
-
-						<p>
-							Email: <span>{selectedEmployee.Email}</span>
-						</p>
-						<p>
-							Phone: <span>{selectedEmployee.Pay}</span>
-						</p>
-						<p>
-							Position: <span>{selectedEmployee.Position}</span>
-						</p>
-						{selectedEmployee.Hired && (
-							<p>
-								Hired:{" "}
-								<span>
-									{new Date(selectedEmployee.Hired).toLocaleDateString(
-										undefined,
-										{ year: "numeric", month: "long", day: "numeric" }
-									)}
-								</span>
-							</p>
-						)}
-						{timeSinceHired && (
-							<p>
-								Employed for: <span>{timeSinceHired}</span>
-							</p>
-						)}
-						{employeeLocation &&
-							employeeLocation.map((loc) => {
-								const { id, Name, Address, City, State, Phone } = loc;
-								return (
-									<div key={id}>
-										<p>
-											{Name} - {City},{State}
-										</p>
-										<p>
-											{Address}, {Phone}
-										</p>
-									</div>
-								);
-							})}
+						<section className={styles.info}>
+							<h6>Phone</h6>
+							<p>{selectedEmployee.Phone}</p>
+						</section>
+						<section className={styles.info}>
+							<h6>Email</h6>
+							<p>{selectedEmployee.Email}</p>
+						</section>
+						<section className={styles.info}>
+							<h6>Pay</h6>
+							<p>{selectedEmployee.Pay}</p>
+						</section>
+						<section className={styles.info}>
+							<h6>Position</h6>
+							<p>{selectedEmployee.Position}</p>
+						</section>
+						<section className={styles.info}>
+							<h6>Locations</h6>
+							{employeeLocation &&
+								employeeLocation.map((loc) => {
+									const { id, Name, Address, City, State, Phone } = loc;
+									return (
+										<div key={id}>
+											<p>
+												{Name} - {City},{State} {""} {Address}, {Phone}
+											</p>
+										</div>
+									);
+								})}
+						</section>
 					</div>
 					<CustomButton
 						text="Dashboard"
