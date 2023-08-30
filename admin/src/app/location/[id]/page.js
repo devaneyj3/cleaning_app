@@ -20,14 +20,19 @@ export default function location({ params: { id } }) {
 			{selectedLocation && (
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
-						<h1>{selectedLocation.Name}</h1>
+						<h1>
+							{selectedLocation.Name}-{selectedLocation.id}
+						</h1>
 					</div>
 					<div className={styles.cardContent}>
-						<p>{selectedLocation.Phone}</p>
-						<p>
-							{selectedLocation.Address} {selectedLocation.City},{" "}
-							{selectedLocation.State} {selectedLocation.Zip}
-						</p>
+						<section className={styles.info}>
+							<p>{selectedLocation.Phone}</p>
+							<p>{selectedLocation.Address}</p>
+							<p>
+								{selectedLocation.City}, {selectedLocation.State}{" "}
+								{selectedLocation.Zip}
+							</p>
+						</section>
 					</div>
 					<CustomButton
 						text="Dashboard"

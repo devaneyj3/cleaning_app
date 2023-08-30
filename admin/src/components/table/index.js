@@ -62,8 +62,8 @@ const DataTable = ({ data, labels, onEdit, onDelete, api }) => {
 		<table className={styles.table}>
 			<thead>
 				<tr>
-					{labels.map((label) => (
-						<th key={label}>{label}</th>
+					{labels.map((label, index) => (
+						<th key={index}>{label}</th>
 					))}
 					<th>Action</th>
 				</tr>

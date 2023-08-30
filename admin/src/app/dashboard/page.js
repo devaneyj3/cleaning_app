@@ -6,6 +6,7 @@ import "./dashboard.css";
 
 import EmployeeTable from "@/components/EmployeeTable";
 import LocationTable from "@/components/LocationTable";
+import ProductTable from "@/components/ProductTable";
 
 export default function Dashboard() {
 	return (
@@ -16,6 +17,7 @@ export default function Dashboard() {
 			<section className="tables">
 				<EmployeeTable />
 				<LocationTable />
+				<ProductTable />
 			</section>
 		</main>
 	);

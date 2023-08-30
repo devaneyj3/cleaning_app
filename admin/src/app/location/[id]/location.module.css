@@ -27,6 +27,11 @@
 	margin-bottom: 10px;
 }
 
+.info {
+	margin: 1% 0 2% 0;
+	align-items: flex-start;
+}
+
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
 	.card {

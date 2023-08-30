@@ -54,15 +54,15 @@ export default function Employee({ params: { id } }) {
 						<h1>{selectedEmployee.Name}</h1>
 						<section className={styles.hired_stats}>
 							{selectedEmployee.Hired && (
-								<p>
-									Hired:{" "}
+								<>
 									<p>
+										Hired:
 										{new Date(selectedEmployee.Hired).toLocaleDateString(
 											undefined,
 											{ year: "numeric", month: "long", day: "numeric" }
 										)}
 									</p>
-								</p>
+								</>
 							)}
 							{timeSinceHired && (
 								<p>
@@ -82,7 +82,7 @@ export default function Employee({ params: { id } }) {
 						</section>
 						<section className={styles.info}>
 							<h6>Pay</h6>
-							<p>{selectedEmployee.Pay}</p>
+							<p>${selectedEmployee.Pay}/hr</p>
 						</section>
 						<section className={styles.info}>
 							<h6>Position</h6>
@@ -95,7 +95,7 @@ export default function Employee({ params: { id } }) {
 									const { id, Name, Address, City, State, Phone } = loc;
 									return (
 										<div key={id}>
-											<p>
+											<p className={styles.banks}>
 												{Name} - {City},{State} {""} {Address}, {Phone}
 											</p>
 										</div>
