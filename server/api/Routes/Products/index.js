@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 		res.status(201).json({
 			newProduct: newProduct,
 			products: products,
-			message: `Creating product ${req.body.Name}`,
+			message: `Creating product ${req.body.name}`,
 		});
 	} catch (error) {
 		console.log(error);

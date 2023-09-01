@@ -10,8 +10,14 @@ import { ProductContext } from "@/app/context/ProductContext";
 export default function ProductTable() {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
-	const { products, getProducts, loading, deleteProduct, editProduct } =
-		useContext(ProductContext);
+	const {
+		products,
+		getProducts,
+		setProducts,
+		loading,
+		deleteProduct,
+		editProduct,
+	} = useContext(ProductContext);
 
 	useEffect(() => {
 		getProducts();
@@ -22,27 +28,23 @@ export default function ProductTable() {
 	if (loading) {
 		return <p>Loading Products...</p>;
 	}
-
 	const productFields = [
-		{ name: "Name", label: "Name", type: "text", required: true },
-		{ name: "Price", label: "Price", type: "number", required: true },
-		{
-			name: "Description",
-			label: "Description",
-			type: "text",
-			required: false,
-		},
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "quantity", label: "Quantity", type: "number", required: true },
+		{ name: "use", label: "Use", type: "text", required: true },
+		{ name: "status", label: "Status", type: "text", required: true },
+		{ name: "type", label: "Type", type: "text", required: true },
 	];
 
 	const productLabelsArray = productFields.map((field) => field.label);
 
-	productLabelsArray.unshift("ID");
+	productLabelsArray.unshift("Id");
 
 	const saveProduct = async (formData) => {
 		try {
 			const response = await customAxios().post("/products", formData);
-			// Assuming the response contains the success message from the server.
 			setMsg("Successfully added product");
+			setProducts(response.data.products);
 			setTimeout(() => {
 				toggle();
 				setMsg("");

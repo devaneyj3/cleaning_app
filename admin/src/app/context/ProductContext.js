@@ -14,7 +14,6 @@ const ProductContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().get("/products");
 			const productsData = response.data;
-			console.log(productsData);
 			// Do something with the products' data here.
 			setProducts(productsData.product);
 			setLoading(false);

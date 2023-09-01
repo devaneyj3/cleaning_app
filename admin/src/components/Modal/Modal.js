@@ -44,8 +44,7 @@ function CustomModal({
 		setInvalidFields(emptyFields);
 
 		// At least one checkbox is checked
-		if (emptyFields.length === 0 && onSave && checkedLocations.length > 0) {
-			console.log("checked locations are, ", checkedLocations);
+		if ((emptyFields.length === 0 && onSave) || checkedLocations.length > 0) {
 			onSave(formData, checkedLocations);
 			// Reset individual fields of formData
 			const resetData = {};
