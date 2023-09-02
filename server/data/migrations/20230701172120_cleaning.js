@@ -2,31 +2,31 @@ exports.up = function (knex) {
 	return knex.schema
 		.createTable("employee", (tbl) => {
 			tbl.increments();
-			tbl.text("Name").notNullable();
-			tbl.text("Email").notNullable();
-			tbl.text("Phone").notNullable();
-			tbl.text("Username").notNullable();
-			tbl.text("Password").notNullable();
-			tbl.float("Pay").notNullable();
-			tbl.text("Position").notNullable();
-			tbl.timestamp("Hired").notNullable();
+			tbl.text("name").notNullable();
+			tbl.text("email").notNullable();
+			tbl.text("phone").notNullable();
+			tbl.text("username").notNullable();
+			tbl.text("password").notNullable();
+			tbl.float("pay").notNullable();
+			tbl.text("position").notNullable();
+			tbl.timestamp("hired").notNullable();
 		})
 		.createTable("location", (tbl) => {
 			tbl.increments();
-			tbl.text("Name").notNullable();
-			tbl.text("Address").notNullable();
-			tbl.text("Phone").notNullable();
-			tbl.text("City").notNullable();
-			tbl.text("State").notNullable();
-			tbl.integer("Zip").notNullable();
+			tbl.text("name").notNullable();
+			tbl.text("address").notNullable();
+			tbl.text("phone").notNullable();
+			tbl.text("city").notNullable();
+			tbl.text("state").notNullable();
+			tbl.integer("zip").notNullable();
 		})
 		.createTable("product", (tbl) => {
 			tbl.increments();
-			tbl.text("Name").notNullable();
-			tbl.text("Quantity").notNullable();
-			tbl.text("Use").notNullable();
-			tbl.text("Status").notNullable();
-			tbl.text("Type").notNullable();
+			tbl.text("name").notNullable();
+			tbl.text("quantity").notNullable();
+			tbl.text("use").notNullable();
+			tbl.text("status").notNullable();
+			tbl.text("type").notNullable();
 		})
 		.createTable("employee_locations", (tbl) => {
 			tbl

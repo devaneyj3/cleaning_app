@@ -38,7 +38,7 @@ export default function ProductTable() {
 
 	const productLabelsArray = productFields.map((field) => field.label);
 
-	productLabelsArray.unshift("Id");
+	productLabelsArray.unshift("id");
 
 	const saveProduct = async (formData) => {
 		try {

@@ -15,7 +15,7 @@ afterAll((done) => {
 describe("Employee_Locations API", () => {
 	it("should create a new location", async () => {
 		const newEmployeeLocation = {
-			employee_id: 3,
+			employee_id: 1,
 			location_id: 1,
 		};
 
@@ -25,20 +25,20 @@ describe("Employee_Locations API", () => {
 		);
 
 		const res = await request(app)
-			.post(`/api/employee-locations/3/locations/1`)
+			.post(`/api/employee-locations/1/locations/1`)
 			.send(newEmployeeLocation);
 
 		expect(res.statusCode).toEqual(201);
 	});
 
 	it("should retrive a specific employee location", async () => {
-		const res = await request(app).get(`/api/employee-locations/3/locations`);
+		const res = await request(app).get(`/api/employee-locations/1/locations`);
 		expect(res.statusCode).toEqual(200);
 	});
 
 	it("should delete an employee's location", async () => {
 		const res = await request(app).delete(
-			"/api/employee-locations/3/locations/1"
+			"/api/employee-locations/1/locations/1"
 		);
 		expect(res.statusCode).toEqual(200);
 	});

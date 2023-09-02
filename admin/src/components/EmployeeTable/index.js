@@ -34,15 +34,15 @@ export default function EmployeeTable() {
 	}
 
 	const employeeFields = [
-		{ name: "Name", label: "Name", type: "text", required: true },
-		{ name: "Email", label: "Email", type: "text", required: true },
-		{ name: "Phone", label: "Phone", type: "text", required: true },
-		{ name: "Username", label: "Username", type: "text", required: true },
-		{ name: "Password", label: "Password", type: "text", required: true },
-		{ name: "Pay", label: "Pay", type: "number", required: true },
-		{ name: "Position", label: "Position", type: "text", required: true },
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "email", label: "Email", type: "text", required: true },
+		{ name: "phone", label: "Phone", type: "text", required: true },
+		{ name: "username", label: "Username", type: "text", required: true },
+		{ name: "password", label: "Password", type: "text", required: true },
+		{ name: "pay", label: "Pay", type: "number", required: true },
+		{ name: "position", label: "Position", type: "text", required: true },
 		{
-			name: "Hired",
+			name: "hired",
 			label: "Hired",
 			type: "date",
 			required: true,
@@ -58,8 +58,16 @@ export default function EmployeeTable() {
 	}));
 	let employeeLabelArr;
 	if (employees.length > 0) {
-		employeeLabelArr = Object.keys(employees[0]);
-		employeeLabelArr[0] = "id";
+		employeeLabelArr = employeeLabelArr = employeeFields.reduce(
+			(acc, field) => {
+				acc.push(field.label);
+				return acc;
+			},
+			[]
+		);
+
+		employeeLabelArr[0] = "Id";
+		console.log(employeeLabelArr);
 	}
 
 	const SaveEmployee = async (formData, checkedLocations) => {

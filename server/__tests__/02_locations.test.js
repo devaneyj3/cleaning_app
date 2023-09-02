@@ -17,12 +17,12 @@ describe("Locations API", () => {
 
 	beforeAll(async () => {
 		const response = await request(app).post("/api/locations").send({
-			Name: "PNC",
-			Address: "1041 Main Street",
-			Phone: "888-888-8888",
-			City: "Johnson",
-			State: "MI",
-			Zip: 43330,
+			name: "PNC",
+			address: "1041 Main Street",
+			phone: "888-888-8888",
+			city: "Johnson",
+			state: "MI",
+			zip: 43330,
 		});
 
 		createdLocation = response.body;
@@ -35,12 +35,12 @@ describe("Locations API", () => {
 
 	it("should create a new location", async () => {
 		const newLocation = {
-			Name: "Huntington",
-			Address: "1041 Main Street",
-			Phone: "888-888-8888",
-			City: "Miracle",
-			State: "MI",
-			Zip: 42230,
+			name: "Huntington",
+			address: "1041 Main Street",
+			phone: "888-888-8888",
+			city: "Miracle",
+			state: "MI",
+			zip: 42230,
 		};
 
 		const res = await request(app).post("/api/locations").send(newLocation);
@@ -58,12 +58,12 @@ describe("Locations API", () => {
 
 	it("should update an existing location", async () => {
 		const updatedLocation = {
-			Name: "TCF",
-			Address: "1041 Main Street",
-			Phone: "888-888-8888",
-			City: "Johnson",
-			State: "MI",
-			Zip: 43330,
+			name: "TCF",
+			address: "1041 Main Street",
+			phone: "888-888-8888",
+			city: "Johnson",
+			state: "MI",
+			zip: 43330,
 		};
 		const res = await request(app)
 			.put(`/api/locations/${createdLocationId}/edit`)
@@ -72,7 +72,7 @@ describe("Locations API", () => {
 		expect(res.body.locations).toContainEqual(res.body.updatedLocation);
 	});
 
-	it("should delete an location", async () => {
+	it("should delete a location", async () => {
 		const res = await request(app).delete(
 			`/api/locations/${createdLocationId}/delete`
 		);

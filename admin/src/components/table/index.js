@@ -10,6 +10,7 @@ const DataTable = ({ data, labels, onEdit, onDelete, api }) => {
 	const [editMode, setEditMode] = useState(false);
 
 	const router = useRouter();
+	console.log(data);
 
 	const deleteRow = (e, id) => {
 		e.stopPropagation();
@@ -72,6 +73,8 @@ const DataTable = ({ data, labels, onEdit, onDelete, api }) => {
 				{data.map((row, index) => (
 					<tr key={index} onClick={() => handleRowClick(row.id, row)}>
 						{labels.map((field) => {
+							console.log("field", field);
+							console.log("field[row]", field[row]);
 							if (field === "Hired") {
 								const originalDate = new Date(row[field]); // Assuming row[field] contains the original date string
 

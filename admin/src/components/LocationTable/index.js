@@ -32,13 +32,13 @@ export default function LocationTable() {
 	}
 
 	const locationFields = [
-		{ name: "Name", label: "Name", type: "text", required: true },
-		{ name: "Address", label: "Address", type: "text", required: true },
-		{ name: "Phone", label: "Phone", type: "text", required: true },
-		{ name: "City", label: "City", type: "text", required: true },
-		{ name: "State", label: "State", type: "text", required: true },
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "address", label: "Address", type: "text", required: true },
+		{ name: "phone", label: "Phone", type: "text", required: true },
+		{ name: "city", label: "City", type: "text", required: true },
+		{ name: "state", label: "State", type: "text", required: true },
 		{
-			name: "Zip",
+			name: "zip",
 			label: "Zip",
 			title: "Please enter a Zip Code",
 			pattern: "^s*?d{5}(?:[-s]d{4})?s*?$",

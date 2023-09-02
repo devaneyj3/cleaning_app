@@ -14,14 +14,14 @@ afterAll((done) => {
 
 describe("Product_Locations API", () => {
 	beforeEach(async () => {
-		const product_id = 358;
+		const product_id = 1;
 		const location_id = 1;
 
 		await db.deleteProductLocation(product_id, location_id);
 	});
 
 	it("should create a new product location", async () => {
-		const product_id = 358;
+		const product_id = 1;
 		const location_id = 1;
 
 		const res = await request(app)
@@ -32,7 +32,7 @@ describe("Product_Locations API", () => {
 	});
 
 	it("should get a product's location", async () => {
-		const product_id = 358;
+		const product_id = 1;
 		const location_id = 1;
 
 		await request(app).post(
@@ -43,7 +43,7 @@ describe("Product_Locations API", () => {
 			`/api/product-locations/${product_id}/locations`
 		);
 
-		const expectedKeys = ["id", "Name", "Quantity", "Use", "Status", "Type"];
+		const expectedKeys = ["id", "name", "quantity", "use", "status", "type"];
 
 		expect(Object.keys(res.body[0])).toEqual(expectedKeys);
 		expect(res.statusCode).toEqual(200);
@@ -51,7 +51,7 @@ describe("Product_Locations API", () => {
 	});
 
 	it("should delete a product's location", async () => {
-		const product_id = 358;
+		const product_id = 1;
 		const location_id = 1;
 
 		const res = await request(app).delete(

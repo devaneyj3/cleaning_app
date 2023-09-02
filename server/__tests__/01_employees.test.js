@@ -20,14 +20,14 @@ describe("Employees API", () => {
 
 	beforeAll(async () => {
 		const response = await request(app).post("/api/employees").send({
-			Name: "John Doe1",
-			Email: "john@gmail.com",
-			Phone: "777-777-7777",
-			Username: "john3",
-			Password: "hello",
-			Pay: 15.0,
-			Position: "cleaner",
-			Hired: date,
+			name: "John Doe1",
+			email: "john@gmail.com",
+			phone: "777-777-7777",
+			username: "john3",
+			password: "hello",
+			pay: 15.0,
+			position: "cleaner",
+			hired: date,
 		});
 
 		createdEmployee = response.body;
@@ -49,14 +49,14 @@ describe("Employees API", () => {
 
 	it("should create a new employee", async () => {
 		const newEmployee = {
-			Name: "John Doe",
-			Email: "john@gmail.com",
-			Phone: "777-777-7777",
-			Username: "john3",
-			Password: "hello",
-			Pay: 15.0,
-			Position: "cleaner",
-			Hired: date,
+			name: "John Doe",
+			email: "john@gmail.com",
+			phone: "777-777-7777",
+			username: "john3",
+			password: "hello",
+			pay: 15.0,
+			position: "cleaner",
+			hired: date,
 		};
 		const res = await request(app).post("/api/employees/").send(newEmployee);
 		newEmployee.id = res.body.newEmployee.id;
@@ -66,14 +66,14 @@ describe("Employees API", () => {
 
 	it("should update an existing employee", async () => {
 		const updatedEmployee = {
-			Name: "John Smoe",
-			Email: "john@gmail.com",
-			Phone: "777-777-7777",
-			Username: "john4",
-			Password: "hello",
-			Pay: 19.0,
-			Position: "cleaner",
-			Hired: date,
+			name: "John Smoe",
+			email: "john@gmail.com",
+			phone: "777-777-7777",
+			username: "john4",
+			password: "hello",
+			pay: 19.0,
+			position: "cleaner",
+			hired: date,
 		};
 		const res = await request(app)
 			.put(`/api/employees/${createdEmployeeId}/edit`)
