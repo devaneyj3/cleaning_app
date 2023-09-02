@@ -11,6 +11,8 @@ import { LocationContext } from "../../app/context/LocationContext";
 
 import customAxios from "@/utils/CustomAxios";
 
+import moment from "moment";
+
 export default function EmployeeTable() {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
@@ -51,8 +53,8 @@ export default function EmployeeTable() {
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations).map((locationName) => ({
 		...locationName,
-		name: `${locationName.Name}`,
-		label: `${locationName.Name} - ${locationName.City}`,
+		name: `${locationName.name}`,
+		label: `${locationName.name} - ${locationName.city}`,
 		type: "checkbox",
 		required: false,
 	}));
@@ -65,10 +67,12 @@ export default function EmployeeTable() {
 			},
 			[]
 		);
-
-		employeeLabelArr[0] = "Id";
-		console.log(employeeLabelArr);
 	}
+
+	const updatedEmployees = employees.map((employee) => ({
+		...employee,
+		hired: moment(employee.hired).format("MM/DD/YYYY"),
+	}));
 
 	const SaveEmployee = async (formData, checkedLocations) => {
 		try {
@@ -104,11 +108,9 @@ export default function EmployeeTable() {
 			<p>You have {employees.length} employees</p>
 			{employees.length > 0 ? (
 				<DataTable
-					data={employees}
-					labels={employeeLabelArr}
-					onEdit={editEmployee}
-					onDelete={deleteEmployee}
-					api="employees"
+					rows={updatedEmployees}
+					headers={employeeLabelArr}
+					// api="employees"
 				/>
 			) : (
 				<p>Create your first employee to get started</p>

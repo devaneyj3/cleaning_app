@@ -49,7 +49,6 @@ export default function LocationTable() {
 
 	const locationLabelsArray = locationFields.map((field) => field.label);
 
-	locationLabelsArray[0] = "id";
 	const SaveLocation = async (formData) => {
 		try {
 			const response = await customAxios().post("/locations", formData);
@@ -71,11 +70,9 @@ export default function LocationTable() {
 			{locations.length > 0 ? (
 				<>
 					<DataTable
-						data={locations}
-						labels={locationLabelsArray}
-						onEdit={editLocation}
-						onDelete={deleteLocation}
-						api="locations"
+						rows={locations}
+						headers={locationLabelsArray}
+						// api="locations"
 					/>
 				</>
 			) : (

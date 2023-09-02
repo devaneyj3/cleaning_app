@@ -38,8 +38,6 @@ export default function ProductTable() {
 
 	const productLabelsArray = productFields.map((field) => field.label);
 
-	productLabelsArray.unshift("id");
-
 	const saveProduct = async (formData) => {
 		try {
 			const response = await customAxios().post("/products", formData);
@@ -60,11 +58,9 @@ export default function ProductTable() {
 			{products.length > 0 ? (
 				<>
 					<DataTable
-						data={products}
-						labels={productLabelsArray}
-						onEdit={editProduct}
-						onDelete={deleteProduct}
-						api="products"
+						rows={products}
+						headers={productLabelsArray}
+						// api="products"
 					/>
 				</>
 			) : (
