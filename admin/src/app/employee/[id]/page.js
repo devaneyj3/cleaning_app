@@ -27,7 +27,7 @@ export default function Employee({ params: { id } }) {
 	}, [selectedEmployee]);
 
 	const calculateTimeSinceHired = () => {
-		var starts = moment(selectedEmployee.Hired);
+		var starts = moment(selectedEmployee.hired);
 		var ends = moment();
 
 		var diff = moment.preciseDiff(starts, ends, true);
@@ -51,9 +51,9 @@ export default function Employee({ params: { id } }) {
 			{selectedEmployee && (
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
-						<h1>{selectedEmployee.Name}</h1>
+						<h1>{selectedEmployee.name}</h1>
 						<section className={styles.hired_stats}>
-							{selectedEmployee.Hired && (
+							{selectedEmployee.hired && (
 								<>
 									<p>
 										Hired:
@@ -74,29 +74,29 @@ export default function Employee({ params: { id } }) {
 					<div className={styles.cardContent}>
 						<section className={styles.info}>
 							<h6>Phone</h6>
-							<p>{selectedEmployee.Phone}</p>
+							<p>{selectedEmployee.phone}</p>
 						</section>
 						<section className={styles.info}>
 							<h6>Email</h6>
-							<p>{selectedEmployee.Email}</p>
+							<p>{selectedEmployee.email}</p>
 						</section>
 						<section className={styles.info}>
 							<h6>Pay</h6>
-							<p>${selectedEmployee.Pay}/hr</p>
+							<p>${selectedEmployee.pay}/hr</p>
 						</section>
 						<section className={styles.info}>
 							<h6>Position</h6>
-							<p>{selectedEmployee.Position}</p>
+							<p>{selectedEmployee.position}</p>
 						</section>
 						<section className={styles.info}>
 							<h6>Locations</h6>
 							{employeeLocation &&
 								employeeLocation.map((loc) => {
-									const { id, Name, Address, City, State, Phone } = loc;
+									const { id, name, address, city, state, phone } = loc;
 									return (
 										<div key={id}>
 											<p className={styles.banks}>
-												{Name} - {City},{State} {""} {Address}, {Phone}
+												{name} - {city},{state} {""} {address}, {phone}
 											</p>
 										</div>
 									);

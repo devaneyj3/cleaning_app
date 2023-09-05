@@ -21,16 +21,16 @@ export default function location({ params: { id } }) {
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
 						<h1>
-							{selectedLocation.Name}-{selectedLocation.id}
+							{selectedLocation.name}-{selectedLocation.id}
 						</h1>
 					</div>
 					<div className={styles.cardContent}>
 						<section className={styles.info}>
-							<p>{selectedLocation.Phone}</p>
-							<p>{selectedLocation.Address}</p>
+							<p>{selectedLocation.phone}</p>
+							<p>{selectedLocation.address}</p>
 							<p>
-								{selectedLocation.City}, {selectedLocation.State}{" "}
-								{selectedLocation.Zip}
+								{selectedLocation.city}, {selectedLocation.state}{" "}
+								{selectedLocation.zip}
 							</p>
 						</section>
 					</div>
