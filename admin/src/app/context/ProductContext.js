@@ -35,9 +35,10 @@ const ProductContextProvider = ({ children }) => {
 
 	const deleteProduct = async (id) => {
 		try {
+			console.log("deleting product");
 			const response = await customAxios().delete(`/products/${id}/delete`);
 			const deletedID = response.data.id;
-			setProducts(products.filter((product) => product.id !== deletedID));
+			setProducts(products.filter((product) => product.id != deletedID));
 		} catch (error) {
 			console.error("Error deleting product:", error.message);
 		}

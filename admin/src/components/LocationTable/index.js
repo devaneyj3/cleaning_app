@@ -72,7 +72,8 @@ export default function LocationTable() {
 					<DataTable
 						rows={locations}
 						headers={locationLabelsArray}
-						// api="locations"
+						api="locations"
+						deleteEntry={deleteLocation}
 					/>
 				</>
 			) : (

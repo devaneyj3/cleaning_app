@@ -60,7 +60,8 @@ export default function ProductTable() {
 					<DataTable
 						rows={products}
 						headers={productLabelsArray}
-						// api="products"
+						api="products"
+						deleteEntry={deleteProduct}
 					/>
 				</>
 			) : (

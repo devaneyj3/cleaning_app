@@ -4,7 +4,7 @@ import styles from "./table.module.css";
 
 import { useRouter } from "next/navigation";
 
-const DataTable = ({ rows, headers }) => {
+const DataTable = ({ rows, headers, deleteEntry }) => {
 	const router = useRouter();
 
 	return (
@@ -31,7 +31,10 @@ const DataTable = ({ rows, headers }) => {
 								);
 							})}
 							<td>
-								<MdDeleteForever color="red" />
+								<MdDeleteForever
+									color="red"
+									onClick={() => deleteEntry(row.id)}
+								/>
 								<MdEdit color="blue" />
 							</td>
 						</tr>

@@ -110,7 +110,8 @@ export default function EmployeeTable() {
 				<DataTable
 					rows={updatedEmployees}
 					headers={employeeLabelArr}
-					// api="employees"
+					api="employees"
+					deleteEntry={deleteEmployee}
 				/>
 			) : (
 				<p>Create your first employee to get started</p>
