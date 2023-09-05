@@ -1,31 +1,30 @@
 "use client";
 
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 
 import DataTable from "@/components/table";
 import CustomButton from "@/components/CustomButton/CustomButton";
 
 import CustomModal from "@/components/Modal/Modal";
 
-import customAxios from "@/utils/CustomAxios";
 import { LocationContext } from "@/app/context/LocationContext";
 
 export default function LocationTable() {
-	const [modal, setModal] = useState(false);
-	const [msg, setMsg] = useState("");
 	const {
 		locations,
 		getLocations,
-		setLocations,
+		SaveLocation,
 		loading,
+		modal,
+		msg,
 		deleteLocation,
 		editLocation,
+		toggle,
 	} = useContext(LocationContext);
 
 	useEffect(() => {
 		getLocations();
 	}, []);
-	const toggle = () => setModal(!modal);
 
 	if (loading) {
 		return <p>Loading Locations...</p>; // Display a loading message while waiting for data
@@ -48,22 +47,6 @@ export default function LocationTable() {
 	];
 
 	const locationLabelsArray = locationFields.map((field) => field.label);
-
-	const SaveLocation = async (formData) => {
-		try {
-			const response = await customAxios().post("/locations", formData);
-			// Assuming the response contains the success message from the server.
-			setLocations(response.data.locations);
-
-			setMsg("Successfully added location");
-			setTimeout(() => {
-				toggle();
-				setMsg("");
-			}, 1000);
-		} catch (error) {
-			console.error("Error posting data:", error);
-		}
-	};
 	return (
 		<main>
 			<p>You have {locations.length} accounts</p>

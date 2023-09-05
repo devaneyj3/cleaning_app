@@ -9,6 +9,10 @@ const ProductContextProvider = ({ children }) => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedProduct, setSelectedProduct] = useState(null);
+	const [msg, setMsg] = useState("");
+	const [modal, setModal] = useState(false);
+
+	const toggle = () => setModal(!modal);
 
 	const getProducts = async () => {
 		try {
@@ -33,6 +37,19 @@ const ProductContextProvider = ({ children }) => {
 		}
 	};
 
+	const saveProduct = async (formData) => {
+		try {
+			const response = await customAxios().post("/products", formData);
+			setMsg("Successfully added product");
+			setProducts(response.data.products);
+			setTimeout(() => {
+				toggle();
+				setMsg("");
+			}, 1000);
+		} catch (error) {
+			console.error("Error posting data:", error);
+		}
+	};
 	const deleteProduct = async (id) => {
 		try {
 			console.log("deleting product");
@@ -65,6 +82,10 @@ const ProductContextProvider = ({ children }) => {
 				editProduct,
 				selectedProduct,
 				getProductById,
+				saveProduct,
+				msg,
+				toggle,
+				modal,
 			}}>
 			{children}
 		</ProductContext.Provider>

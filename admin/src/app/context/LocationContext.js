@@ -10,6 +10,10 @@ const LocationContextProvider = ({ children }) => {
 	const [locations, setLocations] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedLocation, setSelectedLocation] = useState(null);
+	const [modal, setModal] = useState(false);
+	const [msg, setMsg] = useState("");
+
+	const toggle = () => setModal(!modal);
 
 	const getLocations = async () => {
 		try {
@@ -33,6 +37,23 @@ const LocationContextProvider = ({ children }) => {
 			console.error("Error fetching locations:", error.message);
 		}
 	};
+
+	const SaveLocation = async (formData) => {
+		try {
+			const response = await customAxios().post("/locations", formData);
+			// Assuming the response contains the success message from the server.
+			setLocations(response.data.locations);
+
+			setMsg("Successfully added location");
+			setTimeout(() => {
+				toggle();
+				setMsg("");
+			}, 1000);
+		} catch (error) {
+			console.error("Error posting data:", error);
+		}
+	};
+
 	const deleteLocation = async (id) => {
 		try {
 			const response = await customAxios().delete(`/locations/${id}/delete`);
@@ -64,6 +85,10 @@ const LocationContextProvider = ({ children }) => {
 				editLocation,
 				selectedLocation,
 				getLocationById,
+				SaveLocation,
+				modal,
+				msg,
+				toggle,
 			}}>
 			{children}
 		</LocationContext.Provider>

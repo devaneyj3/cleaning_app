@@ -4,8 +4,14 @@ import styles from "./table.module.css";
 
 import { useRouter } from "next/navigation";
 
-const DataTable = ({ rows, headers, deleteEntry }) => {
+const DataTable = ({ rows, headers, deleteEntry, api }) => {
 	const router = useRouter();
+
+	const handleRowClick = (id) => {
+		if (api == "employees") router.push(`employee/${id}`);
+		if (api == "locations") router.push(`location/${id}`);
+		if (api == "products") router.push(`product/${id}`);
+	};
 
 	return (
 		<table className={styles.table}>
@@ -22,7 +28,7 @@ const DataTable = ({ rows, headers, deleteEntry }) => {
 				{rows.map((row, index) => {
 					const values = Object.values(row);
 					return (
-						<tr key={index}>
+						<tr key={index} onClick={() => handleRowClick(row.id)}>
 							{values.map((row, index) => {
 								return (
 									<>

@@ -11,6 +11,10 @@ const EmployeeContextProvider = ({ children }) => {
 	const [employeeLoading, setLoading] = useState(true);
 	const [selectedEmployee, setSelectedEmployee] = useState(null);
 	const [employeeLocation, setEmployeeLocation] = useState(null);
+	const [modal, setModal] = useState(false);
+	const [msg, setMsg] = useState("");
+
+	const toggle = () => setModal(!modal);
 
 	const getEmployees = async () => {
 		try {
@@ -34,6 +38,35 @@ const EmployeeContextProvider = ({ children }) => {
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
 			console.error("Error fetching employee:", error.message);
+		}
+	};
+
+	const SaveEmployee = async (formData, checkedLocations) => {
+		try {
+			const response = await customAxios().post("/employees", formData);
+			// Assuming the response contains the success message from the server.
+			const employeeId = response.data.newEmployee.id;
+			for (const locationId of checkedLocations) {
+				await SaveLocationToEmployee(employeeId, locationId);
+			}
+
+			setEmployees(response.data.employees);
+			setMsg("Successfully added employee");
+			setTimeout(() => {
+				toggle();
+				setMsg("");
+			}, 1000);
+		} catch (error) {
+			console.error("Error posting data:", error);
+		}
+	};
+	const SaveLocationToEmployee = async (employeeId, location_id) => {
+		try {
+			await customAxios().post(
+				`/employee-locations/${employeeId}/locations/${location_id}`
+			);
+		} catch (error) {
+			console.error("Error posting data:", error);
 		}
 	};
 
@@ -97,6 +130,10 @@ const EmployeeContextProvider = ({ children }) => {
 				selectedEmployee,
 				getEmployeeById,
 				employeeLocation,
+				modal,
+				msg,
+				toggle,
+				SaveEmployee,
 			}}>
 			{children}
 		</EmployeeContext.Provider>

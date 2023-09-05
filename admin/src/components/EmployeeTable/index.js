@@ -9,27 +9,25 @@ import CustomModal from "@/components/Modal/Modal";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
 import { LocationContext } from "../../app/context/LocationContext";
 
-import customAxios from "@/utils/CustomAxios";
-
 import moment from "moment";
 
 export default function EmployeeTable() {
-	const [modal, setModal] = useState(false);
-	const [msg, setMsg] = useState("");
 	const {
 		employees,
 		getEmployees,
-		setEmployees,
+		SaveEmployee,
 		employeeLoading,
 		editEmployee,
 		deleteEmployee,
+		modal,
+		msg,
+		toggle,
 	} = useContext(EmployeeContext);
 
 	const { locations } = useContext(LocationContext);
 	useEffect(() => {
 		getEmployees();
 	}, []);
-	const toggle = () => setModal(!modal);
 
 	if (employeeLoading) {
 		return <div>Loading Employees...</div>; // Display a loading message while waiting for data
@@ -73,35 +71,6 @@ export default function EmployeeTable() {
 		...employee,
 		hired: moment(employee.hired).format("MM/DD/YYYY"),
 	}));
-
-	const SaveEmployee = async (formData, checkedLocations) => {
-		try {
-			const response = await customAxios().post("/employees", formData);
-			// Assuming the response contains the success message from the server.
-			const employeeId = response.data.newEmployee.id;
-			for (const locationId of checkedLocations) {
-				await SaveLocationToEmployee(employeeId, locationId);
-			}
-
-			setEmployees(response.data.employees);
-			setMsg("Successfully added employee");
-			setTimeout(() => {
-				toggle();
-				setMsg("");
-			}, 1000);
-		} catch (error) {
-			console.error("Error posting data:", error);
-		}
-	};
-	const SaveLocationToEmployee = async (employeeId, location_id) => {
-		try {
-			await customAxios().post(
-				`/employee-locations/${employeeId}/locations/${location_id}`
-			);
-		} catch (error) {
-			console.error("Error posting data:", error);
-		}
-	};
 
 	return (
 		<main>
