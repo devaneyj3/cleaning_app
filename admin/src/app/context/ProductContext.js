@@ -52,7 +52,6 @@ const ProductContextProvider = ({ children }) => {
 	};
 	const deleteProduct = async (id) => {
 		try {
-			console.log("deleting product");
 			const response = await customAxios().delete(`/products/${id}/delete`);
 			const deletedID = response.data.id;
 			setProducts(products.filter((product) => product.id != deletedID));
@@ -61,7 +60,8 @@ const ProductContextProvider = ({ children }) => {
 		}
 	};
 
-	const editProduct = async (id, data) => {
+	const editProduct = async (id, data = null) => {
+		console.log("editing product", data);
 		try {
 			const response = await customAxios().put(`/products/${id}/edit`, data);
 			const updatedProducts = response.data.products;

@@ -57,6 +57,7 @@ export default function ProductTable() {
 						headers={productLabelsArray}
 						api="products"
 						deleteEntry={deleteProduct}
+						editEntry={editProduct}
 					/>
 				</>
 			) : (

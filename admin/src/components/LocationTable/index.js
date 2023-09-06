@@ -57,6 +57,7 @@ export default function LocationTable() {
 						headers={locationLabelsArray}
 						api="locations"
 						deleteEntry={deleteLocation}
+						editEntry={editLocation}
 					/>
 				</>
 			) : (

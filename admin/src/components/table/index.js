@@ -4,7 +4,7 @@ import styles from "./table.module.css";
 
 import { useRouter } from "next/navigation";
 
-const DataTable = ({ rows, headers, deleteEntry, api }) => {
+const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 	const router = useRouter();
 
 	const handleRowClick = (id) => {
@@ -13,6 +13,15 @@ const DataTable = ({ rows, headers, deleteEntry, api }) => {
 		if (api == "products") router.push(`product/${id}`);
 	};
 
+	const deleteRow = (e, id) => {
+		e.stopPropagation();
+		deleteEntry(id);
+	};
+
+	const editRow = (e, id) => {
+		e.stopPropagation();
+		editEntry(id);
+	};
 	return (
 		<table className={styles.table}>
 			<thead>
@@ -35,9 +44,12 @@ const DataTable = ({ rows, headers, deleteEntry, api }) => {
 							<td key="actions">
 								<MdDeleteForever
 									color="red"
-									onClick={() => deleteEntry(row.id)}
+									onClick={(event) => deleteRow(event, row.id)}
 								/>
-								<MdEdit color="blue" />
+								<MdEdit
+									color="blue"
+									onClick={(event) => editRow(event, row.id)}
+								/>
 							</td>
 						</tr>
 					);

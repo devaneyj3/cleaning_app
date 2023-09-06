@@ -81,6 +81,7 @@ export default function EmployeeTable() {
 					headers={employeeLabelArr}
 					api="employees"
 					deleteEntry={deleteEmployee}
+					editEntry={editEmployee}
 				/>
 			) : (
 				<p>Create your first employee to get started</p>

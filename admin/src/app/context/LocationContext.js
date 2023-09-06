@@ -64,7 +64,8 @@ const LocationContextProvider = ({ children }) => {
 		}
 	};
 
-	const editLocation = async (id, data) => {
+	const editLocation = async (id, data = null) => {
+		console.log("editing location", data);
 		try {
 			const response = await customAxios().put(`/locations/${id}/edit`, data);
 			const locations = response.data.locations;
