@@ -56,11 +56,7 @@ export default function Employee({ params: { id } }) {
 							{selectedEmployee.hired && (
 								<>
 									<p>
-										Hired:
-										{new Date(selectedEmployee.Hired).toLocaleDateString(
-											undefined,
-											{ year: "numeric", month: "long", day: "numeric" }
-										)}
+										Hired: {moment(selectedEmployee.hired).format("MM/DD/YYYY")}
 									</p>
 								</>
 							)}
@@ -89,7 +85,7 @@ export default function Employee({ params: { id } }) {
 							<p>{selectedEmployee.position}</p>
 						</section>
 						<section className={styles.info}>
-							<h6>Locations</h6>
+							{employeeLocation.length > 0 && <h6>Locations</h6>}
 							{employeeLocation &&
 								employeeLocation.map((loc) => {
 									const { id, name, address, city, state, phone } = loc;

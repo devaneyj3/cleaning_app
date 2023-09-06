@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { ProductContext } from "@/app/context/ProductContext"; // Update import to use ProductContext
+import { ProductContext } from "@/app/context/ProductContext";
 import { useRouter } from "next/navigation";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import styles from "./product.module.css";
 
 export default function ProductPage({ params: { id } }) {
-	const { selectedProduct, getProductById } = useContext(ProductContext); // Update context and function names
+	const { selectedProduct, getProductById } = useContext(ProductContext);
 
 	const router = useRouter();
 
 	useEffect(() => {
-		getProductById(id); // Update function call
+		getProductById(id);
 	}, [id]);
 
 	return (
