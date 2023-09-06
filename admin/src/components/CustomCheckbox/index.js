@@ -20,21 +20,21 @@ function CustomCheckbox({ checkboxArr, setCheckedLocations }) {
 			{checkboxArr &&
 				checkboxArr.map((location) => {
 					return (
-						<>
-							<FormGroup key={location.id} className={styles.checkbox_group}>
+						<div key={location.id}>
+							<FormGroup className={styles.checkbox_group}>
 								<div className={styles.list}>
-									<Label className={styles.checkbox_label} for={location.id}>
+									<Label className={styles.checkbox_label} for={location.label}>
 										{location.label}
 									</Label>
 									<Input
-										id={location.id}
+										id={location.label}
 										name={location.id}
 										type="checkbox"
 										onChange={handleChange}
 									/>
 								</div>
 							</FormGroup>
-						</>
+						</div>
 					);
 				})}
 		</div>

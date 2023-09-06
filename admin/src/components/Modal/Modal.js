@@ -25,6 +25,7 @@ function CustomModal({
 	fields,
 	checkboxArr,
 	onSave,
+	modalType,
 }) {
 	const [formData, setFormData] = useState({});
 	const [invalidFields, setInvalidFields] = useState([]);
@@ -85,7 +86,13 @@ function CustomModal({
 								</FormGroup>
 							);
 						})}
+						{checkboxArr && (
+							<Label for="Checkboxes">
+								Plese pick a location to assign the {modalType} to
+							</Label>
+						)}
 						<CustomCheckbox
+							id="Checkboxes"
 							checkboxArr={checkboxArr}
 							setCheckedLocations={setCheckedLocations}
 						/>

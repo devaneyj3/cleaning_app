@@ -30,13 +30,9 @@ const DataTable = ({ rows, headers, deleteEntry, api }) => {
 					return (
 						<tr key={index} onClick={() => handleRowClick(row.id)}>
 							{values.map((row, index) => {
-								return (
-									<>
-										<td key={index}>{row}</td>
-									</>
-								);
+								return <td key={index}>{row}</td>;
 							})}
-							<td>
+							<td key="actions">
 								<MdDeleteForever
 									color="red"
 									onClick={() => deleteEntry(row.id)}

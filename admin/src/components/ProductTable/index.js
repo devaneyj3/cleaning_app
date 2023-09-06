@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import DataTable from "@/components/table";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomModal from "@/components/Modal/Modal";
 import { ProductContext } from "@/app/context/ProductContext";
+import { LocationContext } from "../../app/context/LocationContext";
 
 export default function ProductTable() {
 	const {
@@ -18,6 +19,7 @@ export default function ProductTable() {
 		modal,
 		editProduct,
 	} = useContext(ProductContext);
+	const { locations } = useContext(LocationContext);
 
 	useEffect(() => {
 		getProducts();
@@ -33,6 +35,15 @@ export default function ProductTable() {
 		{ name: "status", label: "Status", type: "text", required: true },
 		{ name: "type", label: "Type", type: "text", required: true },
 	];
+
+	// Add checkboxes for locations dynamically
+	const checkboxArr = Object.values(locations).map((locationName) => ({
+		...locationName,
+		name: `${locationName.name}`,
+		label: `${locationName.name} - ${locationName.city}`,
+		type: "checkbox",
+		required: false,
+	}));
 
 	const productLabelsArray = productFields.map((field) => field.label);
 
@@ -57,8 +68,10 @@ export default function ProductTable() {
 				toggle={toggle}
 				title="Create Product"
 				msg={msg}
+				modalType="product"
 				fields={productFields}
 				onSave={saveProduct}
+				checkboxArr={checkboxArr}
 			/>
 		</main>
 	);

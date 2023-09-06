@@ -85,7 +85,7 @@ export default function Employee({ params: { id } }) {
 							<p>{selectedEmployee.position}</p>
 						</section>
 						<section className={styles.info}>
-							{employeeLocation.length > 0 && <h6>Locations</h6>}
+							{employeeLocation && <h6>Locations</h6>}
 							{employeeLocation &&
 								employeeLocation.map((loc) => {
 									const { id, name, address, city, state, phone } = loc;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 
 import DataTable from "@/components/table";
 import CustomButton from "@/components/CustomButton/CustomButton";
@@ -94,6 +94,7 @@ export default function EmployeeTable() {
 				checkboxArr={checkboxArr}
 				fields={employeeFields}
 				onSave={SaveEmployee}
+				modalType="employee"
 			/>
 		</main>
 	);
