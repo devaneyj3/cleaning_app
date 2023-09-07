@@ -10,6 +10,7 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editItemId, setEditItemId] = useState(null);
+	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
 
 	const handleRowClick = (id) => {
 		if (api == "employees") router.push(`employee/${id}`);
@@ -22,9 +23,9 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 		deleteEntry(id);
 	};
 
-	const editRow = (e, id) => {
+	const editRow = (e, row) => {
 		e.stopPropagation();
-		setEditItemId(id);
+		setSelectedRowToEdit(row);
 		setIsModalOpen(true);
 	};
 
@@ -60,7 +61,7 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 									/>
 									<MdEdit
 										color="blue"
-										onClick={(event) => editRow(event, row.id)}
+										onClick={(event) => editRow(event, row)}
 									/>
 								</td>
 							</tr>
@@ -68,17 +69,20 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 					})}
 				</tbody>
 			</table>
-			<CustomEditModal
-				isOpen={isModalOpen}
-				toggle={closeModal}
-				title="Edit Item"
-				itemId={editItemId}
-				onSave={(editedData) => {
-					// Handle saving the edited data here
-					console.log("Edited data:", editedData);
-					closeModal(); // Close the modal after saving
-				}}
-			/>
+			{selectedRowToEdit && (
+				<CustomEditModal
+					isOpen={isModalOpen}
+					toggle={closeModal}
+					headers={headers}
+					title="Edit Item"
+					row={selectedRowToEdit}
+					onSave={(editedData) => {
+						// Handle saving the edited data here
+						console.log("Edited data:", editedData);
+						closeModal(); // Close the modal after saving
+					}}
+				/>
+			)}
 		</>
 	);
 };

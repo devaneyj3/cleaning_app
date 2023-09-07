@@ -1,30 +1,45 @@
 import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import {
+	Modal,
+	FormGroup,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	Button,
+	Label,
+	Input,
+} from "reactstrap";
 
-function CustomEditModal({ isOpen, toggle, title, onSave, itemId }) {
+function CustomEditModal({ isOpen, toggle, title, onSave, row, headers }) {
 	const [editedData, setEditedData] = useState(""); // State to store edited data
 
 	const handleSave = () => {
-		// Handle saving the edited data
 		onSave(editedData);
 	};
 
 	const handleChange = (e) => {
-		// Update the editedData state when the input changes
 		setEditedData(e.target.value);
 	};
-
+	console.log(row);
 	return (
 		<Modal isOpen={isOpen} toggle={toggle}>
 			<ModalHeader toggle={toggle}>{title}</ModalHeader>
 			<ModalBody>
-				<label htmlFor="editInput">Edit Data:</label>
-				<input
-					type="text"
-					id="editInput"
-					value={editedData}
-					onChange={handleChange}
-				/>
+				{headers.map((lb, index) => {
+					const values = Object.values(row);
+					return (
+						<FormGroup>
+							<Label for={lb}>{lb}</Label>
+							<Input
+								type="text"
+								id="editInput"
+								placeholder={values[index + 1]}
+								value={editedData}
+								onChange={handleChange}
+							/>
+						</FormGroup>
+					);
+				})}
 			</ModalBody>
 			<ModalFooter>
 				<Button color="primary" onClick={handleSave}>
