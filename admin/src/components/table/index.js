@@ -25,6 +25,7 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 
 	const editRow = (e, row) => {
 		e.stopPropagation();
+		setEditItemId(row.id);
 		setSelectedRowToEdit(row);
 		setIsModalOpen(true);
 	};
@@ -78,7 +79,7 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 					row={selectedRowToEdit}
 					onSave={(editedData) => {
 						// Handle saving the edited data here
-						console.log("Edited data:", editedData);
+						editEntry(editItemId, editedData);
 						closeModal(); // Close the modal after saving
 					}}
 				/>

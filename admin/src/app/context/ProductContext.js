@@ -60,8 +60,7 @@ const ProductContextProvider = ({ children }) => {
 		}
 	};
 
-	const editProduct = async (id, data = null) => {
-		console.log("editing product", data);
+	const editProduct = async (id, data) => {
 		try {
 			const response = await customAxios().put(`/products/${id}/edit`, data);
 			const updatedProducts = response.data.products;

@@ -11,30 +11,35 @@ import {
 } from "reactstrap";
 
 function CustomEditModal({ isOpen, toggle, title, onSave, row, headers }) {
-	const [editedData, setEditedData] = useState(""); // State to store edited data
+	const [editedData, setEditedData] = useState({});
 
 	const handleSave = () => {
 		onSave(editedData);
 	};
 
 	const handleChange = (e) => {
-		setEditedData(e.target.value);
+		const { value, name } = e.target;
+		setEditedData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
 	};
-	console.log(row);
 	return (
 		<Modal isOpen={isOpen} toggle={toggle}>
 			<ModalHeader toggle={toggle}>{title}</ModalHeader>
 			<ModalBody>
 				{headers.map((lb, index) => {
 					const values = Object.values(row);
+					const keys = Object.keys(row);
 					return (
-						<FormGroup>
+						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>
 							<Input
 								type="text"
-								id="editInput"
+								id={lb}
+								name={keys[index + 1]}
 								placeholder={values[index + 1]}
-								value={editedData}
+								value={editedData[keys[index + 1]] || ""}
 								onChange={handleChange}
 							/>
 						</FormGroup>
