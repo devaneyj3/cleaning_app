@@ -9,10 +9,19 @@ import {
 	Label,
 	Input,
 } from "reactstrap";
+import CustomCheckbox from "../CustomCheckbox";
 
-function CustomEditModal({ isOpen, toggle, title, onSave, row, headers }) {
+function CustomEditModal({
+	isOpen,
+	toggle,
+	title,
+	onSave,
+	row,
+	headers,
+	checkboxes,
+}) {
 	const [editedData, setEditedData] = useState({});
-
+	const [checkboxValue, setCheckboxValue] = useState([]);
 	const handleSave = () => {
 		onSave(editedData);
 	};
@@ -45,6 +54,12 @@ function CustomEditModal({ isOpen, toggle, title, onSave, row, headers }) {
 						</FormGroup>
 					);
 				})}
+				{checkboxes && (
+					<CustomCheckbox
+						checkboxArr={checkboxes}
+						setCheckedLocations={setCheckboxValue}
+					/>
+				)}
 			</ModalBody>
 			<ModalFooter>
 				<Button color="primary" onClick={handleSave}>

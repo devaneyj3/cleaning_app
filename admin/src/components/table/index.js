@@ -5,7 +5,14 @@ import styles from "./table.module.css";
 import { useRouter } from "next/navigation";
 import CustomEditModal from "../CustomEditModal";
 
-const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
+const DataTable = ({
+	rows,
+	headers,
+	deleteEntry,
+	editEntry,
+	api,
+	checkboxes,
+}) => {
 	const router = useRouter();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,6 +80,7 @@ const DataTable = ({ rows, headers, deleteEntry, editEntry, api }) => {
 			{selectedRowToEdit && (
 				<CustomEditModal
 					isOpen={isModalOpen}
+					checkboxes={checkboxes}
 					toggle={closeModal}
 					headers={headers}
 					title="Edit Item"

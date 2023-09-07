@@ -58,6 +58,7 @@ export default function ProductTable() {
 						api="products"
 						deleteEntry={deleteProduct}
 						editEntry={editProduct}
+						checkboxes={checkboxArr}
 					/>
 				</>
 			) : (

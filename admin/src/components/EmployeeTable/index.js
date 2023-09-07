@@ -79,6 +79,7 @@ export default function EmployeeTable() {
 				<DataTable
 					rows={updatedEmployees}
 					headers={employeeLabelArr}
+					checkboxes={checkboxArr}
 					api="employees"
 					deleteEntry={deleteEmployee}
 					editEntry={editEmployee}
