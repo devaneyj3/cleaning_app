@@ -13,6 +13,22 @@ const LocationContextProvider = ({ children }) => {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
 
+	const locationFields = [
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "address", label: "Address", type: "text", required: true },
+		{ name: "phone", label: "Phone", type: "text", required: true },
+		{ name: "city", label: "City", type: "text", required: true },
+		{ name: "state", label: "State", type: "text", required: true },
+		{
+			name: "zip",
+			label: "Zip",
+			title: "Please enter a Zip Code",
+			pattern: "^s*?d{5}(?:[-s]d{4})?s*?$",
+			type: "number",
+			required: true,
+		},
+	];
+
 	const toggle = () => setModal(!modal);
 
 	const getLocations = async () => {
@@ -89,6 +105,7 @@ const LocationContextProvider = ({ children }) => {
 				modal,
 				msg,
 				toggle,
+				locationFields,
 			}}>
 			{children}
 		</LocationContext.Provider>

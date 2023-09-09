@@ -12,6 +12,14 @@ const ProductContextProvider = ({ children }) => {
 	const [msg, setMsg] = useState("");
 	const [modal, setModal] = useState(false);
 
+	const productFields = [
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "quantity", label: "Quantity", type: "number", required: true },
+		{ name: "use", label: "Use", type: "text", required: true },
+		{ name: "status", label: "Status", type: "text", required: true },
+		{ name: "type", label: "Type", type: "text", required: true },
+	];
+
 	const toggle = () => setModal(!modal);
 
 	const getProducts = async () => {
@@ -85,6 +93,7 @@ const ProductContextProvider = ({ children }) => {
 				msg,
 				toggle,
 				modal,
+				productFields,
 			}}>
 			{children}
 		</ProductContext.Provider>

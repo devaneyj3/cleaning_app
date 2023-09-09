@@ -23,7 +23,9 @@ function CustomEditModal({
 	const [editedData, setEditedData] = useState({});
 	const [checkboxValue, setCheckboxValue] = useState([]);
 	const handleSave = () => {
-		onSave(editedData);
+		onSave(editedData, checkboxValue);
+		setEditedData({});
+		setCheckboxValue([]);
 	};
 
 	const handleChange = (e) => {

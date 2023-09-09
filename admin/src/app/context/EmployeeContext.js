@@ -14,6 +14,22 @@ const EmployeeContextProvider = ({ children }) => {
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
 
+	const employeeFields = [
+		{ name: "name", label: "Name", type: "text", required: true },
+		{ name: "email", label: "Email", type: "text", required: true },
+		{ name: "phone", label: "Phone", type: "text", required: true },
+		{ name: "username", label: "Username", type: "text", required: true },
+		{ name: "password", label: "Password", type: "text", required: true },
+		{ name: "pay", label: "Pay", type: "number", required: true },
+		{ name: "position", label: "Position", type: "text", required: true },
+		{
+			name: "hired",
+			label: "Hired",
+			type: "date",
+			required: true,
+		},
+	];
+
 	const toggle = () => setModal(!modal);
 
 	const getEmployees = async () => {
@@ -95,8 +111,9 @@ const EmployeeContextProvider = ({ children }) => {
 		}
 	};
 
-	const editEmployee = async (id, data) => {
+	const editEmployee = async (id, data, checkbox) => {
 		try {
+			console.log(id, data, checkbox);
 			const response = await customAxios().put(`/employees/${id}/edit`, data);
 			const employees = response.data.employees;
 			setEmployees(employees);
@@ -106,18 +123,6 @@ const EmployeeContextProvider = ({ children }) => {
 			console.error("Error editing employee:", error.message);
 		}
 	};
-	const addEmployeeToLocation = async (id, data) => {
-		try {
-			const response = await customAxios().put(`/employees/${id}/edit`, data);
-			const employees = response.data.employees;
-			setEmployees(employees);
-		} catch (error) {
-			// Do something with the employees' data here.
-			// Handle any errors that might occur during the API request.
-			console.error("Error editing employee:", error.message);
-		}
-	};
-
 	return (
 		<EmployeeContext.Provider
 			value={{
@@ -134,6 +139,8 @@ const EmployeeContextProvider = ({ children }) => {
 				msg,
 				toggle,
 				SaveEmployee,
+				getEmployeesLocations,
+				employeeFields,
 			}}>
 			{children}
 		</EmployeeContext.Provider>

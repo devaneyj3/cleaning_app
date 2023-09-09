@@ -19,12 +19,6 @@ const DataTable = ({
 	const [editItemId, setEditItemId] = useState(null);
 	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
 
-	const handleRowClick = (id) => {
-		if (api == "employees") router.push(`employee/${id}`);
-		if (api == "locations") router.push(`location/${id}`);
-		if (api == "products") router.push(`product/${id}`);
-	};
-
 	const deleteRow = (e, id) => {
 		e.stopPropagation();
 		deleteEntry(id);
@@ -85,9 +79,9 @@ const DataTable = ({
 					headers={headers}
 					title="Edit Item"
 					row={selectedRowToEdit}
-					onSave={(editedData) => {
+					onSave={(editedData, checkbox) => {
 						// Handle saving the edited data here
-						editEntry(editItemId, editedData);
+						editEntry(editItemId, editedData, checkbox);
 						closeModal(); // Close the modal after saving
 					}}
 				/>

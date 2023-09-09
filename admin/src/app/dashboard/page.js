@@ -4,9 +4,9 @@ import React from "react";
 
 import "./dashboard.css";
 
-import EmployeeTable from "@/components/EmployeeTable";
-import LocationTable from "@/components/LocationTable";
-import ProductTable from "@/components/ProductTable";
+import EmployeeTable from "@/components/Employee";
+import LocationTable from "@/components/Location";
+import ProductTable from "@/components/Product";
 
 export default function Dashboard() {
 	return (
