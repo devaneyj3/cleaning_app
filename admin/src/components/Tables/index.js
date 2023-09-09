@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import CustomEditModal from "../CustomEditModal";
 
-const DataTable = ({ rows, headers, editEntry, api, checkboxes }) => {
+const DataTable = ({ , headers, editEntry, checkboxes }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const closeModal = () => {

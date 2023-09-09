@@ -5,7 +5,7 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomModal from "@/components/Modal/Modal";
 import { ProductContext } from "@/app/context/ProductContext";
 import { LocationContext } from "../../app/context/LocationContext";
-import ProductsTable from "../Tables/ProductTable";
+import ProductsTable from "./Table/ProductTable";
 
 export default function Product() {
 	const { products, getProducts, saveProduct, loading, msg, toggle, modal } =

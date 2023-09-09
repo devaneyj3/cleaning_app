@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomModal from "@/components/Modal/Modal";
 import { LocationContext } from "@/app/context/LocationContext";
-import LocationTable from "../Tables/LocationTable";
+import LocationTable from "./Table/LocationTable";
 
 export default function Location() {
 	const { locations, getLocations, SaveLocation, loading, modal, msg, toggle } =

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./table.module.css";
-import CustomCheckbox from "../CustomCheckbox";
+import CustomCheckbox from "../../CustomCheckbox";
 import { useRouter } from "next/navigation";
 
 import { ProductContext } from "@/app/context/ProductContext";
@@ -41,9 +41,7 @@ function ProductsTable({ products }) {
 	const tableRows = products.map((product, index) => (
 		<tr key={index} onClick={() => handleRowClick(product.id)}>
 			{productFields.map((field) => (
-				<>
-					<td key={field.name}>{product[field.name]}</td>
-				</>
+				<td key={field.name}>{product[field.name]}</td>
 			))}
 			<td>
 				<MdDeleteForever

@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomModal from "@/components/Modal/Modal";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
-import EmployeeTable from "../Tables/EmployeeTable";
+import EmployeeTable from "./Table/EmployeeTable";
 
 export default function Employee() {
 	const {

@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 
 import moment from "moment";
 import styles from "./table.module.css";
-import CustomCheckbox from "../CustomCheckbox";
+import CustomCheckbox from "../../CustomCheckbox";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 import { useRouter } from "next/navigation";
@@ -39,13 +39,11 @@ function EmployeeTable({ employees }) {
 	const tableRows = employees.map((employee, index) => (
 		<tr key={index} onClick={() => handleRowClick(employee.id)}>
 			{employeeFields.map((field) => (
-				<>
-					<td key={field.name}>
-						{field.name === "hired"
-							? moment(employee[field.name]).format("MM/DD/YYYY")
-							: employee[field.name]}
-					</td>
-				</>
+				<td key={field.name}>
+					{field.name === "hired"
+						? moment(employee[field.name]).format("MM/DD/YYYY")
+						: employee[field.name]}
+				</td>
 			))}
 			<td>
 				<MdDeleteForever
