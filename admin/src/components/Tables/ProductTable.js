@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./table.module.css";
 import CustomCheckbox from "../CustomCheckbox";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,16 @@ import { ProductContext } from "@/app/context/ProductContext";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 function ProductsTable({ products }) {
-	const { productFields } = useContext(ProductContext);
+	//#region STATE
+	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+
+	//#endregion
+
+	//#region CONTEXT
+	const { productFields, deleteProduct, editProduct } =
+		useContext(ProductContext);
+
+	//#endregion
 
 	const router = useRouter();
 
@@ -39,13 +48,27 @@ function ProductsTable({ products }) {
 			<td>
 				<MdDeleteForever
 					color="red"
-					onClick={(event) => deleteRow(event, row.id)}
+					onClick={(event) => deleteRow(event, product.id)}
 				/>
-				<MdEdit color="blue" onClick={(event) => editRow(event, row)} />
+				<MdEdit color="blue" onClick={(event) => editRow(event, product)} />
 			</td>
 		</tr>
 	));
 
+	//#endregion
+
+	//#region DELETE ROW
+	const deleteRow = (e, id) => {
+		e.stopPropagation();
+		deleteProduct(id);
+	};
+	//#endregion
+
+	//#region EDIT ROW
+	const editRow = (e, product) => {
+		e.stopPropagation();
+		editProduct(product);
+	};
 	//#endregion
 
 	return (

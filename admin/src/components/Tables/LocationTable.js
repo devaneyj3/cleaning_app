@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./table.module.css";
 import CustomCheckbox from "../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
@@ -6,7 +6,17 @@ import { useRouter } from "next/navigation";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 function LocationTable({ locations }) {
-	const { locationFields } = useContext(LocationContext);
+	//#region STATE
+	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+
+	//#endregion
+
+	//#region CONTEXT
+	const { locationFields, deleteLocation, editLocation } =
+		useContext(LocationContext);
+
+	//#endregion
+
 	const router = useRouter();
 
 	//#region NAVIGATE TO LOCATION PAGE
@@ -43,6 +53,20 @@ function LocationTable({ locations }) {
 		</tr>
 	));
 
+	//#endregion
+
+	//#region DELETE ROW
+	const deleteRow = (e, id) => {
+		e.stopPropagation();
+		deleteLocation(id);
+	};
+	//#endregion
+
+	//#region EDIT ROW
+	const editRow = (e, location) => {
+		e.stopPropagation();
+		editLocation(location);
+	};
 	//#endregion
 
 	return (

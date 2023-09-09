@@ -1,5 +1,5 @@
 import { EmployeeContext } from "@/app/context/EmployeeContext";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import moment from "moment";
 import styles from "./table.module.css";
@@ -9,7 +9,16 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 function EmployeeTable({ employees }) {
-	const { employeeFields } = useContext(EmployeeContext);
+	//#region STATE
+	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+
+	//#endregion
+
+	//#region CONTEXT
+	const { employeeFields, deleteEmployee } = useContext(EmployeeContext);
+
+	//#endregion
+
 	const router = useRouter();
 
 	//#region NAVIGATE TO EMPLOYEE PAGE
@@ -41,13 +50,27 @@ function EmployeeTable({ employees }) {
 			<td>
 				<MdDeleteForever
 					color="red"
-					onClick={(event) => deleteRow(event, row.id)}
+					onClick={(event) => deleteRow(event, employee.id)}
 				/>
-				<MdEdit color="blue" onClick={(event) => editRow(event, row)} />
+				<MdEdit color="blue" onClick={(event) => editRow(event, employee)} />
 			</td>
 		</tr>
 	));
 
+	//#endregion
+
+	//#region	DELETE ROW
+	const deleteRow = (e, id) => {
+		e.stopPropagation();
+		deleteEmployee(id);
+	};
+	//#endregion
+
+	//#region EDIT ROW
+	const editRow = (e, employee) => {
+		e.stopPropagation();
+		setSelectedRowToEdit(employee);
+	};
 	//#endregion
 
 	return (

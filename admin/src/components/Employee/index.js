@@ -1,13 +1,9 @@
 "use client";
 
 import React, { useEffect, useContext } from "react";
-
-import DataTable from "@/components/Tables";
 import CustomButton from "@/components/CustomButton/CustomButton";
-
 import CustomModal from "@/components/Modal/Modal";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
-
 import EmployeeTable from "../Tables/EmployeeTable";
 
 export default function Employee() {
@@ -16,8 +12,6 @@ export default function Employee() {
 		getEmployees,
 		SaveEmployee,
 		employeeLoading,
-		editEmployee,
-		deleteEmployee,
 		modal,
 		msg,
 		toggle,

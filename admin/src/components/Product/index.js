@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useContext } from "react";
-import DataTable from "@/components/Tables";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import CustomModal from "@/components/Modal/Modal";
 import { ProductContext } from "@/app/context/ProductContext";
@@ -9,17 +8,8 @@ import { LocationContext } from "../../app/context/LocationContext";
 import ProductsTable from "../Tables/ProductTable";
 
 export default function Product() {
-	const {
-		products,
-		getProducts,
-		saveProduct,
-		loading,
-		deleteProduct,
-		msg,
-		toggle,
-		modal,
-		editProduct,
-	} = useContext(ProductContext);
+	const { products, getProducts, saveProduct, loading, msg, toggle, modal } =
+		useContext(ProductContext);
 	const { locations } = useContext(LocationContext);
 
 	useEffect(() => {

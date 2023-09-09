@@ -1,27 +1,14 @@
 "use client";
 
 import React, { useEffect, useContext } from "react";
-
-import DataTable from "@/components/Tables";
 import CustomButton from "@/components/CustomButton/CustomButton";
-
 import CustomModal from "@/components/Modal/Modal";
-
 import { LocationContext } from "@/app/context/LocationContext";
 import LocationTable from "../Tables/LocationTable";
 
 export default function Location() {
-	const {
-		locations,
-		getLocations,
-		SaveLocation,
-		loading,
-		modal,
-		msg,
-		deleteLocation,
-		editLocation,
-		toggle,
-	} = useContext(LocationContext);
+	const { locations, getLocations, SaveLocation, loading, modal, msg, toggle } =
+		useContext(LocationContext);
 
 	useEffect(() => {
 		getLocations();

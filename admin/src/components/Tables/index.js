@@ -2,29 +2,8 @@ import React, { useState } from "react";
 
 import CustomEditModal from "../CustomEditModal";
 
-const DataTable = ({
-	rows,
-	headers,
-	deleteEntry,
-	editEntry,
-	api,
-	checkboxes,
-}) => {
+const DataTable = ({ rows, headers, editEntry, api, checkboxes }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [editItemId, setEditItemId] = useState(null);
-	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
-
-	const deleteRow = (e, id) => {
-		e.stopPropagation();
-		deleteEntry(id);
-	};
-
-	const editRow = (e, row) => {
-		e.stopPropagation();
-		setEditItemId(row.id);
-		setSelectedRowToEdit(row);
-		setIsModalOpen(true);
-	};
 
 	const closeModal = () => {
 		setIsModalOpen(false);
