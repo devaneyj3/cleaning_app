@@ -8,7 +8,7 @@ import { LocationContext } from "../../app/context/LocationContext";
 import ProductsTable from "./Table/ProductTable";
 
 export default function Product() {
-	const { products, getProducts, saveProduct, loading, msg, toggle, modal } =
+	const { products, getProducts, saveProduct, loading, toggle } =
 		useContext(ProductContext);
 	const { locations } = useContext(LocationContext);
 

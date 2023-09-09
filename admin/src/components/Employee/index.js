@@ -7,15 +7,8 @@ import { EmployeeContext } from "../../app/context/EmployeeContext";
 import EmployeeTable from "./Table/EmployeeTable";
 
 export default function Employee() {
-	const {
-		employees,
-		getEmployees,
-		SaveEmployee,
-		employeeLoading,
-		modal,
-		msg,
-		toggle,
-	} = useContext(EmployeeContext);
+	const { employees, getEmployees, SaveEmployee, employeeLoading, toggle } =
+		useContext(EmployeeContext);
 
 	useEffect(() => {
 		getEmployees();

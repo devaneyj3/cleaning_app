@@ -7,19 +7,27 @@ import CustomCheckbox from "../../CustomCheckbox";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 import { useRouter } from "next/navigation";
+import CustomEditModal from "@/components/CustomEditModal";
 
 function EmployeeTable({ employees }) {
 	//#region STATE
 	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	//#endregion
 
 	//#region CONTEXT
-	const { employeeFields, deleteEmployee } = useContext(EmployeeContext);
+	const { employeeFields, deleteEmployee, editEmployee, modal, msg, toggle } =
+		useContext(EmployeeContext);
 
 	//#endregion
 
 	const router = useRouter();
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+		setEditItemId(null);
+	};
 
 	//#region NAVIGATE TO EMPLOYEE PAGE
 	const handleRowClick = (id) => {
@@ -68,16 +76,34 @@ function EmployeeTable({ employees }) {
 	const editRow = (e, employee) => {
 		e.stopPropagation();
 		setSelectedRowToEdit(employee);
+		editEmployee(employee);
 	};
 	//#endregion
 
 	return (
-		<table className={styles.table}>
-			<thead>
-				<tr>{tableHeaders}</tr>
-			</thead>
-			<tbody>{tableRows}</tbody>
-		</table>
+		<>
+			<table className={styles.table}>
+				<thead>
+					<tr>{tableHeaders}</tr>
+				</thead>
+				<tbody>{tableRows}</tbody>
+			</table>
+			{selectedRowToEdit && (
+				<CustomEditModal
+					isOpen={isModalOpen}
+					checkboxes={checkboxes}
+					toggle={closeModal}
+					headers={headers}
+					title="Edit Item"
+					row={selectedRowToEdit}
+					onSave={(editedData, checkbox) => {
+						// Handle saving the edited data here
+						editEntry(editItemId, editedData, checkbox);
+						closeModal(); // Close the modal after saving
+					}}
+				/>
+			)}
+		</>
 	);
 }
 

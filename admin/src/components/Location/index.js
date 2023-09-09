@@ -7,7 +7,7 @@ import { LocationContext } from "@/app/context/LocationContext";
 import LocationTable from "./Table/LocationTable";
 
 export default function Location() {
-	const { locations, getLocations, SaveLocation, loading, modal, msg, toggle } =
+	const { locations, getLocations, SaveLocation, loading, toggle } =
 		useContext(LocationContext);
 
 	useEffect(() => {
