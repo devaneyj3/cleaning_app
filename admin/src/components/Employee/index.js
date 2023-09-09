@@ -7,7 +7,7 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 
 import CustomModal from "@/components/Modal/Modal";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
-import { LocationContext } from "../../app/context/LocationContext";
+
 import EmployeeTable from "../Tables/EmployeeTable";
 
 export default function Employee() {
@@ -23,7 +23,6 @@ export default function Employee() {
 		toggle,
 	} = useContext(EmployeeContext);
 
-	const { locations } = useContext(LocationContext);
 	useEffect(() => {
 		getEmployees();
 	}, []);

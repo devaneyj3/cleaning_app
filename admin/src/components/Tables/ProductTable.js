@@ -4,6 +4,7 @@ import CustomCheckbox from "../CustomCheckbox";
 import { useRouter } from "next/navigation";
 
 import { ProductContext } from "@/app/context/ProductContext";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 function ProductsTable({ products }) {
 	const { productFields } = useContext(ProductContext);
@@ -31,8 +32,17 @@ function ProductsTable({ products }) {
 	const tableRows = products.map((product, index) => (
 		<tr key={index} onClick={() => handleRowClick(product.id)}>
 			{productFields.map((field) => (
-				<td key={field.name}>{product[field.name]}</td>
+				<>
+					<td key={field.name}>{product[field.name]}</td>
+				</>
 			))}
+			<td>
+				<MdDeleteForever
+					color="red"
+					onClick={(event) => deleteRow(event, row.id)}
+				/>
+				<MdEdit color="blue" onClick={(event) => editRow(event, row)} />
+			</td>
 		</tr>
 	));
 

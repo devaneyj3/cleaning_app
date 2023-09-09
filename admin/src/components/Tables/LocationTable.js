@@ -3,6 +3,7 @@ import styles from "./table.module.css";
 import CustomCheckbox from "../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
 import { useRouter } from "next/navigation";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 function LocationTable({ locations }) {
 	const { locationFields } = useContext(LocationContext);
@@ -28,8 +29,17 @@ function LocationTable({ locations }) {
 	const tableRows = locations.map((location, index) => (
 		<tr key={index} onClick={() => handleRowClick(location.id)}>
 			{locationFields.map((field) => (
-				<td key={field.name}>{location[field.name]}</td>
+				<>
+					<td key={field.name}>{location[field.name]}</td>
+				</>
 			))}
+			<td>
+				<MdDeleteForever
+					color="red"
+					onClick={(event) => deleteRow(event, row.id)}
+				/>
+				<MdEdit color="blue" onClick={(event) => editRow(event, row)} />
+			</td>
 		</tr>
 	));
 
