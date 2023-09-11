@@ -30,6 +30,16 @@ const EmployeeContextProvider = ({ children }) => {
 		},
 	];
 
+	let employeeLabelArr;
+	if (employees.length > 0) {
+		employeeLabelArr = employeeLabelArr = employeeFields.reduce(
+			(acc, field) => {
+				acc.push(field.label);
+				return acc;
+			},
+			[]
+		);
+	}
 	const toggle = () => setModal(!modal);
 
 	const getEmployees = async () => {
@@ -141,6 +151,7 @@ const EmployeeContextProvider = ({ children }) => {
 				SaveEmployee,
 				getEmployeesLocations,
 				employeeFields,
+				employeeLabelArr,
 			}}>
 			{children}
 		</EmployeeContext.Provider>

@@ -29,6 +29,17 @@ const LocationContextProvider = ({ children }) => {
 		},
 	];
 
+	let locationLabelArray;
+	if (locations.length > 0) {
+		locationLabelArray = locationLabelArray = locationFields.reduce(
+			(acc, field) => {
+				acc.push(field.label);
+				return acc;
+			},
+			[]
+		);
+	}
+
 	const toggle = () => setModal(!modal);
 
 	const getLocations = async () => {
@@ -106,6 +117,7 @@ const LocationContextProvider = ({ children }) => {
 				msg,
 				toggle,
 				locationFields,
+				locationLabelArray,
 			}}>
 			{children}
 		</LocationContext.Provider>

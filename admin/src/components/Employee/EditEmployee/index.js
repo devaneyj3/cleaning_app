@@ -18,9 +18,10 @@ function EditEmployee({ selectedRowToEdit }) {
 	const [checkboxValue, setCheckboxValue] = useState([]);
 
 	const { locations } = useContext(LocationContext);
-	const { toggle, modal, editEmployee, employees } =
+	const { toggle, modal, editEmployee, employeeLabelArr } =
 		useContext(EmployeeContext);
 
+	console.log("showing");
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations).map((locationName) => ({
 		...locationName,
@@ -29,7 +30,6 @@ function EditEmployee({ selectedRowToEdit }) {
 		type: "checkbox",
 		required: false,
 	}));
-
 	const handleSave = () => {
 		editEmployee(selectedRowToEdit, editedData, checkboxValue);
 		setEditedData({});
@@ -47,16 +47,21 @@ function EditEmployee({ selectedRowToEdit }) {
 		<Modal isOpen={modal} toggle={toggle}>
 			<ModalHeader toggle={toggle}>Edit Employee</ModalHeader>
 			<ModalBody>
-				{employees.map((lb, index) => {
-					const values = Object.values(lb);
-					const keys = Object.keys(lb);
+				{employeeLabelArr.map((lb, index) => {
+					const values = Object.values(selectedRowToEdit);
+					const keys = Object.keys(selectedRowToEdit);
+					const placeholder = values[index + 1];
+					const value = editedData[keys[index + 1]] || "";
+					const name = lb.toLowerCase();
+
+					console.log(placeholder, name, value);
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>
 							<Input
 								type="text"
 								id={lb}
-								name={keys[index + 1]}
+								name={name}
 								placeholder={values[index + 1]}
 								value={editedData[keys[index + 1]] || ""}
 								onChange={handleChange}

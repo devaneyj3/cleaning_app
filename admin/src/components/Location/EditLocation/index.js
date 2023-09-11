@@ -14,7 +14,7 @@ import { LocationContext } from "@/app/context/LocationContext";
 function EditLocation({ selectedRowToEdit }) {
 	const [editedData, setEditedData] = useState({});
 
-	const { toggle, modal, editLocation, locationFields } =
+	const { toggle, modal, editLocation, locations, locationLabelArray } =
 		useContext(LocationContext);
 
 	const handleSave = () => {
@@ -29,13 +29,15 @@ function EditLocation({ selectedRowToEdit }) {
 			[name]: value,
 		}));
 	};
+
 	return (
 		<Modal isOpen={modal} toggle={toggle}>
 			<ModalHeader toggle={toggle}>Edit Location</ModalHeader>
 			<ModalBody>
-				{locationFields.map((lb, index) => {
-					const values = Object.values(lb);
-					const keys = Object.keys(lb);
+				{locationLabelArray.map((lb, index) => {
+					const values = Object.values(locations);
+					const keys = Object.keys(locations);
+					console.log(lb, values, keys);
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>

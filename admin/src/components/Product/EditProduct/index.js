@@ -23,7 +23,7 @@ function EditProduct({ row }) {
 		toggle();
 	};
 	const { locations } = useContext(LocationContext);
-	const { toggle, modal, editProduct, productFields } =
+	const { toggle, modal, editProduct, products, productLabelArr } =
 		useContext(ProductContext);
 
 	// Add checkboxes for locations dynamically
@@ -46,9 +46,9 @@ function EditProduct({ row }) {
 		<Modal isOpen={modal} toggle={toggle}>
 			<ModalHeader toggle={toggle}>Edit Product</ModalHeader>
 			<ModalBody>
-				{productFields.map((lb, index) => {
-					const values = Object.values(lb);
-					const keys = Object.keys(lb);
+				{productLabelArr.map((lb, index) => {
+					const values = Object.values(products);
+					const keys = Object.keys(products);
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>

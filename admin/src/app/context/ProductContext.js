@@ -20,6 +20,13 @@ const ProductContextProvider = ({ children }) => {
 		{ name: "type", label: "Type", type: "text", required: true },
 	];
 
+	let productLabelArr;
+	if (products.length > 0) {
+		productLabelArr = productLabelArr = productFields.reduce((acc, field) => {
+			acc.push(field.label);
+			return acc;
+		}, []);
+	}
 	const toggle = () => setModal(!modal);
 
 	const getProducts = async () => {
@@ -94,6 +101,7 @@ const ProductContextProvider = ({ children }) => {
 				toggle,
 				modal,
 				productFields,
+				productLabelArr,
 			}}>
 			{children}
 		</ProductContext.Provider>
