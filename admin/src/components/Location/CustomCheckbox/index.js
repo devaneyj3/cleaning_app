@@ -3,7 +3,7 @@ import React from "react";
 
 import styles from "./checkbox.module.css";
 
-function CustomCheckbox({ checkboxArr, setCheckedLocations }) {
+function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
 	const handleChange = (e) => {
 		const { name, checked } = e.target;
 		if (checked) {

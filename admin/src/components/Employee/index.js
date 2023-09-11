@@ -22,7 +22,7 @@ export default function Employee() {
 		<main>
 			<p>You have {employees.length} employees</p>
 			{employees.length > 0 ? (
-				<EmployeeTable employees={employees} />
+				<EmployeeTable />
 			) : (
 				<p>Create your first employee to get started</p>
 			)}

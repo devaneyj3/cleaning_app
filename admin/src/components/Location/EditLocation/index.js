@@ -11,15 +11,19 @@ import {
 } from "reactstrap";
 import { LocationContext } from "@/app/context/LocationContext";
 
-function EditLocation({ selectedRowToEdit }) {
+function EditLocation({
+	selectedLocationRowToEdit,
+	isLocationEditModalOpen,
+	closeLocationEditModal,
+}) {
 	const [editedData, setEditedData] = useState({});
 
-	const { toggle, modal, editLocation, locations, locationLabelArray } =
-		useContext(LocationContext);
+	const { editLocation, locationLabelArray } = useContext(LocationContext);
 
 	const handleSave = () => {
-		editLocation(selectedRowToEdit, editedData);
+		editLocation(selectedLocationRowToEdit, editedData);
 		setEditedData({});
+		closeLocationEditModal();
 	};
 
 	const handleChange = (e) => {
@@ -31,22 +35,25 @@ function EditLocation({ selectedRowToEdit }) {
 	};
 
 	return (
-		<Modal isOpen={modal} toggle={toggle}>
-			<ModalHeader toggle={toggle}>Edit Location</ModalHeader>
+		<Modal isOpen={isLocationEditModalOpen} toggle={closeLocationEditModal}>
+			<ModalHeader toggle={closeLocationEditModal}>Edit Location</ModalHeader>
 			<ModalBody>
 				{locationLabelArray.map((lb, index) => {
-					const values = Object.values(locations);
-					const keys = Object.keys(locations);
-					console.log(lb, values, keys);
+					const values = Object.values(selectedLocationRowToEdit);
+					const keys = Object.keys(selectedLocationRowToEdit);
+					let placeholder = values[index + 1];
+					placeholder = placeholder.toString();
+					const value = editedData[keys[index + 1]] || "";
+					const name = lb.toLowerCase();
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>
 							<Input
 								type="text"
 								id={lb}
-								name={keys[index + 1]}
-								placeholder={values[index + 1]}
-								value={editedData[keys[index + 1]] || ""}
+								name={name}
+								placeholder={placeholder}
+								value={value}
 								onChange={handleChange}
 							/>
 						</FormGroup>
@@ -57,7 +64,7 @@ function EditLocation({ selectedRowToEdit }) {
 				<Button color="primary" onClick={handleSave}>
 					Save
 				</Button>
-				<Button color="secondary" onClick={toggle}>
+				<Button color="secondary" onClick={closeLocationEditModal}>
 					Cancel
 				</Button>
 			</ModalFooter>

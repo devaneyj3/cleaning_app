@@ -8,7 +8,7 @@ import CustomButton from "@/components/CustomButton/CustomButton";
 import moment from "moment";
 import "moment-precise-range-plugin";
 
-export default function Employee({ params: { id } }) {
+export default function Employee({ params: { id = {} } }) {
 	const { selectedEmployee, getEmployeeById, employeeLocation } =
 		useContext(EmployeeContext);
 

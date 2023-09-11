@@ -13,18 +13,21 @@ import CustomCheckbox from "../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
 import { ProductContext } from "@/app/context/ProductContext";
 
-function EditProduct({ row }) {
+function EditProduct({
+	selectedProductRowToEdit,
+	isProductEditModalOpen,
+	closeProductEditModal,
+}) {
 	const [editedData, setEditedData] = useState({});
 	const [checkboxValue, setCheckboxValue] = useState([]);
 	const handleSave = () => {
-		editProduct(editedData, checkboxValue);
+		editProduct(selectedProductRowToEdit, editedData, checkboxValue);
 		setEditedData({});
 		setCheckboxValue([]);
-		toggle();
+		closeProductEditModal();
 	};
 	const { locations } = useContext(LocationContext);
-	const { toggle, modal, editProduct, products, productLabelArr } =
-		useContext(ProductContext);
+	const { editProduct, productLabelArr } = useContext(ProductContext);
 
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations).map((locationName) => ({
@@ -43,21 +46,24 @@ function EditProduct({ row }) {
 		}));
 	};
 	return (
-		<Modal isOpen={modal} toggle={toggle}>
-			<ModalHeader toggle={toggle}>Edit Product</ModalHeader>
+		<Modal isOpen={isProductEditModalOpen} toggle={closeProductEditModal}>
+			<ModalHeader toggle={closeProductEditModal}>Edit Product</ModalHeader>
 			<ModalBody>
 				{productLabelArr.map((lb, index) => {
-					const values = Object.values(products);
-					const keys = Object.keys(products);
+					const values = Object.values(selectedProductRowToEdit);
+					const keys = Object.keys(selectedProductRowToEdit);
+					const placeholder = values[index + 1];
+					const value = editedData[keys[index + 1]] || "";
+					const name = lb.toLowerCase();
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>
 							<Input
 								type="text"
 								id={lb}
-								name={keys[index + 1]}
-								placeholder={values[index + 1]}
-								value={editedData[keys[index + 1]] || ""}
+								name={name}
+								placeholder={placeholder}
+								value={value}
 								onChange={handleChange}
 							/>
 						</FormGroup>
@@ -74,7 +80,7 @@ function EditProduct({ row }) {
 				<Button color="primary" onClick={handleSave}>
 					Save
 				</Button>
-				<Button color="secondary" onClick={toggle}>
+				<Button color="secondary" onClick={closeProductEditModal}>
 					Cancel
 				</Button>
 			</ModalFooter>

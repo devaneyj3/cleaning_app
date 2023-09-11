@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import EditLocation from "../EditLocation";
 
-function LocationTable({ locations }) {
+function LocationTable({ locations = {} }) {
 	//#region STATE
-	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+	const [selectedLocationRowToEdit, setSelectedLocationRowToEdit] =
+		useState(null);
+	const [isLocationEditModalOpen, setIsLocationEditModalOpen] = useState(false);
 	//#endregion
 
 	//#region CONTEXT
-	const { locationFields, deleteLocation, editLocation } =
-		useContext(LocationContext);
+	const { locationFields, deleteLocation } = useContext(LocationContext);
 
 	//#endregion
 
@@ -62,10 +63,15 @@ function LocationTable({ locations }) {
 	//#region EDIT ROW
 	const editRow = (e, location) => {
 		e.stopPropagation();
-		setSelectedRowToEdit(location);
-		editLocation(location);
+		setIsLocationEditModalOpen(true);
+		setSelectedLocationRowToEdit(location);
 	};
 	//#endregion
+
+	const closeLocationEditModal = () => {
+		setIsLocationEditModalOpen(false);
+		setSelectedLocationRowToEdit(null);
+	};
 
 	return (
 		<>
@@ -75,8 +81,12 @@ function LocationTable({ locations }) {
 				</thead>
 				<tbody>{tableRows}</tbody>
 			</table>
-			{selectedRowToEdit && (
-				<EditLocation selectedRowToEdit={selectedRowToEdit} />
+			{selectedLocationRowToEdit && (
+				<EditLocation
+					selectedLocationRowToEdit={selectedLocationRowToEdit}
+					isLocationEditModalOpen={isLocationEditModalOpen}
+					closeLocationEditModal={closeLocationEditModal}
+				/>
 			)}
 		</>
 	);

@@ -8,14 +8,17 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EditEmployee from "@/components/Employee/EditEmployee";
 
-function EmployeeTable({ employees }) {
+function EmployeeTable({}) {
 	//#region STATE
-	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+	const [selectedEmployeeRowToEdit, setSelecteEmployeedRowToEdit] =
+		useState(null);
+	const [isEmployeeEditModalOpen, setIsEmployeeEditModalOpen] = useState(false);
 
 	//#endregion
 
 	//#region CONTEXT
-	const { employeeFields, deleteEmployee } = useContext(EmployeeContext);
+	const { employeeFields, deleteEmployee, employees } =
+		useContext(EmployeeContext);
 
 	//#endregion
 
@@ -67,9 +70,15 @@ function EmployeeTable({ employees }) {
 	//#region EDIT ROW
 	const editRow = (e, employee) => {
 		e.stopPropagation();
-		setSelectedRowToEdit(employee);
+		setSelecteEmployeedRowToEdit(employee);
+		setIsEmployeeEditModalOpen(true);
 	};
 	//#endregion
+
+	const closeEmployeeEditModal = () => {
+		setIsEmployeeEditModalOpen(false);
+		setSelecteEmployeedRowToEdit(null);
+	};
 
 	return (
 		<>
@@ -79,8 +88,12 @@ function EmployeeTable({ employees }) {
 				</thead>
 				<tbody>{tableRows}</tbody>
 			</table>
-			{selectedRowToEdit && (
-				<EditEmployee selectedRowToEdit={selectedRowToEdit} />
+			{selectedEmployeeRowToEdit && (
+				<EditEmployee
+					selectedEmployeeRowToEdit={selectedEmployeeRowToEdit}
+					isEmployeeEditModalOpen={isEmployeeEditModalOpen}
+					closeEmployeeEditModal={closeEmployeeEditModal}
+				/>
 			)}
 		</>
 	);

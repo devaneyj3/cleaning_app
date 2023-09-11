@@ -13,15 +13,19 @@ import CustomCheckbox from "../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
 import { EmployeeContext } from "@/app/context/EmployeeContext";
 
-function EditEmployee({ selectedRowToEdit }) {
+import moment from "moment";
+
+function EditEmployee({
+	selectedEmployeeRowToEdit,
+	isEmployeeEditModalOpen,
+	closeEmployeeEditModal,
+}) {
 	const [editedData, setEditedData] = useState({});
 	const [checkboxValue, setCheckboxValue] = useState([]);
 
 	const { locations } = useContext(LocationContext);
-	const { toggle, modal, editEmployee, employeeLabelArr } =
-		useContext(EmployeeContext);
+	const { editEmployee, employeeLabelArr } = useContext(EmployeeContext);
 
-	console.log("showing");
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations).map((locationName) => ({
 		...locationName,
@@ -31,9 +35,10 @@ function EditEmployee({ selectedRowToEdit }) {
 		required: false,
 	}));
 	const handleSave = () => {
-		editEmployee(selectedRowToEdit, editedData, checkboxValue);
+		editEmployee(selectedEmployeeRowToEdit, editedData, checkboxValue);
 		setEditedData({});
 		setCheckboxValue([]);
+		closeEmployeeEditModal();
 	};
 
 	const handleChange = (e) => {
@@ -43,27 +48,32 @@ function EditEmployee({ selectedRowToEdit }) {
 			[name]: value,
 		}));
 	};
+
 	return (
-		<Modal isOpen={modal} toggle={toggle}>
-			<ModalHeader toggle={toggle}>Edit Employee</ModalHeader>
+		<Modal isOpen={isEmployeeEditModalOpen} toggle={closeEmployeeEditModal}>
+			<ModalHeader toggle={closeEmployeeEditModal}>Edit Employee</ModalHeader>
 			<ModalBody>
 				{employeeLabelArr.map((lb, index) => {
-					const values = Object.values(selectedRowToEdit);
-					const keys = Object.keys(selectedRowToEdit);
-					const placeholder = values[index + 1];
+					selectedEmployeeRowToEdit.hired = moment(
+						selectedEmployeeRowToEdit.hired
+					).format("MM/DD/YYYY");
+
+					const values = Object.values(selectedEmployeeRowToEdit);
+					const keys = Object.keys(selectedEmployeeRowToEdit);
+					let placeholder = values[index + 1];
+					placeholder = placeholder.toString();
 					const value = editedData[keys[index + 1]] || "";
 					const name = lb.toLowerCase();
-
-					console.log(placeholder, name, value);
+					console.log(placeholder);
 					return (
 						<FormGroup key={lb}>
-							<Label for={lb}>{lb}</Label>
+							<Label for={name}>{lb}</Label>
 							<Input
 								type="text"
-								id={lb}
+								id={name}
 								name={name}
-								placeholder={values[index + 1]}
-								value={editedData[keys[index + 1]] || ""}
+								placeholder={placeholder}
+								value={value}
 								onChange={handleChange}
 							/>
 						</FormGroup>
@@ -80,7 +90,7 @@ function EditEmployee({ selectedRowToEdit }) {
 				<Button color="primary" onClick={handleSave}>
 					Save
 				</Button>
-				<Button color="secondary" onClick={toggle}>
+				<Button color="secondary" onClick={closeEmployeeEditModal}>
 					Cancel
 				</Button>
 			</ModalFooter>

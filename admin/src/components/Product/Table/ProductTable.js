@@ -6,13 +6,15 @@ import { ProductContext } from "@/app/context/ProductContext";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import EditProduct from "../EditProduct";
 
-function ProductsTable({ products }) {
+function ProductsTable({ products = {} }) {
 	//#region STATE
-	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
+	const [selectedProductRowToEdit, seSelectedProductRowToEdit] = useState(null);
+
+	const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
 	//#endregion
 
 	//#region CONTEXT
-	const { productFields, deleteProduct, editProduct, msg, toggle, modal } =
+	const { productFields, deleteProduct, editProduct, toggle } =
 		useContext(ProductContext);
 
 	//#endregion
@@ -64,10 +66,15 @@ function ProductsTable({ products }) {
 	//#region EDIT ROW
 	const editRow = (e, product) => {
 		e.stopPropagation();
-		editProduct(product);
-		setSelectedRowToEdit(product);
+		seSelectedProductRowToEdit(product);
+		setIsProductEditModalOpen(true);
 	};
 	//#endregion
+
+	const closeProductEditModal = () => {
+		setIsProductEditModalOpen(false);
+		seSelectedProductRowToEdit(null);
+	};
 
 	return (
 		<>
@@ -77,7 +84,13 @@ function ProductsTable({ products }) {
 				</thead>
 				<tbody>{tableRows}</tbody>
 			</table>
-			{selectedRowToEdit && <EditProduct row={selectedRowToEdit} />}
+			{selectedProductRowToEdit && (
+				<EditProduct
+					selectedProductRowToEdit={selectedProductRowToEdit}
+					isProductEditModalOpen={isProductEditModalOpen}
+					closeProductEditModal={closeProductEditModal}
+				/>
+			)}
 		</>
 	);
 }

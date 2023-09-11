@@ -11,7 +11,7 @@ export const metadata = {
 		"Add your customers, employees, and manage your cleaning buisness",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children = {} }) {
 	return (
 		<html lang="en">
 			<body>
