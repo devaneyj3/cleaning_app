@@ -1,16 +1,14 @@
 import React, { useContext, useState } from "react";
 import styles from "./table.module.css";
-import CustomCheckbox from "../../CustomCheckbox";
 import { useRouter } from "next/navigation";
 
 import { ProductContext } from "@/app/context/ProductContext";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
-import CustomEditModal from "@/components/CustomEditModal";
+import EditProduct from "../EditProduct";
 
 function ProductsTable({ products }) {
 	//#region STATE
 	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	//#endregion
 
 	//#region CONTEXT
@@ -19,10 +17,6 @@ function ProductsTable({ products }) {
 
 	//#endregion
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setEditItemId(null);
-	};
 	const router = useRouter();
 
 	//#region NAVIGATE TO PRODUCT PAGE
@@ -83,21 +77,7 @@ function ProductsTable({ products }) {
 				</thead>
 				<tbody>{tableRows}</tbody>
 			</table>
-			{selectedRowToEdit && (
-				<CustomEditModal
-					isOpen={isModalOpen}
-					checkboxes={checkboxes}
-					toggle={closeModal}
-					headers={headers}
-					title="Edit Item"
-					row={selectedRowToEdit}
-					onSave={(editedData, checkbox) => {
-						// Handle saving the edited data here
-						editEntry(editItemId, editedData, checkbox);
-						closeModal(); // Close the modal after saving
-					}}
-				/>
-			)}
+			{selectedRowToEdit && <EditProduct row={selectedRowToEdit} />}
 		</>
 	);
 }

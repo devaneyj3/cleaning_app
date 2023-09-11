@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
 	Modal,
 	FormGroup,
@@ -10,20 +10,28 @@ import {
 	Input,
 } from "reactstrap";
 import CustomCheckbox from "../CustomCheckbox";
+import { LocationContext } from "@/app/context/LocationContext";
+import { EmployeeContext } from "@/app/context/EmployeeContext";
 
-function CustomEditModal({
-	isOpen,
-	toggle,
-	title,
-	onSave,
-	row,
-	headers,
-	checkboxes,
-}) {
+function EditEmployee({ selectedRowToEdit }) {
 	const [editedData, setEditedData] = useState({});
 	const [checkboxValue, setCheckboxValue] = useState([]);
+
+	const { locations } = useContext(LocationContext);
+	const { toggle, modal, editEmployee, employees } =
+		useContext(EmployeeContext);
+
+	// Add checkboxes for locations dynamically
+	const checkboxArr = Object.values(locations).map((locationName) => ({
+		...locationName,
+		name: `${locationName.name}`,
+		label: `${locationName.name} - ${locationName.city}`,
+		type: "checkbox",
+		required: false,
+	}));
+
 	const handleSave = () => {
-		onSave(editedData, checkboxValue);
+		editEmployee(selectedRowToEdit, editedData, checkboxValue);
 		setEditedData({});
 		setCheckboxValue([]);
 	};
@@ -36,12 +44,12 @@ function CustomEditModal({
 		}));
 	};
 	return (
-		<Modal isOpen={isOpen} toggle={toggle}>
-			<ModalHeader toggle={toggle}>{title}</ModalHeader>
+		<Modal isOpen={modal} toggle={toggle}>
+			<ModalHeader toggle={toggle}>Edit Employee</ModalHeader>
 			<ModalBody>
-				{headers.map((lb, index) => {
-					const values = Object.values(row);
-					const keys = Object.keys(row);
+				{employees.map((lb, index) => {
+					const values = Object.values(lb);
+					const keys = Object.keys(lb);
 					return (
 						<FormGroup key={lb}>
 							<Label for={lb}>{lb}</Label>
@@ -56,9 +64,9 @@ function CustomEditModal({
 						</FormGroup>
 					);
 				})}
-				{checkboxes && (
+				{checkboxArr && (
 					<CustomCheckbox
-						checkboxArr={checkboxes}
+						checkboxArr={checkboxArr}
 						setCheckedLocations={setCheckboxValue}
 					/>
 				)}
@@ -75,4 +83,4 @@ function CustomEditModal({
 	);
 }
 
-export default CustomEditModal;
+export default EditEmployee;

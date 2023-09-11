@@ -13,23 +13,16 @@ import {
 	Label,
 	Alert,
 } from "reactstrap";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-import CustomCheckbox from "../CustomCheckbox";
+import { LocationContext } from "@/app/context/LocationContext";
 
-function CustomModal({
-	isOpen,
-	toggle,
-	title,
-	msg,
-	fields,
-	checkboxArr,
-	onSave,
-	modalType,
-}) {
+function CreateLocation() {
 	const [formData, setFormData] = useState({});
 	const [invalidFields, setInvalidFields] = useState([]);
-	const [checkedLocations, setCheckedLocations] = useState([]);
+
+	const { msg, modal, toggle, SaveLocation, locationFields } =
+		useContext(LocationContext);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -40,13 +33,15 @@ function CustomModal({
 	};
 
 	const save = () => {
-		const requiredFields = fields.filter((f) => f.required).map((f) => f.name);
+		const requiredFields = locationFields
+			.filter((f) => f.required)
+			.map((f) => f.name);
 		const emptyFields = requiredFields.filter((field) => !formData[field]);
 		setInvalidFields(emptyFields);
 
 		// At least one checkbox is checked
-		if ((emptyFields.length === 0 && onSave) || checkedLocations.length > 0) {
-			onSave(formData, checkedLocations);
+		if (emptyFields.length === 0) {
+			SaveLocation(formData);
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {
@@ -60,12 +55,12 @@ function CustomModal({
 
 	return (
 		<div>
-			<Modal isOpen={isOpen} toggle={toggle}>
-				<ModalHeader toggle={toggle}>{title}</ModalHeader>
+			<Modal isOpen={modal} toggle={toggle}>
+				<ModalHeader toggle={toggle}>Create a Location</ModalHeader>
 				<ModalBody>
 					{msg && <Alert color="success">{msg}</Alert>}
 					<Form>
-						{fields.map((field, index) => {
+						{locationFields.map((field, index) => {
 							return (
 								<FormGroup key={index}>
 									<Label for={field.name}>{field.label}</Label>
@@ -86,16 +81,6 @@ function CustomModal({
 								</FormGroup>
 							);
 						})}
-						{checkboxArr && (
-							<Label for="Checkboxes">
-								Plese pick a location to assign the {modalType} to
-							</Label>
-						)}
-						<CustomCheckbox
-							id="Checkboxes"
-							checkboxArr={checkboxArr}
-							setCheckedLocations={setCheckedLocations}
-						/>
 					</Form>
 				</ModalBody>
 				<ModalFooter>
@@ -111,4 +96,4 @@ function CustomModal({
 	);
 }
 
-export default CustomModal;
+export default CreateLocation;

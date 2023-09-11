@@ -1,27 +1,20 @@
 import React, { useContext, useState } from "react";
 import styles from "./table.module.css";
-import CustomCheckbox from "../../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
 import { useRouter } from "next/navigation";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
-import CustomEditModal from "@/components/CustomEditModal";
+import EditLocation from "../EditLocation";
 
 function LocationTable({ locations }) {
 	//#region STATE
 	const [selectedRowToEdit, setSelectedRowToEdit] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	//#endregion
 
 	//#region CONTEXT
-	const { locationFields, deleteLocation, editLocation, msg, toggle, modal } =
+	const { locationFields, deleteLocation, editLocation } =
 		useContext(LocationContext);
 
 	//#endregion
-
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setEditItemId(null);
-	};
 
 	const router = useRouter();
 
@@ -83,19 +76,7 @@ function LocationTable({ locations }) {
 				<tbody>{tableRows}</tbody>
 			</table>
 			{selectedRowToEdit && (
-				<CustomEditModal
-					isOpen={isModalOpen}
-					checkboxes={checkboxes}
-					toggle={closeModal}
-					headers={headers}
-					title="Edit Item"
-					row={selectedRowToEdit}
-					onSave={(editedData, checkbox) => {
-						// Handle saving the edited data here
-						editEntry(editItemId, editedData, checkbox);
-						closeModal(); // Close the modal after saving
-					}}
-				/>
+				<EditLocation selectedRowToEdit={selectedRowToEdit} />
 			)}
 		</>
 	);

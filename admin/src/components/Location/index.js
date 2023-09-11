@@ -2,9 +2,9 @@
 
 import React, { useEffect, useContext } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
-import CustomModal from "@/components/Modal/Modal";
 import { LocationContext } from "@/app/context/LocationContext";
 import LocationTable from "./Table/LocationTable";
+import CreateLocation from "./CreateLocation";
 
 export default function Location() {
 	const { locations, getLocations, SaveLocation, loading, toggle } =
@@ -27,14 +27,7 @@ export default function Location() {
 				<p>Create your first location to get started</p>
 			)}
 			<CustomButton text="Create Location" onClick={toggle} />
-			{/* <CustomModal
-				isOpen={modal}
-				toggle={toggle}
-				title="Create Location"
-				msg={msg}
-				fields={locationFields}
-				onSave={SaveLocation}
-			/> */}
+			<CreateLocation />
 		</main>
 	);
 }

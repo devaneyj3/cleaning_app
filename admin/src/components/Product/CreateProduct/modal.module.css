@@ -1,0 +1,13 @@
+.checkbox_group {
+	display: inline-flex;
+	width: 50%;
+	justify-content: space-evenly;
+}
+.checkbox_label {
+	font-size: small;
+}
+
+.list {
+	display: flex;
+	gap: 10px;
+}
