@@ -28,6 +28,7 @@ function EditLocation({
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
+		console.log(name, value);
 		setEditedData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -43,7 +44,8 @@ function EditLocation({
 					const keys = Object.keys(selectedLocationRowToEdit);
 					let placeholder = values[index + 1];
 					placeholder = placeholder.toString();
-					const value = editedData[keys[index + 1]] || "";
+					console.log(keys[index + 1]);
+					const value = editedData[keys[index + 1]];
 					const name = lb.toLowerCase();
 					return (
 						<FormGroup key={lb}>

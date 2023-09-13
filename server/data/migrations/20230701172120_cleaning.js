@@ -19,6 +19,7 @@ exports.up = function (knex) {
 			tbl.text("city").notNullable();
 			tbl.text("state").notNullable();
 			tbl.integer("zip").notNullable();
+			tbl.integer("employees_needed").notNullable();
 		})
 		.createTable("product", (tbl) => {
 			tbl.increments();

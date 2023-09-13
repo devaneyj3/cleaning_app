@@ -20,6 +20,12 @@ const LocationContextProvider = ({ children }) => {
 		{ name: "city", label: "City", type: "text", required: true },
 		{ name: "state", label: "State", type: "text", required: true },
 		{
+			name: "employees_needed",
+			label: "Employees Needed",
+			type: "number",
+			required: true,
+		},
+		{
 			name: "zip",
 			label: "Zip",
 			title: "Please enter a Zip Code",
@@ -69,6 +75,7 @@ const LocationContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().post("/locations", formData);
 			// Assuming the response contains the success message from the server.
+
 			setLocations(response.data.locations);
 
 			setMsg("Successfully added location");

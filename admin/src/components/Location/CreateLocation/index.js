@@ -38,8 +38,6 @@ function CreateLocation() {
 			.map((f) => f.name);
 		const emptyFields = requiredFields.filter((field) => !formData[field]);
 		setInvalidFields(emptyFields);
-
-		// At least one checkbox is checked
 		if (emptyFields.length === 0) {
 			SaveLocation(formData);
 			// Reset individual fields of formData

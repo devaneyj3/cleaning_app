@@ -64,7 +64,6 @@ function EditEmployee({
 					placeholder = placeholder.toString();
 					const value = editedData[keys[index + 1]] || "";
 					const name = lb.toLowerCase();
-					console.log(placeholder);
 					return (
 						<FormGroup key={lb}>
 							<Label for={name}>{lb}</Label>
