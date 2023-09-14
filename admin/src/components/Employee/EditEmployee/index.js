@@ -37,6 +37,7 @@ function EditEmployee({
 	const handleSave = () => {
 		editEmployee(selectedEmployeeRowToEdit, editedData, checkboxValue);
 		//TODO: decrement or increase checked locations employees_needed by 1
+		console.log(`The checked location is: ${checkboxValue}`);
 		setEditedData({});
 		setCheckboxValue([]);
 		closeEmployeeEditModal();

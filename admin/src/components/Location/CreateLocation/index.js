@@ -1,5 +1,3 @@
-// TODO: THIS IS CRAPPY CODE, REDO THIS LATER
-
 import {
 	Button,
 	Modal,
