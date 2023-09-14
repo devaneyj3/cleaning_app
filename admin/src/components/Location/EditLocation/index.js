@@ -12,23 +12,22 @@ import {
 import { LocationContext } from "@/app/context/LocationContext";
 
 function EditLocation({
-	selectedLocationRowToEdit,
-	isLocationEditModalOpen,
-	closeLocationEditModal,
+	selectedLocationRow = {}, // Make sure this prop is correctly passed
+	isLocationEditModalOpen, // Make sure this prop is correctly passed
+	closeLocationEditModal, // Make sure this prop is correctly passed
 }) {
 	const [editedData, setEditedData] = useState({});
 
 	const { editLocation, locationLabelArray } = useContext(LocationContext);
 
 	const handleSave = () => {
-		editLocation(selectedLocationRowToEdit, editedData);
+		editLocation(selectedLocationRow.id, editedData);
 		setEditedData({});
 		closeLocationEditModal();
 	};
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
-		console.log(name, value);
 		setEditedData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -39,23 +38,21 @@ function EditLocation({
 		<Modal isOpen={isLocationEditModalOpen} toggle={closeLocationEditModal}>
 			<ModalHeader toggle={closeLocationEditModal}>Edit Location</ModalHeader>
 			<ModalBody>
-				{locationLabelArray.map((lb, index) => {
-					const values = Object.values(selectedLocationRowToEdit);
-					const keys = Object.keys(selectedLocationRowToEdit);
-					let placeholder = values[index + 1];
-					placeholder = placeholder.toString();
-					console.log(keys[index + 1]);
-					const value = editedData[keys[index + 1]];
-					const name = lb.toLowerCase();
+				{locationLabelArray.map((lb) => {
+					let key = lb.toLowerCase(); // Convert key to lowercase
+					if (key == "employees needed") {
+						key = "employees_needed";
+					}
+					const value = selectedLocationRow[key]; // Use the key to access the value
 					return (
 						<FormGroup key={lb}>
-							<Label for={lb}>{lb}</Label>
+							<Label for={key}>{lb}</Label>
 							<Input
 								type="text"
-								id={lb}
-								name={name}
-								placeholder={placeholder}
-								value={value}
+								id={key}
+								name={key}
+								placeholder={value} // Use the value as the placeholder
+								value={editedData[key] || ""}
 								onChange={handleChange}
 							/>
 						</FormGroup>

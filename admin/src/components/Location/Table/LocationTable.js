@@ -83,7 +83,7 @@ function LocationTable({ locations = {} }) {
 			</table>
 			{selectedLocationRowToEdit && (
 				<EditLocation
-					selectedLocationRowToEdit={selectedLocationRowToEdit}
+					selectedLocationRow={selectedLocationRowToEdit}
 					isLocationEditModalOpen={isLocationEditModalOpen}
 					closeLocationEditModal={closeLocationEditModal}
 				/>
