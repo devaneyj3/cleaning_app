@@ -54,6 +54,7 @@ function CreateEmployee() {
 		// At least one checkbox is checked
 		if (emptyFields.length === 0 || checkedLocations.length > 0) {
 			SaveEmployee(formData, checkedLocations);
+			console.log(checkedLocations);
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {

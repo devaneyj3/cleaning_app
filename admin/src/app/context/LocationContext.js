@@ -52,6 +52,7 @@ const LocationContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().get("/locations");
 			const locations = response.data;
+			console.log(locations);
 			// Do something with the employees' data here.
 			setLocations(locations.locations);
 			setLoading(false);

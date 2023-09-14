@@ -72,8 +72,9 @@ const EmployeeContextProvider = ({ children }) => {
 			const response = await customAxios().post("/employees", formData);
 			// Assuming the response contains the success message from the server.
 			const employeeId = response.data.newEmployee.id;
-			for (const locationId of checkedLocations) {
-				await SaveLocationToEmployee(employeeId, locationId);
+
+			for (const location of checkedLocations) {
+				await SaveLocationToEmployee(employeeId, location.id);
 			}
 
 			setEmployees(response.data.employees);

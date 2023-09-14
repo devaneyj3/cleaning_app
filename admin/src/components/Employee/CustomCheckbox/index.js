@@ -4,10 +4,10 @@ import React from "react";
 import styles from "./checkbox.module.css";
 
 function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
-	const handleChange = (e) => {
+	const handleChange = (e, location) => {
 		const { name, checked } = e.target;
 		if (checked) {
-			setCheckedLocations((prevChecked) => [...prevChecked, name]);
+			setCheckedLocations((prevChecked) => [...prevChecked, location]);
 		} else {
 			setCheckedLocations((prevChecked) =>
 				prevChecked.filter((locationId) => locationId !== name)
@@ -30,7 +30,7 @@ function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
 										id={location.label}
 										name={location.id}
 										type="checkbox"
-										onChange={handleChange}
+										onChange={(e) => handleChange(e, location)}
 									/>
 								</div>
 							</FormGroup>
