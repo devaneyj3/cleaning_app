@@ -6,23 +6,23 @@ import styles from "./checkbox.module.css";
 function CustomCheckbox({
 	checkboxArr = {},
 	setCheckedLocations = {},
-	checkboxValue,
+	checkedLocations,
 }) {
-	const handleChange = (e) => {
+	const handleChange = (e, location) => {
 		const { name, checked } = e.target;
-		setCheckedLocations((prevChecked) => {
-			const locationId = parseInt(name);
-			if (prevChecked.includes(locationId)) {
-				// Location ID is already in the list, so remove it (toggle off)
-				return prevChecked.filter((id) => id !== locationId);
-			} else {
-				// Location ID is not in the list, so add it (toggle on)
-				return [...prevChecked, locationId];
-			}
-		});
+		if (checked) {
+			setCheckedLocations((prevChecked) => [...prevChecked, location]);
+		} else {
+			setCheckedLocations((prevChecked) =>
+				prevChecked.filter(
+					(checkedLocation) => checkedLocation.id !== location.id
+				)
+			);
+		}
 	};
 
-	console.log("checkbox value", checkboxValue);
+	console.log(checkedLocations);
+
 	return (
 		<div>
 			{checkboxArr &&

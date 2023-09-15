@@ -28,15 +28,13 @@ function CreateEmployee() {
 	const { locations, editLocation } = useContext(LocationContext);
 
 	// Add checkboxes for locations dynamically
-	const checkboxArr = Object.values(locations)
-		.filter((location) => location.employees_needed > 0)
-		.map((locationName) => ({
-			...locationName,
-			name: `${locationName.name}`,
-			label: `${locationName.name} - ${locationName.city}`,
-			type: "checkbox",
-			required: false,
-		}));
+	const checkboxArr = Object.values(locations).map((locationName) => ({
+		...locationName,
+		name: `${locationName.name}`,
+		label: `${locationName.name} - ${locationName.city}`,
+		type: "checkbox",
+		required: false,
+	}));
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -57,13 +55,13 @@ function CreateEmployee() {
 		if (emptyFields.length === 0 || checkedLocations.length > 0) {
 			SaveEmployee(formData, checkedLocations);
 			for (let location of checkedLocations) {
-				const updatedEmployeesNeeded = {
-					employees_needed: location.employees_needed - 1,
-				};
-				editLocation(location.id, updatedEmployeesNeeded);
+				console.log(`The checked location is: ${location.address}`);
+				// const updatedEmployeesNeeded = location.employees_needed - 1;
+				// editLocation(location.id, updatedEmployeesNeeded);
 			}
 			//reset checkedLocations
 			setCheckedLocations([]);
+			//TODO: decrement checked locations employees_needed by 1
 			// Reset individual fields of formData
 			const resetData = {};
 			for (const fieldName of requiredFields) {
@@ -112,6 +110,7 @@ function CreateEmployee() {
 							id="Checkboxes"
 							checkboxArr={checkboxArr}
 							setCheckedLocations={setCheckedLocations}
+							checkedLocations={checkedLocations}
 						/>
 					</Form>
 				</ModalBody>
