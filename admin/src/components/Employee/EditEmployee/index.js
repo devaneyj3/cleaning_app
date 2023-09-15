@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
 	Modal,
 	FormGroup,
@@ -24,16 +24,40 @@ function EditEmployee({
 	const [checkboxValue, setCheckboxValue] = useState([]);
 
 	const { locations } = useContext(LocationContext);
-	const { editEmployee, employeeLabelArr } = useContext(EmployeeContext);
+	const {
+		editEmployee,
+		employeeLabelArr,
+		employeeLocation,
+		getEmployeesLocations,
+	} = useContext(EmployeeContext);
+
+	useEffect(() => {
+		getEmployeesLocations(selectedEmployeeRowToEdit.id);
+
+		// Create an array of location IDs from employeeLocation
+		const initialCheckboxState = employeeLocation
+			? employeeLocation.map((el) => el.id)
+			: [];
+
+		setCheckboxValue(initialCheckboxState);
+	}, []);
+
+	console.log(checkboxValue);
 
 	// Add checkboxes for locations dynamically
-	const checkboxArr = Object.values(locations).map((locationName) => ({
-		...locationName,
-		name: `${locationName.name}`,
-		label: `${locationName.name} - ${locationName.city}`,
-		type: "checkbox",
-		required: false,
-	}));
+	// filter out if employees need for the location is less than 1
+	// if employee is assigned to the location filter that out too
+
+	const checkboxArr = Object.values(locations)
+		.filter((location) => location.employees_needed > 0)
+		.map((locationName) => ({
+			...locationName,
+			name: `${locationName.name}`,
+			label: `${locationName.name} - ${locationName.city}`,
+			type: "checkbox",
+			required: false,
+		}));
+
 	const handleSave = () => {
 		editEmployee(selectedEmployeeRowToEdit, editedData, checkboxValue);
 		//TODO: decrement or increase checked locations employees_needed by 1
@@ -84,6 +108,8 @@ function EditEmployee({
 					<CustomCheckbox
 						checkboxArr={checkboxArr}
 						setCheckedLocations={setCheckboxValue}
+						employeeLocation={employeeLocation}
+						checkboxValue={checkboxValue}
 					/>
 				)}
 			</ModalBody>

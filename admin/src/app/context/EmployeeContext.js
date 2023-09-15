@@ -32,13 +32,10 @@ const EmployeeContextProvider = ({ children }) => {
 
 	let employeeLabelArr;
 	if (employees.length > 0) {
-		employeeLabelArr = employeeLabelArr = employeeFields.reduce(
-			(acc, field) => {
-				acc.push(field.label);
-				return acc;
-			},
-			[]
-		);
+		employeeLabelArr = employeeFields.reduce((acc, field) => {
+			acc.push(field.label);
+			return acc;
+		}, []);
 	}
 	const toggle = () => setModal(!modal);
 
@@ -102,7 +99,9 @@ const EmployeeContextProvider = ({ children }) => {
 			const response = await customAxios().get(
 				`/employee-locations/${id}/locations`
 			);
+
 			const { data } = response;
+			console.log(data);
 			setEmployeeLocation(data);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.

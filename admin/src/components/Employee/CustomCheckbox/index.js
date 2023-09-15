@@ -3,20 +3,26 @@ import React from "react";
 
 import styles from "./checkbox.module.css";
 
-function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
-	const handleChange = (e, location) => {
-		const { checked } = e.target;
-		if (checked) {
-			setCheckedLocations((prevChecked) => [...prevChecked, location]);
-		} else {
-			setCheckedLocations((prevChecked) =>
-				prevChecked.filter(
-					(checkedLocation) => checkedLocation.id !== location.id
-				)
-			);
-		}
+function CustomCheckbox({
+	checkboxArr = {},
+	setCheckedLocations = {},
+	checkboxValue,
+}) {
+	const handleChange = (e) => {
+		const { name, checked } = e.target;
+		setCheckedLocations((prevChecked) => {
+			const locationId = parseInt(name);
+			if (prevChecked.includes(locationId)) {
+				// Location ID is already in the list, so remove it (toggle off)
+				return prevChecked.filter((id) => id !== locationId);
+			} else {
+				// Location ID is not in the list, so add it (toggle on)
+				return [...prevChecked, locationId];
+			}
+		});
 	};
 
+	console.log("checkbox value", checkboxValue);
 	return (
 		<div>
 			{checkboxArr &&
@@ -32,6 +38,11 @@ function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
 										id={location.label}
 										name={location.id}
 										type="checkbox"
+										checked={
+											checkboxValue
+												? checkboxValue.includes(location.id)
+												: location.checked
+										}
 										onChange={(e) => handleChange(e, location)}
 									/>
 								</div>
