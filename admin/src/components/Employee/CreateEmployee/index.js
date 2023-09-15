@@ -28,13 +28,15 @@ function CreateEmployee() {
 	const { locations, editLocation } = useContext(LocationContext);
 
 	// Add checkboxes for locations dynamically
-	const checkboxArr = Object.values(locations).map((locationName) => ({
-		...locationName,
-		name: `${locationName.name}`,
-		label: `${locationName.name} - ${locationName.city}`,
-		type: "checkbox",
-		required: false,
-	}));
+	const checkboxArr = Object.values(locations)
+		.filter((location) => location.employees_needed > 0)
+		.map((locationName) => ({
+			...locationName,
+			name: `${locationName.name}`,
+			label: `${locationName.name} - ${locationName.city}`,
+			type: "checkbox",
+			required: false,
+		}));
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -55,9 +57,10 @@ function CreateEmployee() {
 		if (emptyFields.length === 0 || checkedLocations.length > 0) {
 			SaveEmployee(formData, checkedLocations);
 			for (let location of checkedLocations) {
-				console.log(`The checked location is: ${location.address}`);
-				// const updatedEmployeesNeeded = location.employees_needed - 1;
-				// editLocation(location.id, updatedEmployeesNeeded);
+				const updatedEmployeesNeeded = {
+					employees_needed: location.employees_needed - 1,
+				};
+				editLocation(location.id, updatedEmployeesNeeded);
 			}
 			//reset checkedLocations
 			setCheckedLocations([]);
@@ -101,7 +104,7 @@ function CreateEmployee() {
 								</FormGroup>
 							);
 						})}
-						{checkboxArr && (
+						{checkboxArr.length > 1 && (
 							<Label for="Checkboxes">
 								Plese pick a location to assign the employee too
 							</Label>

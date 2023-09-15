@@ -3,11 +3,7 @@ import React from "react";
 
 import styles from "./checkbox.module.css";
 
-function CustomCheckbox({
-	checkboxArr = {},
-	setCheckedLocations = {},
-	checkedLocations,
-}) {
+function CustomCheckbox({ checkboxArr = {}, setCheckedLocations = {} }) {
 	const handleChange = (e, location) => {
 		const { name, checked } = e.target;
 		if (checked) {
@@ -20,8 +16,6 @@ function CustomCheckbox({
 			);
 		}
 	};
-
-	console.log(checkedLocations);
 
 	return (
 		<div>
@@ -38,11 +32,6 @@ function CustomCheckbox({
 										id={location.label}
 										name={location.id}
 										type="checkbox"
-										checked={
-											checkboxValue
-												? checkboxValue.includes(location.id)
-												: location.checked
-										}
 										onChange={(e) => handleChange(e, location)}
 									/>
 								</div>

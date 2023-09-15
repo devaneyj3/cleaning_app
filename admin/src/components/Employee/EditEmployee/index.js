@@ -33,16 +33,7 @@ function EditEmployee({
 
 	useEffect(() => {
 		getEmployeesLocations(selectedEmployeeRowToEdit.id);
-
-		// Create an array of location IDs from employeeLocation
-		const initialCheckboxState = employeeLocation
-			? employeeLocation.map((el) => el.id)
-			: [];
-
-		setCheckboxValue(initialCheckboxState);
 	}, []);
-
-	console.log(checkboxValue);
 
 	// Add checkboxes for locations dynamically
 	// filter out if employees need for the location is less than 1
@@ -108,8 +99,6 @@ function EditEmployee({
 					<CustomCheckbox
 						checkboxArr={checkboxArr}
 						setCheckedLocations={setCheckboxValue}
-						employeeLocation={employeeLocation}
-						checkboxValue={checkboxValue}
 					/>
 				)}
 			</ModalBody>
