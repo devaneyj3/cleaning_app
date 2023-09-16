@@ -22,10 +22,11 @@ function CreateEmployee() {
 	const [invalidFields, setInvalidFields] = useState([]);
 	const [checkedLocations, setCheckedLocations] = useState([]);
 
-	const { modal, toggle, msg, employeeFields, SaveEmployee } =
+	const { toggle, msg, employeeFields, SaveEmployee } =
 		useContext(EmployeeContext);
 
 	const { locations, editLocation } = useContext(LocationContext);
+	console.log(employeeFields);
 
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations)
@@ -78,54 +79,52 @@ function CreateEmployee() {
 
 	return (
 		<div>
-			<Modal isOpen={modal} toggle={toggle}>
-				<ModalHeader toggle={toggle}>Create an employee</ModalHeader>
-				<ModalBody>
-					{msg && <Alert color="success">{msg}</Alert>}
-					<Form>
-						{employeeFields.map((field, index) => {
-							return (
-								<FormGroup key={index}>
-									<Label for={field.name}>{field.label}</Label>
-									<Input
-										id={field.name}
-										name={field.name}
-										type={field.type}
-										value={formData[field.name] || ""}
-										pattern={field.pattern}
-										onChange={handleChange}
-										className={isInvalidField(field.name) ? "invalid" : ""}
-									/>
-									{isInvalidField(field.name) && (
-										<FormText className="invalid-text">
-											Please fill out this field.
-										</FormText>
-									)}
-								</FormGroup>
-							);
-						})}
-						{checkboxArr.length > 1 && (
-							<Label for="Checkboxes">
-								Plese pick a location to assign the employee too
-							</Label>
-						)}
-						<CustomCheckbox
-							id="Checkboxes"
-							checkboxArr={checkboxArr}
-							setCheckedLocations={setCheckedLocations}
-							checkedLocations={checkedLocations}
-						/>
-					</Form>
-				</ModalBody>
-				<ModalFooter>
-					<Button color="primary" onClick={save}>
-						Save
-					</Button>
-					<Button color="secondary" onClick={toggle}>
-						Cancel
-					</Button>
-				</ModalFooter>
-			</Modal>
+			<ModalHeader toggle={toggle}>Create an employee</ModalHeader>
+			<ModalBody>
+				{msg && <Alert color="success">{msg}</Alert>}
+				<Form>
+					{employeeFields.map((field, index) => {
+						return (
+							<FormGroup key={index}>
+								<Label for={field.name}>{field.label}</Label>
+								<Input
+									id={field.name}
+									name={field.name}
+									type={field.type}
+									value={formData[field.name] || ""}
+									pattern={field.pattern}
+									onChange={handleChange}
+									className={isInvalidField(field.name) ? "invalid" : ""}
+								/>
+								{isInvalidField(field.name) && (
+									<FormText className="invalid-text">
+										Please fill out this field.
+									</FormText>
+								)}
+							</FormGroup>
+						);
+					})}
+					{checkboxArr.length > 1 && (
+						<Label for="Checkboxes">
+							Plese pick a location to assign the employee too
+						</Label>
+					)}
+					<CustomCheckbox
+						id="Checkboxes"
+						checkboxArr={checkboxArr}
+						setCheckedLocations={setCheckedLocations}
+						checkedLocations={checkedLocations}
+					/>
+				</Form>
+			</ModalBody>
+			<ModalFooter>
+				<Button color="primary" onClick={save}>
+					Save
+				</Button>
+				<Button color="secondary" onClick={toggle}>
+					Cancel
+				</Button>
+			</ModalFooter>
 		</div>
 	);
 }

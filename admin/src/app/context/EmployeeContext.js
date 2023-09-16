@@ -13,6 +13,7 @@ const EmployeeContextProvider = ({ children }) => {
 	const [employeeLocation, setEmployeeLocation] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [msg, setMsg] = useState("");
+	const [allEmployeeLocations, setAllEmployeeLocation] = useState([]);
 
 	const employeeFields = [
 		{ name: "name", label: "Name", type: "text", required: true },
@@ -63,6 +64,18 @@ const EmployeeContextProvider = ({ children }) => {
 			console.error("Error fetching employee:", error.message);
 		}
 	};
+	const getAllEmployeeLocations = async () => {
+		try {
+			const response = await customAxios().get(`/employee-locations`);
+			const { data } = response;
+			console.log("employee locations response", data);
+
+			setAllEmployeeLocation(data);
+		} catch (error) {
+			// Handle any errors that might occur during the API request.
+			console.error("Error fetching employee locations:", error.message);
+		}
+	};
 
 	const SaveEmployee = async (formData, checkedLocations) => {
 		try {
@@ -101,7 +114,6 @@ const EmployeeContextProvider = ({ children }) => {
 			);
 
 			const { data } = response;
-			console.log(data);
 			setEmployeeLocation(data);
 		} catch (error) {
 			// Handle any errors that might occur during the API request.
@@ -152,6 +164,8 @@ const EmployeeContextProvider = ({ children }) => {
 				getEmployeesLocations,
 				employeeFields,
 				employeeLabelArr,
+				getAllEmployeeLocations,
+				allEmployeeLocations,
 			}}>
 			{children}
 		</EmployeeContext.Provider>

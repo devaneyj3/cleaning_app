@@ -1,5 +1,5 @@
 "use client";
-
+import { Modal } from "reactstrap";
 import React, { useEffect, useContext } from "react";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import { EmployeeContext } from "../../app/context/EmployeeContext";
@@ -7,7 +7,7 @@ import EmployeeTable from "./Table/EmployeeTable";
 import CreateEmployee from "./CreateEmployee";
 
 export default function Employee() {
-	const { employees, getEmployees, employeeLoading, toggle } =
+	const { employees, getEmployees, employeeLoading, toggle, modal } =
 		useContext(EmployeeContext);
 
 	useEffect(() => {
@@ -26,8 +26,11 @@ export default function Employee() {
 			) : (
 				<p>Create your first employee to get started</p>
 			)}
+
 			<CustomButton text="Create Employee" onClick={toggle} />
-			<CreateEmployee />
+			<Modal isOpen={modal} toggle={toggle}>
+				<CreateEmployee />
+			</Modal>
 		</main>
 	);
 }

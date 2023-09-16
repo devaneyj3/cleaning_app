@@ -2,6 +2,16 @@ const express = require("express");
 const db = require("./employee_locations_model");
 const router = express.Router();
 
+//get all employees locations
+router.get("/", async (req, res) => {
+	try {
+		const result = await db.getAllEmployeeLocations();
+		res.status(200).send(result);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 //EMPLOYEE GETS ASSISNED A LOCATION
 router.post("/:id/locations/:locationID", async (req, res) => {
 	const { id } = req.params;

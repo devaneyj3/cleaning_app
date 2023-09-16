@@ -4,6 +4,7 @@ module.exports = {
 	getEmployeeLocations,
 	addLocationToEmployee,
 	deleteEmployeeLocation,
+	getAllEmployeeLocations,
 };
 
 function getEmployeeLocations(id) {
@@ -12,6 +13,10 @@ function getEmployeeLocations(id) {
 		.join("location as l", "el.location_id", "l.id")
 		.select("l.*")
 		.where("el.employee_id", id);
+}
+
+function getAllEmployeeLocations() {
+	return db("employee_locations");
 }
 
 function addLocationToEmployee(id, locationID) {
