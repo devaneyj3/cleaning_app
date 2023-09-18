@@ -8,6 +8,7 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EditEmployee from "@/components/Employee/EditEmployee";
 import { LocationContext } from "@/app/context/LocationContext";
+import customAxios from "@/utils/CustomAxios";
 
 function EmployeeTable({}) {
 	//#region STATE
@@ -25,7 +26,7 @@ function EmployeeTable({}) {
 	} = useContext(EmployeeContext);
 	//#endregion
 
-	const { locations } = useContext(LocationContext);
+	const { locations, editLocation } = useContext(LocationContext);
 
 	useEffect(() => {
 		getAllEmployeeLocations();
@@ -64,8 +65,6 @@ function EmployeeTable({}) {
 			.filter((el) => el.employee_id === employee.id)
 			.map((el) => el.location_id);
 
-		console.log(locationIds);
-
 		return (
 			<tr key={index} onClick={() => handleRowClick(employee.id)}>
 				<td key="id">{employee.id}</td>
@@ -91,11 +90,45 @@ function EmployeeTable({}) {
 
 	//#endregion
 
-	//#region	DELETE ROW
-	const deleteRow = (e, id) => {
+	const deleteRow = async (e, id) => {
 		e.stopPropagation();
-		deleteEmployee(id);
+
+		try {
+			// Get the location IDs associated with the employee
+			const locationIds = allEmployeeLocations
+				.filter((emp) => emp.employee_id == id)
+				.map((emp) => emp.location_id);
+
+			// Delete the employee
+			await deleteEmployee(id);
+
+			// Update the employees_needed for each associated location
+			locationIds.forEach(async (locationId) => {
+				await updateEmployeesNeeded(locationId);
+			});
+		} catch (error) {
+			console.error("Error deleting employee:", error.message);
+		}
 	};
+
+	const updateEmployeesNeeded = async (locationId) => {
+		try {
+			// Fetch the location by ID
+			const response = await customAxios().get(`/locations/${locationId}`);
+			const { location } = response.data;
+
+			// Update employees_needed by incrementing it by one
+			const updatedLocation = {
+				employees_needed: location.employees_needed + 1,
+			};
+
+			// Save the updated location
+			editLocation(locationId, updatedLocation);
+		} catch (error) {
+			console.error("Error updating employees_needed:", error.message);
+		}
+	};
+
 	//#endregion
 
 	//#region EDIT ROW

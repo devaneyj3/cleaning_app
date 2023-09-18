@@ -68,7 +68,6 @@ const EmployeeContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().get(`/employee-locations`);
 			const { data } = response;
-			console.log("employee locations response", data);
 
 			setAllEmployeeLocation(data);
 		} catch (error) {

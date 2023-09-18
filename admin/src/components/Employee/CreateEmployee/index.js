@@ -26,7 +26,6 @@ function CreateEmployee() {
 		useContext(EmployeeContext);
 
 	const { locations, editLocation } = useContext(LocationContext);
-	console.log(employeeFields);
 
 	// Add checkboxes for locations dynamically
 	const checkboxArr = Object.values(locations)

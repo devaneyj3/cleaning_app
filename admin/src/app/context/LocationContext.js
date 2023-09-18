@@ -52,7 +52,6 @@ const LocationContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().get("/locations");
 			const locations = response.data;
-			console.log(locations);
 			// Do something with the employees' data here.
 			setLocations(locations.locations);
 			setLoading(false);
@@ -103,6 +102,7 @@ const LocationContextProvider = ({ children }) => {
 		try {
 			const response = await customAxios().put(`/locations/${id}/edit`, data);
 			const locations = response.data.locations;
+			console.log("editing location, ", locations);
 			setLocations(locations);
 		} catch (error) {
 			console.error("Error editing location:", error.message);
