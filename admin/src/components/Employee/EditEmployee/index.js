@@ -12,6 +12,7 @@ import {
 import CustomCheckbox from "../CustomCheckbox";
 import { LocationContext } from "@/app/context/LocationContext";
 import { EmployeeContext } from "@/app/context/EmployeeContext";
+import customAxios from "@/utils/CustomAxios";
 
 import moment from "moment";
 
@@ -23,10 +24,11 @@ function EditEmployee({
 	const [editedData, setEditedData] = useState({});
 	const [checkboxValue, setCheckboxValue] = useState([]);
 
-	const { locations } = useContext(LocationContext);
+	const { locations, editLocation } = useContext(LocationContext);
 	const {
 		editEmployee,
 		employeeLabelArr,
+		SaveLocationToEmployee,
 		employeeLocation,
 		getEmployeesLocations,
 	} = useContext(EmployeeContext);
@@ -50,12 +52,33 @@ function EditEmployee({
 		}));
 
 	const handleSave = () => {
-		editEmployee(selectedEmployeeRowToEdit, editedData, checkboxValue);
+		editEmployee(selectedEmployeeRowToEdit.id, editedData, checkboxValue);
 		//TODO: decrement or increase checked locations employees_needed by 1
-		console.log(`The checked location is: ${checkboxValue}`);
+		for (let value of checkboxValue) {
+			SaveLocationToEmployee(selectedEmployeeRowToEdit.id, value.id);
+			updateEmployeesNeeded(value.id);
+		}
 		setEditedData({});
 		setCheckboxValue([]);
 		closeEmployeeEditModal();
+	};
+
+	const updateEmployeesNeeded = async (locationId) => {
+		try {
+			// Fetch the location by ID
+			const response = await customAxios().get(`/locations/${locationId}`);
+			const { location } = response.data;
+
+			// Update employees_needed by incrementing it by one
+			const updatedLocation = {
+				employees_needed: location.employees_needed - 1,
+			};
+
+			// Save the updated location
+			editLocation(locationId, updatedLocation);
+		} catch (error) {
+			console.error("Error updating employees_needed:", error.message);
+		}
 	};
 
 	const handleChange = (e) => {

@@ -134,7 +134,6 @@ const EmployeeContextProvider = ({ children }) => {
 
 	const editEmployee = async (id, data, checkbox) => {
 		try {
-			console.log(id, data, checkbox);
 			const response = await customAxios().put(`/employees/${id}/edit`, data);
 			const employees = response.data.employees;
 			setEmployees(employees);
@@ -165,6 +164,7 @@ const EmployeeContextProvider = ({ children }) => {
 				employeeLabelArr,
 				getAllEmployeeLocations,
 				allEmployeeLocations,
+				SaveLocationToEmployee,
 			}}>
 			{children}
 		</EmployeeContext.Provider>
